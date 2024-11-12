@@ -1,6 +1,29 @@
 import { SEARCH_TV } from "./actions";
 
 const initialState = {
+  films: [
+    {
+      title: "Avengers", 
+      image: "image", 
+      year: "2015", 
+      overview: "Los vengadores la pelicula", 
+      ratings: 7
+    },
+    {
+      title: "Avengers", 
+      image: "image", 
+      year: "2015", 
+      overview: "Los vengadores la pelicula", 
+      ratings: 7
+    },
+    {
+      title: "Avengers", 
+      image: "image", 
+      year: "2015", 
+      overview: "Los vengadores la pelicula", 
+      ratings: 7
+    }
+  ],
   miTv: [],
   tvDetail: {},
 };
