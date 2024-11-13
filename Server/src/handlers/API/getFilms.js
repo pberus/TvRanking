@@ -10,15 +10,19 @@ const getApiFilmsHandler = async (req, res) => {
         original_title,
         release_date,
         poster_path,
-        overview
+        overview,
+        vote_average
       }) => ({
         id,
         title: original_title,
         year: release_date,
         image: poster_path,
-        overview
+        overview,
+        rating: vote_average
       })
-    );    
+    );
+    console.log("Se aplica handler");
+    
     await Film.bulkCreate(filmsToInsert);
     const allFilms = await Film.findAll()
     return res.json(allFilms)
