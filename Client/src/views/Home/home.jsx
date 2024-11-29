@@ -1,15 +1,14 @@
 import { useEffect } from "react";
-import Cards from "../../components/Cards/Cards";
 import { useDispatch } from "react-redux";
 import { getFilms } from "../../redux/actions";
+import { Cards } from "../../components";
 
 const Home = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  useEffect(()=> {
-    dispatch(getFilms())
-  }, [dispatch])
-
+  useEffect(() => {
+    dispatch(getFilms());
+  }, [dispatch]);
 
   return (
     <div>

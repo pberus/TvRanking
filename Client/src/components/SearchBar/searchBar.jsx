@@ -1,11 +1,11 @@
 import axios from "axios"
-import {useDispatch, useState} from "react-redux"
+import { useState } from "react";
+import {useDispatch} from "react-redux"
 
 const tvURL = "http://localhost:3001/tv/";
 
 const SearchBar = () => {
     const dispatch = useDispatch()
-
     const [name, setName] = useState("")
 
     const onSearch = async (name) => {
