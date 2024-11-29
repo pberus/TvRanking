@@ -1,15 +1,19 @@
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types"
 import Card from "../Card/card";
+import style from "./cards.module.css"
 
-const Cards = () => {
-  const films = useSelector((state) => state.films);
+const Cards = ({tvArray}) => {
   return (
-    <div>
-      {films?.map((film) => (
-        <Card key={film.id} film={film} />
+    <div className={style.Cards}>
+      {tvArray?.map((tv) => (
+        <Card key={tv.id} tv={tv} />
       ))}
     </div>
   );
 };
+
+Cards.propTypes = {
+  tvArray: PropTypes.array.isRequired,
+}
 
 export default Cards;

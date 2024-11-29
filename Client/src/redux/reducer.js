@@ -1,32 +1,7 @@
 import { GET_FILMS, SEARCH_TV } from "./actions";
 
 const initialState = {
-  films: [
-    {
-      id: 1,
-      title: "Avengers", 
-      image: "image", 
-      year: "2015", 
-      overview: "Los vengadores la pelicula", 
-      ratings: 7
-    },
-    {
-      id: 2,
-      title: "Avengers", 
-      image: "image", 
-      year: "2015", 
-      overview: "Los vengadores la pelicula", 
-      ratings: 7
-    },
-    {
-      id: 3,
-      title: "Avengers", 
-      image: "image", 
-      year: "2015", 
-      overview: "Los vengadores la pelicula", 
-      ratings: 7
-    }
-  ],
+  popularFilms: [],
   miTv: [],
   tvDetail: {},
 };
@@ -36,7 +11,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_FILMS:
       return {
         ...state,
-        films: payload
+        popularFilms: payload
       }
     case SEARCH_TV:
       return {
