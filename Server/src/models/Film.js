@@ -14,16 +14,28 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      overview: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      popular: {
+        type: DataTypes.BOOLEAN,
+      },
+      top_rated: {
+        type: DataTypes.BOOLEAN,
+      },
+      now_playing: {
+        type: DataTypes.BOOLEAN,
+      },
+      upcoming: {
+        type: DataTypes.BOOLEAN,
+      },
       image: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       year: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      overview: {
-        type: DataTypes.TEXT,
         allowNull: false,
       },
       rating: {
