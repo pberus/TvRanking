@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 import Card from "../Card/card";
 import style from "./carousel.module.css";
 
-const Carousel = ({ tvArray }) => {
+const Carousel = ({ tvArray, position }) => {
   return (
     <div className={style.color}>
       <div
-        id='carouselExampleControls'
+        id={`carouselExampleControls${position}`}
         className='carousel slide'
         data-ride='carousel'
       >
@@ -50,7 +50,7 @@ const Carousel = ({ tvArray }) => {
         </div>
         <a
           className='carousel-control-prev'
-          href='#carouselExampleControls'
+          href={`#carouselExampleControls${position}`}
           role='button'
           data-slide='prev'
         >
@@ -62,7 +62,7 @@ const Carousel = ({ tvArray }) => {
         </a>
         <a
           className='carousel-control-next'
-          href='#carouselExampleControls'
+          href={`#carouselExampleControls${position}`}
           role='button'
           data-slide='next'
         >
@@ -79,6 +79,7 @@ const Carousel = ({ tvArray }) => {
 
 Carousel.propTypes = {
   tvArray: PropTypes.array.isRequired,
+  position: PropTypes.number.isRequired
 };
 
 export default Carousel;
