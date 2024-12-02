@@ -2,16 +2,9 @@ import PropTypes from "prop-types";
 import Card from "../Card/card";
 import style from "./carousel.module.css";
 
-//const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
-
 const Carousel = ({ tvArray }) => {
   return (
     <div className={style.color}>
-      <div className={style.Cards}>
-        {tvArray?.map((tv) => (
-          <Card key={tv.id} tv={tv} />
-        ))}
-      </div>
       <div
         id='carouselExampleControls'
         className='carousel slide'
@@ -19,51 +12,39 @@ const Carousel = ({ tvArray }) => {
       >
         <div className='carousel-inner'>
           <div className="carousel-item active">
-            <div className='row justify-content-between'>
-              <div className='col-3'>
-                <Card key={tvArray[0].id} tv={tvArray[0]} />
-              </div>
-              <div className='col-3'>
-                <Card key={tvArray[1].id} tv={tvArray[1]} />
-              </div>
-              <div className='col-3'>
-                <Card key={tvArray[2].id} tv={tvArray[2]} />
-              </div>
-              <div className='col-3'>
-                <Card key={tvArray[3].id} tv={tvArray[3]} />
-              </div>
+            <div className='row'>
+              {tvArray.slice(0, 5).map((tv) => (
+                <div key={tv.id} className={`col ${style.card}`}>
+                  <Card tv={tv} />
+                </div>
+              ))}
             </div>
           </div>
           <div className="carousel-item">
-            <div className='row justify-content-between'>
-              <div className='col-3'>
-                <Card key={tvArray[0].id} tv={tvArray[0]} />
-              </div>
-              <div className='col-3'>
-                <Card key={tvArray[1].id} tv={tvArray[1]} />
-              </div>
-              <div className='col-3'>
-                <Card key={tvArray[2].id} tv={tvArray[2]} />
-              </div>
-              <div className='col-3'>
-                <Card key={tvArray[3].id} tv={tvArray[3]} />
-              </div>
+            <div className='row'>
+              {tvArray.slice(5, 10).map((tv) => (
+                <div key={tv.id} className={`col ${style.card}`}>
+                  <Card tv={tv} />
+                </div>
+              ))}
             </div>
           </div>
           <div className="carousel-item">
-            <div className='row justify-content-between'>
-              <div className='col-3'>
-                <Card key={tvArray[0].id} tv={tvArray[0]} />
-              </div>
-              <div className='col-3'>
-                <Card key={tvArray[1].id} tv={tvArray[1]} />
-              </div>
-              <div className='col-3'>
-                <Card key={tvArray[2].id} tv={tvArray[2]} />
-              </div>
-              <div className='col-3'>
-                <Card key={tvArray[3].id} tv={tvArray[3]} />
-              </div>
+            <div className='row'>
+              {tvArray.slice(10, 15).map((tv) => (
+                <div key={tv.id} className={`col ${style.card}`}>
+                  <Card tv={tv} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="carousel-item">
+            <div className='row'>
+              {tvArray.slice(15, 20).map((tv) => (
+                <div key={tv.id} className={`col ${style.card}`}>
+                  <Card tv={tv} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
