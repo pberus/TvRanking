@@ -79,7 +79,7 @@ const Carousel = ({ tvArray, position }) => {
 
 Carousel.propTypes = {
   tvArray: PropTypes.array.isRequired,
-  position: PropTypes.number.isRequired
+  position: PropTypes.string.isRequired
 };
 
 export default Carousel;
