@@ -1,12 +1,9 @@
 const getApiTopRatedFilmsController = require("../../../controllers/API/Films/getTopRated");
-const { Film } = require("../../../db");
 
 const getApiTopRatedFilmsHandler = async (req, res) => {
   try {
-    const filmsExist = await Film.findOne();
-    if (!filmsExist) {
-      const films = await getApiTopRatedFilmsController();
-      const filmsToInsert = films?.map(
+      let films = await getApiTopRatedFilmsController();
+      films = films?.map(
         ({
           id,
           original_title,
@@ -18,23 +15,12 @@ const getApiTopRatedFilmsHandler = async (req, res) => {
           id,
           title: original_title,
           overview,
-          top_rated: true,
           image: poster_path,
           year: release_date,
           rating: vote_average,
         })
       );
-      await Film.bulkCreate(filmsToInsert, {
-        updateOnDuplicate: ["top_rated"], // Lista de campos que deseas actualizar
-      });
-    }
-
-    const allFilms = await Film.findAll({
-      where: {
-        top_rated: true,
-      },
-    });
-    return res.json(allFilms);
+    return res.json(films);
   } catch (error) {
     console.log("error: ", error.message);
   }
