@@ -1,28 +1,46 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getAiringTodaySeries,
   getNowPlayingFilms,
+  getOnTheAirSeries,
   getPopularFilms,
+  getPopularSeries,
   getTopRatedFilms,
+  getTopRatedSeries,
   getUpcomingFilms,
 } from "../../redux/actions";
 import { Carousel } from "../../components";
 
 const Home = () => {
   const [filmsOrSeries, setFilmsOrSeries] = useState(true);
-
   const dispatch = useDispatch();
+
+  //films
   const nowPlayingFilms = useSelector((state) => state.nowPlayingFilms);
   const popularFilms = useSelector((state) => state.popularFilms);
   const topRatedFilms = useSelector((state) => state.topRatedFilms);
   const upcomingFilms = useSelector((state) => state.upcomingFilms);
 
+  //series
+  const airingTodaySeries = useSelector((state) => state.airingTodaySeries);
+  const onTheAirSeries = useSelector((state) => state.onTheAirSeries);
+  const popularSeries = useSelector((state) => state.popularSeries);
+  const topRatedSeries = useSelector((state) => state.topRatedSeries);
+
   useEffect(() => {
-    dispatch(getNowPlayingFilms());
-    dispatch(getPopularFilms());
-    dispatch(getTopRatedFilms());
-    dispatch(getUpcomingFilms());
-  }, [dispatch]);
+    if (filmsOrSeries) {
+      dispatch(getNowPlayingFilms());
+      dispatch(getPopularFilms());
+      dispatch(getTopRatedFilms());
+      dispatch(getUpcomingFilms());
+    } else {
+      dispatch(getAiringTodaySeries());
+      dispatch(getOnTheAirSeries());
+      dispatch(getPopularSeries());
+      dispatch(getTopRatedSeries());
+    }
+  }, [dispatch, filmsOrSeries]);
 
   return (
     <div>
@@ -61,7 +79,24 @@ const Home = () => {
           )}
         </>
       ) : (
-        <h2>Mostrando las series</h2>
+        <>
+          <h2>Se estrenan hoy...</h2>
+          {airingTodaySeries.length > 0 && (
+            <Carousel tvArray={airingTodaySeries} position='1' />
+          )}
+          <h2>Mas populares del momento</h2>
+          {popularSeries.length > 0 && (
+            <Carousel tvArray={popularSeries} position='2' />
+          )}
+          <h2>Mejor calificadas</h2>
+          {topRatedSeries.length > 0 && (
+            <Carousel tvArray={topRatedSeries} position='3' />
+          )}
+          <h2>Proximamente</h2>
+          {onTheAirSeries.length > 0 && (
+            <Carousel tvArray={onTheAirSeries} position='4' />
+          )}
+        </>
       )}
     </div>
   );

@@ -1,69 +1,134 @@
-import axios from "axios"
+import axios from "axios";
 
 export const SEARCH_TV = "SEARCH_TV";
-export const GET_NOW_PLAYING_FILMS = "GET_NOW_PLAYING_FILMS"
-export const GET_POPULAR_FILMS = "GET_POPULAR_FILMS"
-export const GET_TOP_RATED_FILMS = "GET_TOP_RATED_FILMS"
-export const GET_UPCOMING_FILMS = "GET_UPCOMING_FILMS"
-export const REMOVE_TV = "REMOVE_TV"
+export const GET_NOW_PLAYING_FILMS = "GET_NOW_PLAYING_FILMS";
+export const GET_POPULAR_FILMS = "GET_POPULAR_FILMS";
+export const GET_TOP_RATED_FILMS = "GET_TOP_RATED_FILMS";
+export const GET_UPCOMING_FILMS = "GET_UPCOMING_FILMS";
+export const GET_AIRING_TODAY_SERIES = "GET_AIRING_TODAY_SERIES";
+export const GET_ON_THE_AIR_SERIES = "GET_ON_THE_AIR_SERIES";
+export const GET_POPULAR_SERIES = "GET_POPULAR_SERIES";
+export const GET_TOP_RATED_SERIES = "GET_TOP_RATED_SERIES";
+export const REMOVE_TV = "REMOVE_TV";
 
-const URL = "http://localhost:3001"
+const URL = "http://localhost:3001";
 
-export const getNowPlayingFilms =  () => {
+//GET FILMS
+export const getNowPlayingFilms = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axios(`${URL}/films/now-playing`)
-      return dispatch ({
+      const { data } = await axios(`${URL}/films/now-playing`);
+      return dispatch({
         type: GET_NOW_PLAYING_FILMS,
-        payload: data
-      })
+        payload: data,
+      });
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
-}
+  };
+};
 
-export const getPopularFilms =  () => {
+export const getPopularFilms = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axios(`${URL}/films/popular`)
-      return dispatch ({
+      const { data } = await axios(`${URL}/films/popular`);
+      return dispatch({
         type: GET_POPULAR_FILMS,
-        payload: data
-      })
+        payload: data,
+      });
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
-}
+  };
+};
 
-export const getTopRatedFilms =  () => {
+export const getTopRatedFilms = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axios(`${URL}/films/top-rated`)
-      return dispatch ({
+      const { data } = await axios(`${URL}/films/top-rated`);
+      return dispatch({
         type: GET_TOP_RATED_FILMS,
-        payload: data
-      })
+        payload: data,
+      });
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
-}
+  };
+};
 
-export const getUpcomingFilms =  () => {
+export const getUpcomingFilms = () => {
   return async (dispatch) => {
     try {
-      const {data} = await axios(`${URL}/films/upcoming`)
-      return dispatch ({
+      const { data } = await axios(`${URL}/films/upcoming`);
+      return dispatch({
         type: GET_UPCOMING_FILMS,
-        payload: data
-      })
+        payload: data,
+      });
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
-}
+  };
+};
+
+//GET SERIES
+
+export const getAiringTodaySeries = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/series/airing-today`);
+      return dispatch({
+        type: GET_AIRING_TODAY_SERIES,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const getOnTheAirSeries = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/series/on-the-air`);
+      return dispatch({
+        type: GET_ON_THE_AIR_SERIES,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const getPopularSeries = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/series/popular`);
+      return dispatch({
+        type: GET_POPULAR_SERIES,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const getTopRatedSeries = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/series/top-rated`);
+      return dispatch({
+        type: GET_TOP_RATED_SERIES,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+//
 
 export const searchTv = (tv) => {
   return {
