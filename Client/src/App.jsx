@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { Home } from "./views";
+import { Home, Popular } from "./views";
 import { Nav } from "./components";
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/popular' element={<Popular />} />
       </Routes>
     </div>
   );

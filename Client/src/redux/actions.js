@@ -9,6 +9,9 @@ export const GET_AIRING_TODAY_SERIES = "GET_AIRING_TODAY_SERIES";
 export const GET_ON_THE_AIR_SERIES = "GET_ON_THE_AIR_SERIES";
 export const GET_POPULAR_SERIES = "GET_POPULAR_SERIES";
 export const GET_TOP_RATED_SERIES = "GET_TOP_RATED_SERIES";
+export const GET_DISCOVER_FILMS = "GET_DISCOVER_FILMS";
+export const GET_DISCOVER_SERIES = "GET_DISCOVER_SERIES";
+export const GET_DISCOVER_TV = "GET_DISCOVER_TV";
 export const REMOVE_TV = "REMOVE_TV";
 
 const URL = "http://localhost:3001";
@@ -121,6 +124,51 @@ export const getTopRatedSeries = () => {
       return dispatch({
         type: GET_TOP_RATED_SERIES,
         payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+//GET DISCOVER
+
+export const getDiscoverFilms = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/discover/films`);
+      return dispatch({
+        type: GET_DISCOVER_FILMS,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const getDiscoverSeries = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/discover/series`);
+      return dispatch({
+        type: GET_DISCOVER_SERIES,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const getDiscoverTv = () => {
+  return async (dispatch) => {
+    try {
+      const films = await axios(`${URL}/discover/films`);
+      const series = await axios(`${URL}/discover/series`);
+      return dispatch({
+        type: GET_DISCOVER_TV,
+        payload: [...films.data, ...series.data],
       });
     } catch (error) {
       alert(error.message);

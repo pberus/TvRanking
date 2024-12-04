@@ -1,5 +1,8 @@
 import {
   GET_AIRING_TODAY_SERIES,
+  GET_DISCOVER_FILMS,
+  GET_DISCOVER_SERIES,
+  GET_DISCOVER_TV,
   GET_NOW_PLAYING_FILMS,
   GET_ON_THE_AIR_SERIES,
   GET_POPULAR_FILMS,
@@ -21,6 +24,11 @@ const initialState = {
   onTheAirSeries: [],
   popularSeries: [],
   topRatedSeries: [],
+  //DISCOVER
+  discoverFilms: [],
+  discoverSeries: [],
+  discoverTv: [],
+  //
   miTv: [],
   tvDetail: {},
 };
@@ -68,6 +76,22 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         topRatedSeries: payload,
+      };
+    //DISCOVER
+    case GET_DISCOVER_FILMS:
+      return {
+        ...state,
+        discoverFilms: payload,
+      };
+    case GET_DISCOVER_SERIES:
+      return {
+        ...state,
+        discoverSeries: payload,
+      };
+    case GET_DISCOVER_TV:
+      return {
+        ...state,
+        discoverTv: payload,
       };
     //
     case SEARCH_TV:
