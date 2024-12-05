@@ -10,6 +10,7 @@ import {
   GET_TOP_RATED_FILMS,
   GET_TOP_RATED_SERIES,
   GET_UPCOMING_FILMS,
+  REMOVE_TV,
   SEARCH_TV,
 } from "./actions";
 
@@ -93,6 +94,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         discoverTv: payload,
       };
+    //REMOVE TV
+      case REMOVE_TV:
+        return {
+          ...state,
+          [payload]: [],
+        }
     //
     case SEARCH_TV:
       return {

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Cards from "../../components/Cards/cards";
 import { useEffect, useState } from "react";
-import { getDiscoverFilms, getDiscoverSeries } from "../../redux/actions";
+import { getDiscoverFilms, getDiscoverSeries, removeTv } from "../../redux/actions";
 
 const Popular = () => {
   const [discover, setDiscover] = useState({
@@ -16,8 +16,10 @@ const Popular = () => {
   useEffect(() => {
     if (discover.filmsOrSeries === "films") {
       dispatch(getDiscoverFilms(discover.sortBy));
+      dispatch(removeTv("discoverSeries"))
     } else {
       dispatch(getDiscoverSeries(discover.sortBy));
+      dispatch(removeTv("discoverFilms"))
     }
   }, [dispatch, discover]);
 

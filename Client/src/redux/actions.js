@@ -176,6 +176,15 @@ export const getDiscoverTv = (sortBy) => {
   };
 };
 
+//REMOVE TV
+
+export const removeTv = (tv) => {
+  return {
+    type: REMOVE_TV,
+    payload: tv
+  }
+}
+
 //
 
 export const searchTv = (tv) => {
