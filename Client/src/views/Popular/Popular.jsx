@@ -10,8 +10,6 @@ const Popular = () => {
   });
   const dispatch = useDispatch();
 
-  console.log("sortBy: ", discover.sortBy);
-
   const discoverFilms = useSelector((state) => state.discoverFilms);
   const discoverSeries = useSelector((state) => state.discoverSeries);
 
@@ -42,6 +40,7 @@ const Popular = () => {
           setDiscover({
             ...discover,
             filmsOrSeries: "films",
+            sortBy: "popularity"
           })
         }
       >
@@ -56,6 +55,7 @@ const Popular = () => {
           setDiscover({
             ...discover,
             filmsOrSeries: "series",
+            sortBy: "popularity"
           })
         }
       >
@@ -95,6 +95,7 @@ const Popular = () => {
           Ordenamientos
         </option>
         <option value='popularity'>Popularidad</option>
+        <option value='trending'>Tendencia</option>
         <option
           value={
             discover.filmsOrSeries === "films"
