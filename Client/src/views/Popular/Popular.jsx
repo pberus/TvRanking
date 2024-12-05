@@ -1,48 +1,63 @@
 import { useDispatch, useSelector } from "react-redux";
 import Cards from "../../components/Cards/cards";
 import { useEffect, useState } from "react";
-import {
-  getDiscoverFilms,
-  getDiscoverSeries,
-} from "../../redux/actions";
+import { getDiscoverFilms, getDiscoverSeries } from "../../redux/actions";
 
 const Popular = () => {
   const [discover, setDiscover] = useState({
     filmsOrSeries: "films",
-    order: "popularity",
+    sortBy: "popularity",
   });
   const dispatch = useDispatch();
+
+  console.log("sortBy: ", discover.sortBy);
 
   const discoverFilms = useSelector((state) => state.discoverFilms);
   const discoverSeries = useSelector((state) => state.discoverSeries);
 
   useEffect(() => {
     if (discover.filmsOrSeries === "films") {
-      dispatch(getDiscoverFilms());
+      dispatch(getDiscoverFilms(discover.sortBy));
     } else {
-      dispatch(getDiscoverSeries());
+      dispatch(getDiscoverSeries(discover.sortBy));
     }
   }, [dispatch, discover]);
+
+  const handleSort = (e) => {
+    e.preventDefault();
+    setDiscover({
+      ...discover,
+      sortBy: e.target.value,
+    });
+  };
 
   return (
     <div>
       <button
-        className={`btn ${discover.filmsOrSeries === "films" ? "btn-primary" : "btn-secondary"}`}
+        className={`btn ${
+          discover.filmsOrSeries === "films" ? "btn-primary" : "btn-secondary"
+        }`}
         disabled={discover.filmsOrSeries === "films"}
-        onClick={() => setDiscover({
+        onClick={() =>
+          setDiscover({
             ...discover,
-            filmsOrSeries: "films"
-        })}
+            filmsOrSeries: "films",
+          })
+        }
       >
         Peliculas
       </button>
       <button
-        className={`btn ${discover.filmsOrSeries === "series" ? "btn-primary" : "btn-secondary"}`}
+        className={`btn ${
+          discover.filmsOrSeries === "series" ? "btn-primary" : "btn-secondary"
+        }`}
         disabled={discover.filmsOrSeries === "series"}
-        onClick={() => setDiscover({
+        onClick={() =>
+          setDiscover({
             ...discover,
-            filmsOrSeries: "series"
-        })}
+            filmsOrSeries: "series",
+          })
+        }
       >
         Series
       </button>
@@ -69,47 +84,37 @@ const Popular = () => {
           </button>
         </div>
       </div>
-      <div className='dropdown'>
-        <button
-          className='btn btn-secondary dropdown-toggle'
-          type='button'
-          id='dropdownMenu2'
-          data-toggle='dropdown'
-          aria-haspopup='true'
-          aria-expanded='false'
-        >
+      <select
+        name='sortBy'
+        className='form-select'
+        aria-label='Default select example'
+        value={discover.sortBy}
+        onChange={handleSort}
+      >
+        <option value='' disabled>
           Ordenamientos
-        </button>
-        <div className='dropdown-menu' aria-labelledby='dropdownMenu2'>
-          <button className='dropdown-item' type='button'>
-            Popularidad
-          </button>
-          <button className='dropdown-item' type='button'>
-            Alfabético
-          </button>
-          <button className='dropdown-item' type='button'>
-            Año de lanzamiento
-          </button>
-          <button className='dropdown-item' type='button'>
-            Recaudación
-          </button>
-          <button className='dropdown-item' type='button'>
-            Calificación de TMDB 
-          </button>
-        </div>
-      </div>
+        </option>
+        <option value='popularity'>Popularidad</option>
+        <option
+          value={
+            discover.filmsOrSeries === "films"
+              ? "original_title"
+              : "original_name"
+          }
+        >
+          Alfabético
+        </option>
+        <option value='vote_average'>Calificación de TMDB</option>
+        {discover.filmsOrSeries === "films" ? (
+          <option value='revenue'>Recaudación</option>
+        ) : (
+          <option value='vote_count'>Cantidad de votos</option>
+        )}
+      </select>
       {discover.filmsOrSeries === "films" ? (
-        <>
-          {discoverFilms.length > 0 && (
-            <Cards tvArray={discoverFilms} />
-          )}
-        </>
+        <>{discoverFilms.length > 0 && <Cards tvArray={discoverFilms} />}</>
       ) : (
-        <>
-          {discoverSeries.length > 0 && (
-            <Cards tvArray={discoverSeries} />
-          )}
-        </>
+        <>{discoverSeries.length > 0 && <Cards tvArray={discoverSeries} />}</>
       )}
     </div>
   );

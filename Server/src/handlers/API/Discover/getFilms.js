@@ -2,7 +2,9 @@ const getApiDiscoverFilmsController = require("../../../controllers/API//Discove
 
 const getApiDiscoverFilmsHandler = async (req, res) => {
   try {
-    let films = await getApiDiscoverFilmsController();
+    const { sort_by } = req.query;
+
+    let films = await getApiDiscoverFilmsController(sort_by);
     films = films?.map(
       ({
         id,
@@ -18,7 +20,7 @@ const getApiDiscoverFilmsHandler = async (req, res) => {
         image: poster_path,
         year: release_date,
         rating: vote_average,
-        media_type: "movie"
+        media_type: "movie",
       })
     );
     return res.json(films);

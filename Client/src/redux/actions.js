@@ -133,10 +133,10 @@ export const getTopRatedSeries = () => {
 
 //GET DISCOVER
 
-export const getDiscoverFilms = () => {
+export const getDiscoverFilms = (sortBy) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios(`${URL}/discover/films`);
+      const { data } = await axios(`${URL}/discover/films?sort_by=${sortBy}`);
       return dispatch({
         type: GET_DISCOVER_FILMS,
         payload: data,
@@ -147,10 +147,10 @@ export const getDiscoverFilms = () => {
   };
 };
 
-export const getDiscoverSeries = () => {
+export const getDiscoverSeries = (sortBy) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios(`${URL}/discover/series`);
+      const { data } = await axios(`${URL}/discover/series?sort_by=${sortBy}`);
       return dispatch({
         type: GET_DISCOVER_SERIES,
         payload: data,
@@ -161,11 +161,11 @@ export const getDiscoverSeries = () => {
   };
 };
 
-export const getDiscoverTv = () => {
+export const getDiscoverTv = (sortBy) => {
   return async (dispatch) => {
     try {
-      const films = await axios(`${URL}/discover/films`);
-      const series = await axios(`${URL}/discover/series`);
+      const films = await axios(`${URL}/discover/films?sort_by=${sortBy}`);
+      const series = await axios(`${URL}/discover/series?sort_by=${sortBy}`);
       return dispatch({
         type: GET_DISCOVER_TV,
         payload: [...films.data, ...series.data],
