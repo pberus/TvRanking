@@ -2,9 +2,9 @@ const getApiDiscoverSeriesController = require("../../../controllers/API/Discove
 
 const getApiDiscoverSeriesHandler = async (req, res) => {
   try {
-    const { sort_by } = req.query;
+    const { sort_by, year_range } = req.query;
 
-    let series = await getApiDiscoverSeriesController(sort_by);
+    let series = await getApiDiscoverSeriesController(sort_by, year_range);
     series = series?.map(
       ({
         id,
@@ -18,7 +18,7 @@ const getApiDiscoverSeriesHandler = async (req, res) => {
         title: original_name,
         overview,
         image: poster_path,
-        year: first_air_date,
+        date: first_air_date,
         rating: vote_average,
         media_type: "tv",
       })

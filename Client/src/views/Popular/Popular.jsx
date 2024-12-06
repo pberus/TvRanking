@@ -1,13 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import Cards from "../../components/Cards/cards";
 import { useEffect, useState } from "react";
-import { getDiscoverFilms, getDiscoverSeries, removeTv } from "../../redux/actions";
+import {
+  getDiscoverFilms,
+  getDiscoverSeries,
+  removeTv,
+} from "../../redux/actions";
+import { YearRelease } from "../../components";
 
 const Popular = () => {
   const [discover, setDiscover] = useState({
     filmsOrSeries: "films",
     sortBy: "popularity",
+    yearRange: [],
   });
+
   const dispatch = useDispatch();
 
   const discoverFilms = useSelector((state) => state.discoverFilms);
@@ -15,11 +22,11 @@ const Popular = () => {
 
   useEffect(() => {
     if (discover.filmsOrSeries === "films") {
-      dispatch(getDiscoverFilms(discover.sortBy));
-      dispatch(removeTv("discoverSeries"))
+      dispatch(getDiscoverFilms(discover.sortBy, discover.yearRange));
+      dispatch(removeTv("discoverSeries"));
     } else {
-      dispatch(getDiscoverSeries(discover.sortBy));
-      dispatch(removeTv("discoverFilms"))
+      dispatch(getDiscoverSeries(discover.sortBy, discover.yearRange));
+      dispatch(removeTv("discoverFilms"));
     }
   }, [dispatch, discover]);
 
@@ -31,8 +38,16 @@ const Popular = () => {
     });
   };
 
+  const handleYearChange = (newRange) => {
+    setDiscover({
+      ...discover,
+      yearRange: newRange,
+    });
+  };
+
   return (
     <div>
+      {/* BOTONES DE PELICULAS Y SERIES */}
       <button
         className={`btn ${
           discover.filmsOrSeries === "films" ? "btn-primary" : "btn-secondary"
@@ -42,7 +57,7 @@ const Popular = () => {
           setDiscover({
             ...discover,
             filmsOrSeries: "films",
-            sortBy: "popularity"
+            sortBy: "popularity",
           })
         }
       >
@@ -57,33 +72,45 @@ const Popular = () => {
           setDiscover({
             ...discover,
             filmsOrSeries: "series",
-            sortBy: "popularity"
+            sortBy: "popularity",
           })
         }
       >
         Series
       </button>
-      <div className='dropdown'>
-        <button
-          className='btn btn-secondary dropdown-toggle'
-          type='button'
-          id='dropdownMenu2'
-          data-toggle='dropdown'
-          aria-haspopup='true'
-          aria-expanded='false'
-        >
-          Filtros
-        </button>
-        <div className='dropdown-menu' aria-labelledby='dropdownMenu2'>
-          <button className='dropdown-item' type='button'>
-            Action
+      {/* COLAPSO */}
+      <div>
+        <p className='d-inline-flex gap-1'>
+          <button
+            className='btn btn-primary'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#collapseExample'
+            aria-expanded='false'
+            aria-controls='collapseExample'
+          >
+            Filtros
           </button>
-          <button className='dropdown-item' type='button'>
-            Another action
-          </button>
-          <button className='dropdown-item' type='button'>
-            Something else here
-          </button>
+        </p>
+        <div className='collapse' id='collapseExample'>
+          <div className='card card-body'>
+            {/* DROPDOWNS */}
+            <div className='dropdown'>
+              <button
+                className='btn btn-secondary dropdown-toggle'
+                type='button'
+                data-bs-toggle='dropdown'
+                data-bs-auto-close='outside'
+                aria-expanded='false'
+              >
+                Año de lanzamiento
+              </button>
+              <div className='dropdown-menu'>
+                <p>Año de lanzamiento</p>
+                <YearRelease onYearChange={handleYearChange} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <select

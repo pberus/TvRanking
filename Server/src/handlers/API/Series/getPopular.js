@@ -16,7 +16,7 @@ const getApiPopularSeriesHandler = async (req, res) => {
         title: original_name,
         overview,
         image: poster_path,
-        year: first_air_date,
+        date: first_air_date,
         rating: vote_average,
       })
     );

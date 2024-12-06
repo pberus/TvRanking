@@ -133,10 +133,14 @@ export const getTopRatedSeries = () => {
 
 //GET DISCOVER
 
-export const getDiscoverFilms = (sortBy) => {
+export const getDiscoverFilms = (sortBy, yearRange) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios(`${URL}/discover/films?sort_by=${sortBy}`);
+      let discoverURL = `${URL}/discover/films?sort_by=${sortBy}`;
+
+      if (yearRange.length > 0) discoverURL += `&year_range=${yearRange}`;
+
+      const { data } = await axios(discoverURL);
       return dispatch({
         type: GET_DISCOVER_FILMS,
         payload: data,
@@ -147,10 +151,14 @@ export const getDiscoverFilms = (sortBy) => {
   };
 };
 
-export const getDiscoverSeries = (sortBy) => {
+export const getDiscoverSeries = (sortBy, yearRange) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios(`${URL}/discover/series?sort_by=${sortBy}`);
+      let discoverURL = `${URL}/discover/series?sort_by=${sortBy}`;
+
+      if (yearRange.length > 0) discoverURL += `&year_range=${yearRange}`;
+
+      const { data } = await axios(discoverURL);
       return dispatch({
         type: GET_DISCOVER_SERIES,
         payload: data,
@@ -181,9 +189,9 @@ export const getDiscoverTv = (sortBy) => {
 export const removeTv = (tv) => {
   return {
     type: REMOVE_TV,
-    payload: tv
-  }
-}
+    payload: tv,
+  };
+};
 
 //
 

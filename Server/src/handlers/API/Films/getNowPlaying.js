@@ -16,7 +16,7 @@ const getApiNowPlayingFilmsHandler = async (req, res) => {
         title: original_title,
         overview,
         image: poster_path,
-        year: release_date,
+        date: release_date,
         rating: vote_average,
       })
     );

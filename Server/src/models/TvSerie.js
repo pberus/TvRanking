@@ -22,13 +22,13 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      year: {
+      date: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       rating: {
         type: DataTypes.INTEGER,
-      }
+      },
     },
     { timestamps: false }
   );
