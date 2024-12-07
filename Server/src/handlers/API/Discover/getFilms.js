@@ -1,4 +1,4 @@
-const getApiDiscoverFilmsController = require("../../../controllers/API//Discover/getFilms");
+const getApiDiscoverFilmsController = require("../../../controllers/API/Discover/getFilms");
 
 const getApiDiscoverFilmsHandler = async (req, res) => {
   try {

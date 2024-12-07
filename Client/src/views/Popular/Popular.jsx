@@ -4,26 +4,38 @@ import { useEffect, useState } from "react";
 import {
   getDiscoverFilms,
   getDiscoverSeries,
+  getLenguages,
   removeTv,
 } from "../../redux/actions";
 import { YearRelease } from "../../components";
+import "./popular.css"
 
 const Popular = () => {
   const [discover, setDiscover] = useState({
     filmsOrSeries: "films",
     sortBy: "popularity",
     yearRange: [],
+    lenguage: ""
   });
+  const [activeIndex, setActiveIndex] = useState("");
+  console.log("activeIndex: ", activeIndex);
+  
 
   const dispatch = useDispatch();
 
   const discoverFilms = useSelector((state) => state.discoverFilms);
   const discoverSeries = useSelector((state) => state.discoverSeries);
 
+  const lenguages = useSelector((state) => state.lenguages)
+
+  useEffect(() => {
+    !lenguages.length && dispatch(getLenguages())    
+  }, [dispatch, lenguages])
+
   useEffect(() => {
     if (discover.filmsOrSeries === "films") {
       dispatch(getDiscoverFilms(discover.sortBy, discover.yearRange));
-      dispatch(removeTv("discoverSeries"));
+      dispatch(removeTv("discoverSeries"));      
     } else {
       dispatch(getDiscoverSeries(discover.sortBy, discover.yearRange));
       dispatch(removeTv("discoverFilms"));
@@ -44,6 +56,11 @@ const Popular = () => {
       yearRange: newRange,
     });
   };
+
+  const handleLenguage = (index) => {
+    setActiveIndex(index)
+    setDiscover({...discover, lenguage: index})
+  }
 
   return (
     <div>
@@ -106,9 +123,33 @@ const Popular = () => {
                 Año de lanzamiento
               </button>
               <div className='dropdown-menu'>
-                <p>Año de lanzamiento</p>
+                <span className='dropdown-item-text'>Año de lanzamiento</span>
+                <hr className='dropdown-divider' />
                 <YearRelease onYearChange={handleYearChange} />
               </div>
+
+              <button
+                className='btn btn-secondary dropdown-toggle'
+                type='button'
+                data-bs-toggle='dropdown'
+                data-bs-auto-close='outside'
+                aria-expanded='false'
+              >
+                Idioma original
+              </button>
+              <ul className='dropdown-menu'>
+                <li>
+                  <span className='dropdown-item-text'>Idioma original</span>
+                  <hr className='dropdown-divider' />
+                </li>
+                {lenguages?.map((len) => (
+                  <li key={len.iso}>
+                    <button className={`dropdown-item ${activeIndex === len.iso && "active"}`} aria-current={activeIndex === len.iso ? "true" : "false"} onClick={() => handleLenguage(len.iso)}>{len.name}</button>  
+                  </li>
+                ))}
+                <li>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

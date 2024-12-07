@@ -1,0 +1,4 @@
+.dropdown-menu {
+    max-height: 400px; /* Ajusta según el tamaño que prefieras */
+    overflow-y: auto;  /* Habilita el scroll cuando los elementos excedan el límite de altura */
+  }

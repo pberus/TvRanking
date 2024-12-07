@@ -3,6 +3,7 @@ import {
   GET_DISCOVER_FILMS,
   GET_DISCOVER_SERIES,
   GET_DISCOVER_TV,
+  GET_LENGUAGES,
   GET_NOW_PLAYING_FILMS,
   GET_ON_THE_AIR_SERIES,
   GET_POPULAR_FILMS,
@@ -29,6 +30,8 @@ const initialState = {
   discoverFilms: [],
   discoverSeries: [],
   discoverTv: [],
+  //LENGUAGES
+  lenguages: [],
   //
   miTv: [],
   tvDetail: {},
@@ -95,11 +98,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
         discoverTv: payload,
       };
     //REMOVE TV
-      case REMOVE_TV:
-        return {
-          ...state,
-          [payload]: [],
-        }
+    case REMOVE_TV:
+      return {
+        ...state,
+        [payload]: [],
+      };
+    //LENGUAGES
+    case GET_LENGUAGES:
+      return {
+        ...state,
+        lenguages: payload,
+      };
     //
     case SEARCH_TV:
       return {
