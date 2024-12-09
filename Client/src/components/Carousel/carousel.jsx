@@ -5,13 +5,37 @@ import style from "./carousel.module.css";
 const Carousel = ({ tvArray, position }) => {
   return (
     <div className={style.color}>
-      <div
-        id={`carouselExampleControls${position}`}
-        className='carousel slide'
-        data-ride='carousel'
-      >
+      <div id={`carouselExampleIndicators${position}`} className='carousel slide'>
+        <div className='carousel-indicators'>
+          <button
+            type='button'
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to='0'
+            className='active'
+            aria-current='true'
+            aria-label='Slide 1'
+          ></button>
+          <button
+            type='button'
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to='1'
+            aria-label='Slide 2'
+          ></button>
+          <button
+            type='button'
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to='2'
+            aria-label='Slide 3'
+          ></button>
+          <button
+            type='button'
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to='3'
+            aria-label='Slide 4'
+          ></button>
+        </div>
         <div className='carousel-inner'>
-          <div className="carousel-item active">
+          <div className='carousel-item active'>
             <div className='row'>
               {tvArray.slice(0, 5).map((tv) => (
                 <div key={tv.id} className={`col ${style.card}`}>
@@ -20,7 +44,7 @@ const Carousel = ({ tvArray, position }) => {
               ))}
             </div>
           </div>
-          <div className="carousel-item">
+          <div className='carousel-item'>
             <div className='row'>
               {tvArray.slice(5, 10).map((tv) => (
                 <div key={tv.id} className={`col ${style.card}`}>
@@ -29,7 +53,7 @@ const Carousel = ({ tvArray, position }) => {
               ))}
             </div>
           </div>
-          <div className="carousel-item">
+          <div className='carousel-item'>
             <div className='row'>
               {tvArray.slice(10, 15).map((tv) => (
                 <div key={tv.id} className={`col ${style.card}`}>
@@ -38,7 +62,7 @@ const Carousel = ({ tvArray, position }) => {
               ))}
             </div>
           </div>
-          <div className="carousel-item">
+          <div className='carousel-item'>
             <div className='row'>
               {tvArray.slice(15, 20).map((tv) => (
                 <div key={tv.id} className={`col ${style.card}`}>
@@ -48,30 +72,30 @@ const Carousel = ({ tvArray, position }) => {
             </div>
           </div>
         </div>
-        <a
+        <button
           className='carousel-control-prev'
-          href={`#carouselExampleControls${position}`}
-          role='button'
-          data-slide='prev'
+          type='button'
+          data-bs-target={`#carouselExampleIndicators${position}`}
+          data-bs-slide='prev'
         >
           <span
             className='carousel-control-prev-icon'
             aria-hidden='true'
           ></span>
-          <span className='sr-only'>Previous</span>
-        </a>
-        <a
+          <span className='visually-hidden'>Previous</span>
+        </button>
+        <button
           className='carousel-control-next'
-          href={`#carouselExampleControls${position}`}
-          role='button'
-          data-slide='next'
+          type='button'
+          data-bs-target={`#carouselExampleIndicators${position}`}
+          data-bs-slide='next'
         >
           <span
             className='carousel-control-next-icon'
             aria-hidden='true'
           ></span>
-          <span className='sr-only'>Next</span>
-        </a>
+          <span className='visually-hidden'>Next</span>
+        </button>
       </div>
     </div>
   );
@@ -79,7 +103,7 @@ const Carousel = ({ tvArray, position }) => {
 
 Carousel.propTypes = {
   tvArray: PropTypes.array.isRequired,
-  position: PropTypes.string.isRequired
+  position: PropTypes.string.isRequired,
 };
 
 export default Carousel;
