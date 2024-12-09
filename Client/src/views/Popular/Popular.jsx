@@ -8,7 +8,7 @@ import {
   removeTv,
 } from "../../redux/actions";
 import { YearRelease } from "../../components";
-import "./popular.css";
+import style from "./popular.module.css";
 
 const Popular = () => {
   const [discover, setDiscover] = useState({
@@ -18,13 +18,15 @@ const Popular = () => {
     lenguage: "",
   });
   const [activeIndex, setActiveIndex] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [resetYear, setResetYear] = useState(false);
 
   const dispatch = useDispatch();
 
   const discoverFilms = useSelector((state) => state.discoverFilms);
   const discoverSeries = useSelector((state) => state.discoverSeries);
 
-  const lenguages = useSelector((state) => state.lenguages);
+  let lenguages = useSelector((state) => state.lenguages);
 
   useEffect(() => {
     !lenguages.length && dispatch(getLenguages());
@@ -40,6 +42,7 @@ const Popular = () => {
     }
   }, [dispatch, discover]);
 
+  //sort
   const handleSort = (e) => {
     e.preventDefault();
     setDiscover({
@@ -48,6 +51,7 @@ const Popular = () => {
     });
   };
 
+  //yearRelease
   const handleYearChange = (newRange) => {
     setDiscover({
       ...discover,
@@ -55,10 +59,28 @@ const Popular = () => {
     });
   };
 
+  //lenguages
   const handleLenguage = (index) => {
     setActiveIndex(index);
     setDiscover({ ...discover, lenguage: index });
   };
+
+  const filteredLenguages = lenguages?.filter((len) =>
+    len.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );  
+
+  const handleChangeInputLenguage = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleResetLenguage = () => {
+    setDiscover({
+      ...discover,
+      lenguage: ""
+    })
+    setActiveIndex("")
+    setSearchTerm("")
+  }
 
   return (
     <div>
@@ -120,10 +142,13 @@ const Popular = () => {
               >
                 Año de lanzamiento
               </button>
-              <div className='dropdown-menu'>
-                <span className='dropdown-item-text'>Año de lanzamiento</span>
+              <div className={`dropdown-menu ${style.yearRelease}`}>
+                <div className={style.header}>
+                  <span className='dropdown-item-text'>Año de lanzamiento</span>
+                  <button onClick={() => setResetYear(true)}>X</button>
+                </div>
                 <hr className='dropdown-divider' />
-                <YearRelease onYearChange={handleYearChange} />
+                <YearRelease onYearChange={handleYearChange} reset={resetYear} setReset={setResetYear} />
               </div>
 
               <button
@@ -135,25 +160,41 @@ const Popular = () => {
               >
                 Idioma original
               </button>
-              <ul className='dropdown-menu'>
-                <li>
-                  <span className='dropdown-item-text'>Idioma original</span>
-                  <hr className='dropdown-divider' />
+              <ul className={`dropdown-menu ${style.lenguages}`}>
+                <li className={style.search}>
+                  <span className='dropdown-item-text w-auto'>
+                    Idioma original
+                  </span>
+                  <input
+                    className='form-control w-auto'
+                    type='text'
+                    placeholder='Search'
+                    aria-label='Search'
+                    onChange={handleChangeInputLenguage}
+                    value={searchTerm}
+                  />
+                  <button onClick={handleResetLenguage}>X</button>
                 </li>
-                {lenguages?.map((len) => (
-                  <li key={len.iso}>
-                    <button
-                      className={`dropdown-item ${
-                        activeIndex === len.iso && "active"
-                      }`}
-                      aria-current={activeIndex === len.iso ? "true" : "false"}
-                      onClick={() => handleLenguage(len.iso)}
-                    >
-                      {len.name}
-                    </button>
-                  </li>
-                ))}
-                <li></li>
+                <hr className='dropdown-divider' />
+                {filteredLenguages.length > 0 ? (
+                  filteredLenguages.map((len) => (
+                    <li key={len.iso}>
+                      <button
+                        className={`dropdown-item ${
+                          activeIndex === len.iso && "active"
+                        }`}
+                        aria-current={
+                          activeIndex === len.iso ? "true" : "false"
+                        }
+                        onClick={() => handleLenguage(len.iso)}
+                      >
+                        {len.name}
+                      </button>
+                    </li>
+                  ))
+                ) : (
+                  <li>No hay resultados</li>
+                )}
               </ul>
             </div>
           </div>

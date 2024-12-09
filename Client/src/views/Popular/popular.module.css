@@ -1,0 +1,19 @@
+.yearRelease .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.lenguages {
+    max-height: 400px; /* Ajusta según el tamaño que prefieras */
+    overflow-y: auto;  /* Habilita el scroll cuando los elementos excedan el límite de altura */
+    width: 400px;
+  }
+
+.lenguages .search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 380px;
+}
