@@ -134,12 +134,13 @@ export const getTopRatedSeries = () => {
 
 //GET DISCOVER
 
-export const getDiscoverFilms = (sortBy, yearRange) => {
+export const getDiscoverFilms = ({ sortBy, yearRange, lenguage }) => {
   return async (dispatch) => {
     try {
       let discoverURL = `${URL}/discover/films?sort_by=${sortBy}`;
 
       if (yearRange.length > 0) discoverURL += `&year_range=${yearRange}`;
+      if (lenguage) discoverURL += `&lenguage=${lenguage}`;
 
       const { data } = await axios(discoverURL);
       return dispatch({
@@ -152,12 +153,13 @@ export const getDiscoverFilms = (sortBy, yearRange) => {
   };
 };
 
-export const getDiscoverSeries = (sortBy, yearRange) => {
+export const getDiscoverSeries = ({ sortBy, yearRange, lenguage }) => {
   return async (dispatch) => {
     try {
       let discoverURL = `${URL}/discover/series?sort_by=${sortBy}`;
 
       if (yearRange.length > 0) discoverURL += `&year_range=${yearRange}`;
+      if (lenguage) discoverURL += `&lenguage=${lenguage}`;
 
       const { data } = await axios(discoverURL);
       return dispatch({
@@ -198,8 +200,8 @@ export const removeTv = (tv) => {
 
 export const getLenguages = () => {
   return async (dispatch) => {
-    try {      
-      const {data} = await axios(`${URL}/lenguages`);      
+    try {
+      const { data } = await axios(`${URL}/lenguages`);
       return dispatch({
         type: GET_LENGUAGES,
         payload: data,

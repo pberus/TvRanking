@@ -8,36 +8,34 @@ import {
   removeTv,
 } from "../../redux/actions";
 import { YearRelease } from "../../components";
-import "./popular.css"
+import "./popular.css";
 
 const Popular = () => {
   const [discover, setDiscover] = useState({
     filmsOrSeries: "films",
     sortBy: "popularity",
     yearRange: [],
-    lenguage: ""
+    lenguage: "",
   });
   const [activeIndex, setActiveIndex] = useState("");
-  console.log("activeIndex: ", activeIndex);
-  
 
   const dispatch = useDispatch();
 
   const discoverFilms = useSelector((state) => state.discoverFilms);
   const discoverSeries = useSelector((state) => state.discoverSeries);
 
-  const lenguages = useSelector((state) => state.lenguages)
+  const lenguages = useSelector((state) => state.lenguages);
 
   useEffect(() => {
-    !lenguages.length && dispatch(getLenguages())    
-  }, [dispatch, lenguages])
+    !lenguages.length && dispatch(getLenguages());
+  }, [dispatch, lenguages]);
 
   useEffect(() => {
     if (discover.filmsOrSeries === "films") {
-      dispatch(getDiscoverFilms(discover.sortBy, discover.yearRange));
-      dispatch(removeTv("discoverSeries"));      
+      dispatch(getDiscoverFilms(discover));
+      dispatch(removeTv("discoverSeries"));
     } else {
-      dispatch(getDiscoverSeries(discover.sortBy, discover.yearRange));
+      dispatch(getDiscoverSeries(discover));
       dispatch(removeTv("discoverFilms"));
     }
   }, [dispatch, discover]);
@@ -58,9 +56,9 @@ const Popular = () => {
   };
 
   const handleLenguage = (index) => {
-    setActiveIndex(index)
-    setDiscover({...discover, lenguage: index})
-  }
+    setActiveIndex(index);
+    setDiscover({ ...discover, lenguage: index });
+  };
 
   return (
     <div>
@@ -144,11 +142,18 @@ const Popular = () => {
                 </li>
                 {lenguages?.map((len) => (
                   <li key={len.iso}>
-                    <button className={`dropdown-item ${activeIndex === len.iso && "active"}`} aria-current={activeIndex === len.iso ? "true" : "false"} onClick={() => handleLenguage(len.iso)}>{len.name}</button>  
+                    <button
+                      className={`dropdown-item ${
+                        activeIndex === len.iso && "active"
+                      }`}
+                      aria-current={activeIndex === len.iso ? "true" : "false"}
+                      onClick={() => handleLenguage(len.iso)}
+                    >
+                      {len.name}
+                    </button>
                   </li>
                 ))}
-                <li>
-                </li>
+                <li></li>
               </ul>
             </div>
           </div>

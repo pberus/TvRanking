@@ -2,9 +2,13 @@ const getApiDiscoverFilmsController = require("../../../controllers/API/Discover
 
 const getApiDiscoverFilmsHandler = async (req, res) => {
   try {
-    const { sort_by, year_range } = req.query;
+    const { sort_by, year_range, lenguage } = req.query;
 
-    let films = await getApiDiscoverFilmsController(sort_by, year_range);
+    let films = await getApiDiscoverFilmsController(
+      sort_by,
+      year_range,
+      lenguage
+    );
     films = films?.map(
       ({
         id,
