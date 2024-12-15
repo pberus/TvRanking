@@ -3,6 +3,7 @@ import {
   GET_DISCOVER_FILMS,
   GET_DISCOVER_SERIES,
   GET_DISCOVER_TV,
+  GET_GENRES,
   GET_LENGUAGES,
   GET_NOW_PLAYING_FILMS,
   GET_ON_THE_AIR_SERIES,
@@ -32,6 +33,8 @@ const initialState = {
   discoverTv: [],
   //LENGUAGES
   lenguages: [],
+  //GENRES
+  genres: {},
   //
   miTv: [],
   tvDetail: {},
@@ -108,6 +111,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         lenguages: payload,
+      };
+    //GENRES
+    case GET_GENRES:
+      return {
+        ...state,
+        genres: payload,
       };
     //
     case SEARCH_TV:

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   getDiscoverFilms,
   getDiscoverSeries,
+  getGenres,
   getLenguages,
   removeTv,
 } from "../../redux/actions";
@@ -17,9 +18,10 @@ const Popular = () => {
     yearRange: [],
     lenguage: "",
   });
-  const [activeIndex, setActiveIndex] = useState("");
+  const [activeLenguage, setActiveLenguage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [resetYear, setResetYear] = useState(false);
+  const [activeGenre, setActiveGenre] = useState("");
 
   const dispatch = useDispatch();
 
@@ -27,10 +29,12 @@ const Popular = () => {
   const discoverSeries = useSelector((state) => state.discoverSeries);
 
   let lenguages = useSelector((state) => state.lenguages);
+  let {films, series} =  useSelector((state) => state.genres)   
 
   useEffect(() => {
-    !lenguages.length && dispatch(getLenguages());
-  }, [dispatch, lenguages]);
+    dispatch(getLenguages());
+    dispatch(getGenres());   
+  }, [dispatch]);
 
   useEffect(() => {
     if (discover.filmsOrSeries === "films") {
@@ -61,7 +65,7 @@ const Popular = () => {
 
   //lenguages
   const handleLenguage = (index) => {
-    setActiveIndex(index);
+    setActiveLenguage(index);
     setDiscover({ ...discover, lenguage: index });
   };
 
@@ -78,8 +82,13 @@ const Popular = () => {
       ...discover,
       lenguage: "",
     });
-    setActiveIndex("");
+    setActiveLenguage("");
     setSearchTerm("");
+  };
+
+  //genres
+  const handleGenre = (index) => {
+    setActiveGenre(index);
   };
 
   return (
@@ -174,6 +183,7 @@ const Popular = () => {
         <div className='card card-body'>
           {/* DROPDOWNS */}
           <div className='dropdown d-flex gap-3'>
+            {/* year release */}
             <button
               className='btn btn-secondary dropdown-toggle'
               type='button'
@@ -195,7 +205,7 @@ const Popular = () => {
                 setReset={setResetYear}
               />
             </div>
-
+            {/* lenguages */}
             <button
               className='btn btn-secondary dropdown-toggle'
               type='button'
@@ -226,9 +236,9 @@ const Popular = () => {
                   <li key={len.iso}>
                     <button
                       className={`dropdown-item ${
-                        activeIndex === len.iso && "active"
+                        activeLenguage === len.iso && "active"
                       }`}
-                      aria-current={activeIndex === len.iso ? "true" : "false"}
+                      aria-current={activeLenguage === len.iso ? "true" : "false"}
                       onClick={() => handleLenguage(len.iso)}
                     >
                       {len.name}
@@ -237,6 +247,54 @@ const Popular = () => {
                 ))
               ) : (
                 <li>No hay resultados</li>
+              )}
+            </ul>
+            {/* genres */}
+            <button
+              className='btn btn-secondary dropdown-toggle'
+              type='button'
+              data-bs-toggle='dropdown'
+              data-bs-auto-close='outside'
+              aria-expanded='false'
+            >
+              Generos
+            </button>
+            <ul className={`dropdown-menu ${style.lenguages}`}>
+              <li className={style.search}>
+                <span className='dropdown-item-text w-auto'>
+                  Generos
+                </span>
+                <button onClick={handleResetLenguage}>X</button>
+              </li>
+              <hr className='dropdown-divider' />
+              {discover.filmsOrSeries === "films" ? (
+                films?.map((gen) => (
+                  <li key={gen.id}>
+                    <button
+                      className={`dropdown-item ${
+                        activeGenre === gen.id && "active"
+                      }`}
+                      aria-current={activeGenre === gen.id ? "true" : "false"}
+                      onClick={() => handleGenre(gen.id)}
+                    >
+                      {gen.name}
+                    </button>
+                  </li>
+                ))
+              ) : (
+                series?.map((gen) => (
+                  <li key={gen.id}>
+                    <button
+                      className={`dropdown-item ${
+                        activeGenre === gen.id && "active"
+                      }`}
+                      aria-current={activeGenre === gen.id ? "true" : "false"}
+                      onClick={() => handleGenre(gen.id)}
+                    >
+                      {gen.name}
+                    </button>
+                  </li>
+                ))
               )}
             </ul>
           </div>

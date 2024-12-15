@@ -14,6 +14,7 @@ export const GET_DISCOVER_SERIES = "GET_DISCOVER_SERIES";
 export const GET_DISCOVER_TV = "GET_DISCOVER_TV";
 export const REMOVE_TV = "REMOVE_TV";
 export const GET_LENGUAGES = "GET_LENGUAGES";
+export const GET_GENRES = "GET_GENRES";
 
 const URL = "http://localhost:3001";
 
@@ -204,6 +205,22 @@ export const getLenguages = () => {
       const { data } = await axios(`${URL}/lenguages`);
       return dispatch({
         type: GET_LENGUAGES,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+//GET LENGUAGES
+
+export const getGenres = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/genres`);
+      return dispatch({
+        type: GET_GENRES,
         payload: data,
       });
     } catch (error) {
