@@ -1,3 +1,25 @@
+.popular {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav .filmsSeriesButtons {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.nav .ordeFiltButtons {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
 .yearRelease .header {
   display: flex;
   justify-content: space-between;
@@ -6,10 +28,10 @@
 }
 
 .lenguages {
-    max-height: 400px; /* Ajusta según el tamaño que prefieras */
-    overflow-y: auto;  /* Habilita el scroll cuando los elementos excedan el límite de altura */
-    width: 400px;
-  }
+  max-height: 400px; /* Ajusta según el tamaño que prefieras */
+  overflow-y: auto; /* Habilita el scroll cuando los elementos excedan el límite de altura */
+  width: 400px;
+}
 
 .lenguages .search {
   display: flex;
