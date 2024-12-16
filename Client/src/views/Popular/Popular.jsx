@@ -105,6 +105,31 @@ const Popular = () => {
     }
   };
 
+  const handleResetGenres = () => {
+    setDiscover({
+      ...discover,
+      genres: [],
+    });
+    setActiveGenres([]);
+    console.log("se aplico reset genres");
+  };
+
+  //all filters
+  const handleResetAll = (mediaType) => {
+    setDiscover({
+      ...discover,
+      filmsOrSeries: mediaType,
+      sortBy: "popularity",
+      yearRange: [],
+      lenguage: "",
+      genres: [],
+    })
+    setResetYear(true)
+    setActiveLenguage("")
+    setSearchTerm("")
+    setActiveGenres([])
+  };
+
   return (
     <div className={style.popular}>
       <div className={style.nav}>
@@ -117,13 +142,7 @@ const Popular = () => {
                 : "btn-secondary"
             }`}
             disabled={discover.filmsOrSeries === "films"}
-            onClick={() =>
-              setDiscover({
-                ...discover,
-                filmsOrSeries: "films",
-                sortBy: "popularity",
-              })
-            }
+            onClick={() => handleResetAll("films")}
           >
             Peliculas
           </button>
@@ -134,13 +153,7 @@ const Popular = () => {
                 : "btn-secondary"
             }`}
             disabled={discover.filmsOrSeries === "series"}
-            onClick={() =>
-              setDiscover({
-                ...discover,
-                filmsOrSeries: "series",
-                sortBy: "popularity",
-              })
-            }
+            onClick={() => handleResetAll("series")}
           >
             Series
           </button>
@@ -229,7 +242,7 @@ const Popular = () => {
             >
               Idioma original
             </button>
-            <ul className={`dropdown-menu ${style.lenguages}`}>
+            <ul className={`dropdown-menu ${style.dropdownList}`}>
               <li className={style.search}>
                 <span className='dropdown-item-text w-auto'>
                   Idioma original
@@ -275,51 +288,58 @@ const Popular = () => {
             >
               Generos
             </button>
-            <ul className={`dropdown-menu ${style.lenguages}`}>
+            <ul className={`dropdown-menu ${style.dropdownList}`}>
               <li className={style.search}>
                 <span className='dropdown-item-text w-auto'>Generos</span>
-                <button onClick={handleResetLenguage}>X</button>
+                <button onClick={handleResetGenres}>X</button>
               </li>
               <hr className='dropdown-divider' />
-              {discover.filmsOrSeries === "films"
-                ? films?.map((gen) => (
-                    <li key={gen.id}>
-                      <button
-                        className={`dropdown-item ${
-                          activeGenres.some((active) => active === gen.id)
-                            ? "active"
-                            : ""
-                        }`}
-                        aria-current={
-                          activeGenres.some((active) => active === gen.id)
-                            ? "true"
-                            : "false"
-                        }
-                        onClick={() => handleGenres(gen.id)}
-                      >
-                        {gen.name}
-                      </button>
-                    </li>
-                  ))
-                : series?.map((gen) => (
-                    <li key={gen.id}>
-                      <button
-                        className={`dropdown-item ${
-                          activeGenres.some((active) => active === gen.id)
-                            ? "active"
-                            : ""
-                        }`}
-                        aria-current={
-                          activeGenres.some((active) => active === gen.id)
-                            ? "active"
-                            : "false"
-                        }
-                        onClick={() => handleGenres(gen.id)}
-                      >
-                        {gen.name}
-                      </button>
-                    </li>
-                  ))}
+              <div className='row'>
+                {discover.filmsOrSeries === "films"
+                  ? films?.map((gen) => (
+                      <div className='col-6' key={gen.id}>
+                        <li>
+                          <button
+                            className={`dropdown-item
+                              ${
+                                activeGenres.some((active) => active === gen.id)
+                                  ? "active"
+                                  : ""
+                              }`}
+                            aria-current={
+                              activeGenres.some((active) => active === gen.id)
+                                ? "true"
+                                : "false"
+                            }
+                            onClick={() => handleGenres(gen.id)}
+                          >
+                            {gen.name}
+                          </button>
+                        </li>
+                      </div>
+                    ))
+                  : series?.map((gen) => (
+                      <div className='col-6' key={gen.id}>
+                        <li>
+                          <button
+                            className={`dropdown-item ${
+                              activeGenres.some((active) => active === gen.id)
+                                ? "active"
+                                : ""
+                            }`}
+                            aria-current={
+                              activeGenres.some((active) => active === gen.id)
+                                ? "true"
+                                : "false"
+                            }
+                            onClick={() => handleGenres(gen.id)}
+                          >
+                            {gen.name}
+                          </button>
+                        </li>
+                      </div>
+                    ))}
+              </div>
             </ul>
           </div>
         </div>
