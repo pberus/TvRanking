@@ -175,6 +175,15 @@ const Popular = () => {
             <option
               value={
                 discover.filmsOrSeries === "films"
+                  ? "primary_release_date"
+                  : "first_air_date"
+              }
+            >
+              Fecha de lanzamiento
+            </option>
+            <option
+              value={
+                discover.filmsOrSeries === "films"
                   ? "original_title"
                   : "original_name"
               }
