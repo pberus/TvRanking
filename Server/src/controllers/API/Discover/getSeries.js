@@ -8,11 +8,12 @@ const getApiDiscoverSeriesController = async (
   sortBy,
   yearRange,
   lenguage,
-  genres
+  genres,
+  runtime
 ) => {
   let discoverURL = SERIES_URL;
 
-  if (sortBy === "trending" && !yearRange && !lenguage && !genres)
+  if (sortBy === "trending" && !yearRange && !lenguage && !genres && !runtime)
     discoverURL = TRENDING_URL;
   else {
     discoverURL += `&page=1`;
@@ -33,6 +34,11 @@ const getApiDiscoverSeriesController = async (
     if (genres) {
       genres = genres.replace(new RegExp(",", "g"), "%2C");
       discoverURL += `&with_genres=${genres}`;
+    }
+
+    if (runtime) {
+      const [startTime, endTime] = runtime.split(",");
+      discoverURL += `&with_runtime.gte=${startTime}&with_runtime.lte=${endTime}`;
     }
   }
   const { data } = await axios(discoverURL);

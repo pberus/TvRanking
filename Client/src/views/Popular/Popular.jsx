@@ -8,7 +8,7 @@ import {
   getLenguages,
   removeTv,
 } from "../../redux/actions";
-import { YearRelease } from "../../components";
+import { Runtime, YearRelease } from "../../components";
 import style from "./popular.module.css";
 
 const Popular = () => {
@@ -18,11 +18,13 @@ const Popular = () => {
     yearRange: [],
     lenguage: "",
     genres: [],
+    runtime: [],
   });
   const [resetYear, setResetYear] = useState(false);
   const [activeLenguage, setActiveLenguage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [activeGenres, setActiveGenres] = useState([]);
+  const [resetRuntime, setResetRuntime] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -114,6 +116,15 @@ const Popular = () => {
     console.log("se aplico reset genres");
   };
 
+  //runtime
+
+  const handleRuntimeChange = (newRange) => {
+    setDiscover({
+      ...discover,
+      runtime: newRange,
+    });
+  };
+
   //all filters
   const handleResetAll = (mediaType) => {
     setDiscover({
@@ -123,11 +134,13 @@ const Popular = () => {
       yearRange: [],
       lenguage: "",
       genres: [],
-    })
-    setResetYear(true)
-    setActiveLenguage("")
-    setSearchTerm("")
-    setActiveGenres([])
+      runtime: [],
+    });
+    setResetYear(true);
+    setActiveLenguage("");
+    setSearchTerm("");
+    setActiveGenres([]);
+    setResetRuntime(true);
   };
 
   return (
@@ -229,7 +242,7 @@ const Popular = () => {
             >
               Año de lanzamiento
             </button>
-            <div className={`dropdown-menu ${style.yearRelease}`}>
+            <div className='dropdown-menu'>
               <div className={style.header}>
                 <span className='dropdown-item-text'>Año de lanzamiento</span>
                 <button onClick={() => setResetYear(true)}>X</button>
@@ -350,6 +363,33 @@ const Popular = () => {
                     ))}
               </div>
             </ul>
+            {/* runtime */}
+            <button
+              className='btn btn-secondary dropdown-toggle'
+              type='button'
+              data-bs-toggle='dropdown'
+              data-bs-auto-close='outside'
+              aria-expanded='false'
+            >
+              Duración
+            </button>
+            <div className='dropdown-menu'>
+              <div className={style.header}>
+                <span className='dropdown-item-text'>
+                  {discover.filmsOrSeries === "films"
+                    ? "Duración total"
+                    : "Duración promedio de los episodios"}
+                </span>
+                <button onClick={() => setResetRuntime(true)}>X</button>
+              </div>
+              <hr className='dropdown-divider' />
+              <Runtime
+                filmsOrSeries={discover.filmsOrSeries}
+                onRuntimeChange={handleRuntimeChange}
+                reset={resetRuntime}
+                setReset={setResetRuntime}
+              />
+            </div>
           </div>
         </div>
       </div>
