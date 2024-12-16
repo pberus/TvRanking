@@ -17,11 +17,12 @@ const Popular = () => {
     sortBy: "popularity",
     yearRange: [],
     lenguage: "",
+    genres: [],
   });
+  const [resetYear, setResetYear] = useState(false);
   const [activeLenguage, setActiveLenguage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [resetYear, setResetYear] = useState(false);
-  const [activeGenre, setActiveGenre] = useState("");
+  const [activeGenres, setActiveGenres] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -29,11 +30,11 @@ const Popular = () => {
   const discoverSeries = useSelector((state) => state.discoverSeries);
 
   let lenguages = useSelector((state) => state.lenguages);
-  let {films, series} =  useSelector((state) => state.genres)   
+  let { films, series } = useSelector((state) => state.genres);
 
   useEffect(() => {
     dispatch(getLenguages());
-    dispatch(getGenres());   
+    dispatch(getGenres());
   }, [dispatch]);
 
   useEffect(() => {
@@ -87,8 +88,21 @@ const Popular = () => {
   };
 
   //genres
-  const handleGenre = (index) => {
-    setActiveGenre(index);
+  const handleGenres = (index) => {
+    if (activeGenres.includes(index)) {
+      let filteredGenres = activeGenres.filter((gen) => gen !== index);
+      setDiscover({
+        ...discover,
+        genres: filteredGenres,
+      });
+      setActiveGenres(filteredGenres);
+    } else {
+      setDiscover({
+        ...discover,
+        genres: [...activeGenres, index],
+      });
+      setActiveGenres([...activeGenres, index]);
+    }
   };
 
   return (
@@ -238,7 +252,9 @@ const Popular = () => {
                       className={`dropdown-item ${
                         activeLenguage === len.iso && "active"
                       }`}
-                      aria-current={activeLenguage === len.iso ? "true" : "false"}
+                      aria-current={
+                        activeLenguage === len.iso ? "true" : "false"
+                      }
                       onClick={() => handleLenguage(len.iso)}
                     >
                       {len.name}
@@ -261,41 +277,49 @@ const Popular = () => {
             </button>
             <ul className={`dropdown-menu ${style.lenguages}`}>
               <li className={style.search}>
-                <span className='dropdown-item-text w-auto'>
-                  Generos
-                </span>
+                <span className='dropdown-item-text w-auto'>Generos</span>
                 <button onClick={handleResetLenguage}>X</button>
               </li>
               <hr className='dropdown-divider' />
-              {discover.filmsOrSeries === "films" ? (
-                films?.map((gen) => (
-                  <li key={gen.id}>
-                    <button
-                      className={`dropdown-item ${
-                        activeGenre === gen.id && "active"
-                      }`}
-                      aria-current={activeGenre === gen.id ? "true" : "false"}
-                      onClick={() => handleGenre(gen.id)}
-                    >
-                      {gen.name}
-                    </button>
-                  </li>
-                ))
-              ) : (
-                series?.map((gen) => (
-                  <li key={gen.id}>
-                    <button
-                      className={`dropdown-item ${
-                        activeGenre === gen.id && "active"
-                      }`}
-                      aria-current={activeGenre === gen.id ? "true" : "false"}
-                      onClick={() => handleGenre(gen.id)}
-                    >
-                      {gen.name}
-                    </button>
-                  </li>
-                ))
-              )}
+              {discover.filmsOrSeries === "films"
+                ? films?.map((gen) => (
+                    <li key={gen.id}>
+                      <button
+                        className={`dropdown-item ${
+                          activeGenres.some((active) => active === gen.id)
+                            ? "active"
+                            : ""
+                        }`}
+                        aria-current={
+                          activeGenres.some((active) => active === gen.id)
+                            ? "true"
+                            : "false"
+                        }
+                        onClick={() => handleGenres(gen.id)}
+                      >
+                        {gen.name}
+                      </button>
+                    </li>
+                  ))
+                : series?.map((gen) => (
+                    <li key={gen.id}>
+                      <button
+                        className={`dropdown-item ${
+                          activeGenres.some((active) => active === gen.id)
+                            ? "active"
+                            : ""
+                        }`}
+                        aria-current={
+                          activeGenres.some((active) => active === gen.id)
+                            ? "active"
+                            : "false"
+                        }
+                        onClick={() => handleGenres(gen.id)}
+                      >
+                        {gen.name}
+                      </button>
+                    </li>
+                  ))}
             </ul>
           </div>
         </div>

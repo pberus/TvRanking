@@ -4,10 +4,15 @@ const { API_KEY } = process.env;
 const FILMS_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&include_video=false&language=en-US`;
 const TRENDING_URL = `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}&language=en-US`;
 
-const getApiDiscoverFilmsController = async (sortBy, yearRange, lenguage) => {
+const getApiDiscoverFilmsController = async (
+  sortBy,
+  yearRange,
+  lenguage,
+  genres
+) => {
   let discoverURL = FILMS_URL;
 
-  if (sortBy === "trending" && !yearRange && !lenguage)
+  if (sortBy === "trending" && !yearRange && !lenguage && !genres)
     discoverURL = TRENDING_URL;
   else {
     discoverURL += `&page=1`;
@@ -24,8 +29,12 @@ const getApiDiscoverFilmsController = async (sortBy, yearRange, lenguage) => {
     if (lenguage) {
       discoverURL += `&with_original_language=${lenguage}`;
     }
-  }
 
+    if (genres) {
+      genres = genres.replace(new RegExp(",", "g"), "%2C");
+      discoverURL += `&with_genres=${genres}`;
+    }
+  }
   const { data } = await axios(discoverURL);
   return data.results;
 };

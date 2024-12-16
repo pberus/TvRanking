@@ -135,13 +135,14 @@ export const getTopRatedSeries = () => {
 
 //GET DISCOVER
 
-export const getDiscoverFilms = ({ sortBy, yearRange, lenguage }) => {
+export const getDiscoverFilms = ({ sortBy, yearRange, lenguage, genres }) => {
   return async (dispatch) => {
     try {
       let discoverURL = `${URL}/discover/films?sort_by=${sortBy}`;
 
       if (yearRange.length > 0) discoverURL += `&year_range=${yearRange}`;
       if (lenguage) discoverURL += `&lenguage=${lenguage}`;
+      if (genres.length > 0) discoverURL += `&genres=${genres}`;
 
       const { data } = await axios(discoverURL);
       return dispatch({
@@ -154,13 +155,14 @@ export const getDiscoverFilms = ({ sortBy, yearRange, lenguage }) => {
   };
 };
 
-export const getDiscoverSeries = ({ sortBy, yearRange, lenguage }) => {
+export const getDiscoverSeries = ({ sortBy, yearRange, lenguage, genres }) => {
   return async (dispatch) => {
     try {
       let discoverURL = `${URL}/discover/series?sort_by=${sortBy}`;
 
       if (yearRange.length > 0) discoverURL += `&year_range=${yearRange}`;
       if (lenguage) discoverURL += `&lenguage=${lenguage}`;
+      if (genres.length > 0) discoverURL += `&genres=${genres}`;
 
       const { data } = await axios(discoverURL);
       return dispatch({
