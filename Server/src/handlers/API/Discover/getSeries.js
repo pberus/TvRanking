@@ -2,14 +2,16 @@ const getApiDiscoverSeriesController = require("../../../controllers/API/Discove
 
 const getApiDiscoverSeriesHandler = async (req, res) => {
   try {
-    const { sort_by, year_range, lenguage, genres, runtime } = req.query;
+    const { sort_by, year_range, lenguage, genres, runtime, rating } =
+      req.query;
 
     let series = await getApiDiscoverSeriesController(
       sort_by,
       year_range,
       lenguage,
       genres,
-      runtime
+      runtime,
+      rating
     );
     series = series?.map(
       ({

@@ -25,16 +25,16 @@ export default function YearRelease({ onYearChange, reset, setReset }) {
   const [val, setVal] = React.useState([MIN, MAX]);
   const handleChange = (_, newValue) => {
     setVal(newValue);
-    onYearChange(newValue);
+    onYearChange("yearRange", newValue);
   };
 
   React.useEffect(() => {
     if (reset) {
-      setVal([MIN, MAX])
-      onYearChange([MIN, MAX])
-      setReset(false)
+      setVal([MIN, MAX]);
+      onYearChange("yearRange", []);
+      setReset(false);
     }
-  }, [onYearChange, reset, setReset])
+  }, [onYearChange, reset, setReset]);
 
   return (
     <Box sx={{ width: 300, margin: 2 }}>

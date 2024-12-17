@@ -5,53 +5,48 @@ import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
 
 function valuetext(value) {
-  return `Min ${value}`;
+  return `Rating ${value}`;
 }
 
-export default function Runtime({
-  filmsOrSeries,
-  onRuntimeChange,
-  reset,
-  setReset,
-}) {
-  const MAX = filmsOrSeries === "films" ? 300 : 90;
-  const MIN = 0;
-  const marks = [
-    {
-      value: MIN,
-      label: "",
-    },
-    {
-      value: MAX,
-      label: "",
-    },
-  ];
+const MAX = 10;
+const MIN = 0;
+const marks = [
+  {
+    value: MIN,
+    label: "",
+  },
+  {
+    value: MAX,
+    label: "",
+  },
+];
 
+export default function Rating({ onRatingChange, reset, setReset }) {
   const [val, setVal] = React.useState([MIN, MAX]);
   const handleChange = (_, newValue) => {
     setVal(newValue);
-    onRuntimeChange("runtime", newValue);
+    onRatingChange("rating", newValue);
   };
 
   React.useEffect(() => {
     if (reset) {
       setVal([MIN, MAX]);
-      onRuntimeChange("runtime", []);
+      onRatingChange("rating", []);
       setReset(false);
     }
-  }, [onRuntimeChange, reset, setReset, MAX]);
+  }, [onRatingChange, reset, setReset]);
 
   return (
     <Box sx={{ width: 300, margin: 2 }}>
       <Slider
         marks={marks}
-        step={5}
+        step={0.1}
         value={val}
         valueLabelDisplay='auto'
         min={MIN}
         max={MAX}
         onChange={handleChange}
-        getAriaLabel={() => "Runtime range"}
+        getAriaLabel={() => "Rating range"}
         getAriaValueText={valuetext}
       />
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -74,9 +69,8 @@ export default function Runtime({
   );
 }
 
-Runtime.propTypes = {
-  filmsOrSeries: PropTypes.string.isRequired,
-  onRuntimeChange: PropTypes.func.isRequired,
+Rating.propTypes = {
+  onRatingChange: PropTypes.func.isRequired,
   reset: PropTypes.bool.isRequired,
   setReset: PropTypes.func.isRequired,
 };

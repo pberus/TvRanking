@@ -8,7 +8,7 @@ import {
   getLenguages,
   removeTv,
 } from "../../redux/actions";
-import { Runtime, YearRelease } from "../../components";
+import { Rating, Runtime, YearRelease } from "../../components";
 import style from "./popular.module.css";
 
 const Popular = () => {
@@ -19,12 +19,14 @@ const Popular = () => {
     lenguage: "",
     genres: [],
     runtime: [],
+    rating: [],
   });
   const [resetYear, setResetYear] = useState(false);
   const [activeLenguage, setActiveLenguage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [activeGenres, setActiveGenres] = useState([]);
   const [resetRuntime, setResetRuntime] = useState(false);
+  const [resetRating, setResetRating] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -55,14 +57,6 @@ const Popular = () => {
     setDiscover({
       ...discover,
       sortBy: e.target.value,
-    });
-  };
-
-  //yearRelease
-  const handleYearChange = (newRange) => {
-    setDiscover({
-      ...discover,
-      yearRange: newRange,
     });
   };
 
@@ -113,19 +107,16 @@ const Popular = () => {
       genres: [],
     });
     setActiveGenres([]);
-    console.log("se aplico reset genres");
-  };
-
-  //runtime
-
-  const handleRuntimeChange = (newRange) => {
-    setDiscover({
-      ...discover,
-      runtime: newRange,
-    });
   };
 
   //all filters
+  const handleChange = (property, newRange) => {
+    setDiscover({
+      ...discover,
+      [property]: newRange,
+    });
+  };
+
   const handleResetAll = (mediaType) => {
     setDiscover({
       ...discover,
@@ -141,6 +132,7 @@ const Popular = () => {
     setSearchTerm("");
     setActiveGenres([]);
     setResetRuntime(true);
+    setResetRating(true);
   };
 
   return (
@@ -249,7 +241,7 @@ const Popular = () => {
               </div>
               <hr className='dropdown-divider' />
               <YearRelease
-                onYearChange={handleYearChange}
+                onYearChange={handleChange}
                 reset={resetYear}
                 setReset={setResetYear}
               />
@@ -385,9 +377,31 @@ const Popular = () => {
               <hr className='dropdown-divider' />
               <Runtime
                 filmsOrSeries={discover.filmsOrSeries}
-                onRuntimeChange={handleRuntimeChange}
+                onRuntimeChange={handleChange}
                 reset={resetRuntime}
                 setReset={setResetRuntime}
+              />
+            </div>
+            {/* rating */}
+            <button
+              className='btn btn-secondary dropdown-toggle'
+              type='button'
+              data-bs-toggle='dropdown'
+              data-bs-auto-close='outside'
+              aria-expanded='false'
+            >
+              Calificación
+            </button>
+            <div className='dropdown-menu'>
+              <div className={style.header}>
+                <span className='dropdown-item-text'>Calificación de TMDB</span>
+                <button onClick={() => setResetRating(true)}>X</button>
+              </div>
+              <hr className='dropdown-divider' />
+              <Rating
+                onRatingChange={handleChange}
+                reset={resetRating}
+                setReset={setResetRating}
               />
             </div>
           </div>

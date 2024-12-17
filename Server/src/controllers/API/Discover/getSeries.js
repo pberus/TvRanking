@@ -9,11 +9,19 @@ const getApiDiscoverSeriesController = async (
   yearRange,
   lenguage,
   genres,
-  runtime
+  runtime,
+  rating
 ) => {
   let discoverURL = SERIES_URL;
 
-  if (sortBy === "trending" && !yearRange && !lenguage && !genres && !runtime)
+  if (
+    sortBy === "trending" &&
+    !yearRange &&
+    !lenguage &&
+    !genres &&
+    !runtime &&
+    !rating
+  )
     discoverURL = TRENDING_URL;
   else {
     discoverURL += `&page=1`;
@@ -42,6 +50,11 @@ const getApiDiscoverSeriesController = async (
     if (runtime) {
       const [startTime, endTime] = runtime.split(",");
       discoverURL += `&with_runtime.gte=${startTime}&with_runtime.lte=${endTime}`;
+    }
+
+    if (rating) {
+      const [startRating, endRating] = rating.split(",");
+      discoverURL += `&vote_average.gte=${startRating}&vote_average.lte=${endRating}&vote_count.gte=500`;
     }
   }
   console.log(discoverURL);
