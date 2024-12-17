@@ -20,7 +20,10 @@ const getApiDiscoverSeriesController = async (
 
     if (!sortBy || sortBy === "trending")
       discoverURL += `&sort_by=popularity.desc`;
-    else discoverURL += `&sort_by=${sortBy}.desc`;
+    else {
+      discoverURL += `&sort_by=${sortBy}.desc`;
+      if (sortBy === "vote_average") discoverURL += `&vote_count.gte=1000`;
+    }
 
     if (yearRange) {
       const [startYear, endYear] = yearRange.split(",");
@@ -41,6 +44,8 @@ const getApiDiscoverSeriesController = async (
       discoverURL += `&with_runtime.gte=${startTime}&with_runtime.lte=${endTime}`;
     }
   }
+  console.log(discoverURL);
+
   const { data } = await axios(discoverURL);
   return data.results;
 };
