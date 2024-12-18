@@ -11,3 +11,7 @@
     justify-content: center;
     border-radius: 3px;
 }
+
+.noActive {
+    filter: brightness(0.5);
+}

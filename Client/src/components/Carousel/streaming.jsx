@@ -41,6 +41,13 @@ const Streaming = ({ streamingArray, onStreamingChange, reset, setReset }) => {
                   onClick={() => handleChange(stre.id)}
                 >
                   <img
+                    className={
+                      (activeProviders.length > 0 &&
+                        activeProviders.some((active) => active === stre.id)) ||
+                      activeProviders.length === 0
+                        ? ""
+                        : style.noActive
+                    }
                     src={IMAGE_URL + stre.img}
                     alt={stre.name}
                     title={stre.name}
@@ -55,8 +62,16 @@ const Streaming = ({ streamingArray, onStreamingChange, reset, setReset }) => {
                 <button
                   key={stre.id}
                   className={`col ${style.streamingButtons}`}
+                  onClick={() => handleChange(stre.id)}
                 >
                   <img
+                    className={
+                      (activeProviders.length > 0 &&
+                        activeProviders.some((active) => active === stre.id)) ||
+                      activeProviders.length === 0
+                        ? ""
+                        : style.noActive
+                    }
                     src={IMAGE_URL + stre.img}
                     alt={stre.name}
                     title={stre.name}
