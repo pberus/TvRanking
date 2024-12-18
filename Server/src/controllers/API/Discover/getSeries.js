@@ -10,7 +10,8 @@ const getApiDiscoverSeriesController = async (
   lenguage,
   genres,
   runtime,
-  rating
+  rating,
+  providers
 ) => {
   let discoverURL = SERIES_URL;
 
@@ -20,7 +21,8 @@ const getApiDiscoverSeriesController = async (
     !lenguage &&
     !genres &&
     !runtime &&
-    !rating
+    !rating &&
+    !providers
   )
     discoverURL = TRENDING_URL;
   else {
@@ -55,6 +57,11 @@ const getApiDiscoverSeriesController = async (
     if (rating) {
       const [startRating, endRating] = rating.split(",");
       discoverURL += `&vote_average.gte=${startRating}&vote_average.lte=${endRating}&vote_count.gte=500`;
+    }
+
+    if (providers) {
+      providers = providers.replace(new RegExp(",", "g"), "%2C");
+      discoverURL += `&watch_region=AR&with_watch_providers=${providers}`;
     }
   }
   console.log(discoverURL);

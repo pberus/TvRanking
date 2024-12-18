@@ -143,6 +143,7 @@ export const getDiscoverFilms = ({
   genres,
   runtime,
   rating,
+  providers,
 }) => {
   return async (dispatch) => {
     try {
@@ -153,6 +154,7 @@ export const getDiscoverFilms = ({
       if (genres.length > 0) discoverURL += `&genres=${genres}`;
       if (runtime.length > 0) discoverURL += `&runtime=${runtime}`;
       if (rating.length > 0) discoverURL += `&rating=${rating}`;
+      if (providers.length > 0) discoverURL += `&providers=${providers}`;
 
       const { data } = await axios(discoverURL);
       return dispatch({
@@ -172,6 +174,7 @@ export const getDiscoverSeries = ({
   genres,
   runtime,
   rating,
+  providers,
 }) => {
   return async (dispatch) => {
     try {
@@ -182,6 +185,7 @@ export const getDiscoverSeries = ({
       if (genres.length > 0) discoverURL += `&genres=${genres}`;
       if (runtime.length > 0) discoverURL += `&runtime=${runtime}`;
       if (rating.length > 0) discoverURL += `&rating=${rating}`;
+      if (providers.length > 0) discoverURL += `&providers=${providers}`;
 
       const { data } = await axios(discoverURL);
       return dispatch({

@@ -22,6 +22,7 @@ const Popular = () => {
     genres: [],
     runtime: [],
     rating: [],
+    providers: [],
   });
   const [resetYear, setResetYear] = useState(false);
   const [activeLenguage, setActiveLenguage] = useState("");
@@ -29,6 +30,7 @@ const Popular = () => {
   const [activeGenres, setActiveGenres] = useState([]);
   const [resetRuntime, setResetRuntime] = useState(false);
   const [resetRating, setResetRating] = useState(false);
+  const [resetProviders, setResetProviders] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -39,7 +41,7 @@ const Popular = () => {
   const { filmsGenres, seriesGenres } = useSelector((state) => state.genres);
   const { filmsProviders, seriesProviders } = useSelector(
     (state) => state.providers
-  );  
+  );
 
   useEffect(() => {
     dispatch(getLenguages());
@@ -132,6 +134,7 @@ const Popular = () => {
       lenguage: "",
       genres: [],
       runtime: [],
+      providers: [],
     });
     setResetYear(true);
     setActiveLenguage("");
@@ -139,6 +142,7 @@ const Popular = () => {
     setActiveGenres([]);
     setResetRuntime(true);
     setResetRating(true);
+    setResetProviders(true);
   };
 
   return (
@@ -254,6 +258,9 @@ const Popular = () => {
                   ? filmsProviders
                   : seriesProviders
               }
+              onStreamingChange={handleChange}
+              reset={resetProviders}
+              setReset={setResetProviders}
             />
           )}
         </div>
