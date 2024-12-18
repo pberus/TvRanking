@@ -1,0 +1,13 @@
+.streamingButtons {
+    display: flex;
+    justify-content: center;
+    background-color: #212529;
+    border: none;
+}
+
+.streamingButtons img {
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    border-radius: 3px;
+}

@@ -20,6 +20,10 @@
   gap: 10px;
 }
 
+.imgStreaming {
+  width: 25px;
+}
+
 .header {
   display: flex;
   justify-content: space-between;

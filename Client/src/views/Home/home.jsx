@@ -10,7 +10,7 @@ import {
   getTopRatedSeries,
   getUpcomingFilms,
 } from "../../redux/actions";
-import { Carousel } from "../../components";
+import { HomeCarousel } from "../../components";
 
 const Home = () => {
   const [filmsOrSeries, setFilmsOrSeries] = useState(true);
@@ -63,38 +63,38 @@ const Home = () => {
         <>
           <h2>En cines</h2>
           {nowPlayingFilms.length > 0 && (
-            <Carousel tvArray={nowPlayingFilms} position='1' />
+            <HomeCarousel tvArray={nowPlayingFilms} position='1' />
           )}
           <h2>Mas populares del momento</h2>
           {popularFilms.length > 0 && (
-            <Carousel tvArray={popularFilms} position='2' />
+            <HomeCarousel tvArray={popularFilms} position='2' />
           )}
           <h2>Mejor calificadas</h2>
           {topRatedFilms.length > 0 && (
-            <Carousel tvArray={topRatedFilms} position='3' />
+            <HomeCarousel tvArray={topRatedFilms} position='3' />
           )}
           <h2>Proximamente</h2>
           {upcomingFilms.length > 0 && (
-            <Carousel tvArray={upcomingFilms} position='4' />
+            <HomeCarousel tvArray={upcomingFilms} position='4' />
           )}
         </>
       ) : (
         <>
           <h2>Se estrenan hoy...</h2>
           {airingTodaySeries.length > 0 && (
-            <Carousel tvArray={airingTodaySeries} position='1' />
+            <HomeCarousel tvArray={airingTodaySeries} position='1' />
           )}
           <h2>Mas populares del momento</h2>
           {popularSeries.length > 0 && (
-            <Carousel tvArray={popularSeries} position='2' />
+            <HomeCarousel tvArray={popularSeries} position='2' />
           )}
           <h2>Mejor calificadas</h2>
           {topRatedSeries.length > 0 && (
-            <Carousel tvArray={topRatedSeries} position='3' />
+            <HomeCarousel tvArray={topRatedSeries} position='3' />
           )}
           <h2>Proximamente</h2>
           {onTheAirSeries.length > 0 && (
-            <Carousel tvArray={onTheAirSeries} position='4' />
+            <HomeCarousel tvArray={onTheAirSeries} position='4' />
           )}
         </>
       )}

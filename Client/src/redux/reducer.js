@@ -9,6 +9,7 @@ import {
   GET_ON_THE_AIR_SERIES,
   GET_POPULAR_FILMS,
   GET_POPULAR_SERIES,
+  GET_PROVIDERS,
   GET_TOP_RATED_FILMS,
   GET_TOP_RATED_SERIES,
   GET_UPCOMING_FILMS,
@@ -35,6 +36,8 @@ const initialState = {
   lenguages: [],
   //GENRES
   genres: {},
+  //PROVIDERS
+  providers: {},
   //
   miTv: [],
   tvDetail: {},
@@ -117,6 +120,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         genres: payload,
+      };
+    //PROVIDERS
+    case GET_PROVIDERS:
+      return {
+        ...state,
+        providers: payload,
       };
     //
     case SEARCH_TV:

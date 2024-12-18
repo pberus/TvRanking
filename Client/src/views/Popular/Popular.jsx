@@ -6,10 +6,12 @@ import {
   getDiscoverSeries,
   getGenres,
   getLenguages,
+  getProviders,
   removeTv,
 } from "../../redux/actions";
-import { Rating, Runtime, YearRelease } from "../../components";
+import { Rating, Runtime, Streaming, YearRelease } from "../../components";
 import style from "./popular.module.css";
+import imgStreaming from "../../assets/video-en-directo.png";
 
 const Popular = () => {
   const [discover, setDiscover] = useState({
@@ -33,12 +35,16 @@ const Popular = () => {
   const discoverFilms = useSelector((state) => state.discoverFilms);
   const discoverSeries = useSelector((state) => state.discoverSeries);
 
-  let lenguages = useSelector((state) => state.lenguages);
-  let { films, series } = useSelector((state) => state.genres);
+  const lenguages = useSelector((state) => state.lenguages);
+  const { filmsGenres, seriesGenres } = useSelector((state) => state.genres);
+  const { filmsProviders, seriesProviders } = useSelector(
+    (state) => state.providers
+  );  
 
   useEffect(() => {
     dispatch(getLenguages());
     dispatch(getGenres());
+    dispatch(getProviders());
   }, [dispatch]);
 
   useEffect(() => {
@@ -164,6 +170,25 @@ const Popular = () => {
           </button>
         </div>
         <div className={style.ordeFiltButtons}>
+          {/* STREAMING */}
+          <div>
+            <p className='d-inline-flex gap-1'>
+              <button
+                className='btn btn-primary'
+                type='button'
+                data-bs-toggle='collapse'
+                data-bs-target='#collapseExample1'
+                aria-expanded='false'
+                aria-controls='collapseExample'
+              >
+                <img
+                  className={style.imgStreaming}
+                  src={imgStreaming}
+                  alt='streaming'
+                />
+              </button>
+            </p>
+          </div>
           {/* ORDENAMIENTOS */}
           <select
             name='sortBy'
@@ -217,6 +242,20 @@ const Popular = () => {
               </button>
             </p>
           </div>
+        </div>
+      </div>
+      {/* STREAMING COLLAPSE */}
+      <div className='collapse mb-2' id='collapseExample1'>
+        <div className='card card-body bg-dark'>
+          {filmsProviders?.length > 0 && (
+            <Streaming
+              streamingArray={
+                discover.filmsOrSeries === "films"
+                  ? filmsProviders
+                  : seriesProviders
+              }
+            />
+          )}
         </div>
       </div>
       {/* FILTERS COLLAPSE */}
@@ -310,7 +349,7 @@ const Popular = () => {
               <hr className='dropdown-divider' />
               <div className='row'>
                 {discover.filmsOrSeries === "films"
-                  ? films?.map((gen) => (
+                  ? filmsGenres?.map((gen) => (
                       <div className='col-6' key={gen.id}>
                         <li>
                           <button
@@ -332,7 +371,7 @@ const Popular = () => {
                         </li>
                       </div>
                     ))
-                  : series?.map((gen) => (
+                  : seriesGenres?.map((gen) => (
                       <div className='col-6' key={gen.id}>
                         <li>
                           <button

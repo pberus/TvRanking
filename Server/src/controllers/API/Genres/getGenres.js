@@ -11,8 +11,8 @@ const getApiGenresController = async () => {
     GENRES_URL + `tv/list?api_key=${API_KEY}&language=es`
   );
   return {
-    films: filmsGenres.data.genres,
-    series: seriesGenres.data.genres,
+    filmsGenres: filmsGenres.data.genres,
+    seriesGenres: seriesGenres.data.genres,
   };
 };
 

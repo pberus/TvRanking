@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import Card from "../Card/card";
-import style from "./carousel.module.css";
+import style from "./homeCarousel.module.css";
 
-const Carousel = ({ tvArray, position }) => {
+const HomeCarousel = ({ tvArray, position }) => {
   return (
     <div className={style.color}>
       <div id={`carouselExampleIndicators${position}`} className='carousel slide'>
@@ -101,9 +101,9 @@ const Carousel = ({ tvArray, position }) => {
   );
 };
 
-Carousel.propTypes = {
+HomeCarousel.propTypes = {
   tvArray: PropTypes.array.isRequired,
   position: PropTypes.string.isRequired,
 };
 
-export default Carousel;
+export default HomeCarousel;
