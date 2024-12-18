@@ -29,8 +29,8 @@ const initialState = {
   popularSeries: [],
   topRatedSeries: [],
   //DISCOVER
-  discoverFilms: [],
-  discoverSeries: [],
+  discoverFilms: {},
+  discoverSeries: {},
   discoverTv: [],
   //LENGUAGES
   lenguages: [],
@@ -91,12 +91,22 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_DISCOVER_FILMS:
       return {
         ...state,
-        discoverFilms: payload,
+        discoverFilms: {
+          results: payload.pageExists
+            ? [...state.discoverFilms.results, ...payload.results]
+            : payload.results,
+          totalPages: payload.totalPages,
+        },
       };
     case GET_DISCOVER_SERIES:
       return {
         ...state,
-        discoverSeries: payload,
+        discoverSeries: {
+          results: payload.pageExists
+            ? [...state.discoverSeries.results, ...payload.results]
+            : payload.results,
+          totalPages: payload.totalPages,
+        },
       };
     case GET_DISCOVER_TV:
       return {

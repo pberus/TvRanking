@@ -7,6 +7,7 @@ import Streaming from "./Carousel/streaming";
 import YearRelease from "./Slider/yearRelease";
 import Runtime from "./Slider/runtime";
 import Rating from "./Slider/rating";
+import InfiniteScrollCards from "./InfiniteScroll/infiniteScrollCards";
 
 export {
   Card,
@@ -18,4 +19,5 @@ export {
   YearRelease,
   Runtime,
   Rating,
+  InfiniteScrollCards,
 };

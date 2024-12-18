@@ -10,18 +10,20 @@ const getApiDiscoverSeriesHandler = async (req, res) => {
       runtime,
       rating,
       providers,
+      page,
     } = req.query;
 
-    let series = await getApiDiscoverSeriesController(
+    let { results, totalPages } = await getApiDiscoverSeriesController(
       sort_by,
       year_range,
       lenguage,
       genres,
       runtime,
       rating,
-      providers
+      providers,
+      page
     );
-    series = series?.map(
+    results = results?.map(
       ({
         id,
         original_name,
@@ -39,7 +41,7 @@ const getApiDiscoverSeriesHandler = async (req, res) => {
         media_type: "tv",
       })
     );
-    return res.json(series);
+    return res.json({ results, totalPages });
   } catch (error) {
     console.log("error: ", error.message);
   }

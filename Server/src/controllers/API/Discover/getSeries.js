@@ -11,7 +11,8 @@ const getApiDiscoverSeriesController = async (
   genres,
   runtime,
   rating,
-  providers
+  providers,
+  page
 ) => {
   let discoverURL = SERIES_URL;
 
@@ -22,11 +23,13 @@ const getApiDiscoverSeriesController = async (
     !genres &&
     !runtime &&
     !rating &&
-    !providers
+    !providers &&
+    !page
   )
     discoverURL = TRENDING_URL;
   else {
-    discoverURL += `&page=1`;
+    if (page) discoverURL += `&page=${page}`;
+    else discoverURL += `&page=1`;
 
     if (!sortBy || sortBy === "trending")
       discoverURL += `&sort_by=popularity.desc`;
@@ -67,7 +70,10 @@ const getApiDiscoverSeriesController = async (
   console.log(discoverURL);
 
   const { data } = await axios(discoverURL);
-  return data.results;
+  return {
+    results: data.results,
+    totalPages: data.total_pages,
+  };
 };
 
 module.exports = getApiDiscoverSeriesController;

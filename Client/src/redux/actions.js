@@ -144,6 +144,7 @@ export const getDiscoverFilms = ({
   runtime,
   rating,
   providers,
+  page,
 }) => {
   return async (dispatch) => {
     try {
@@ -155,11 +156,16 @@ export const getDiscoverFilms = ({
       if (runtime.length > 0) discoverURL += `&runtime=${runtime}`;
       if (rating.length > 0) discoverURL += `&rating=${rating}`;
       if (providers.length > 0) discoverURL += `&providers=${providers}`;
+      if (page) discoverURL += `&page=${page}`;
 
       const { data } = await axios(discoverURL);
       return dispatch({
         type: GET_DISCOVER_FILMS,
-        payload: data,
+        payload: {
+          results: data.results,
+          totalPages: data.totalPages,
+          pageExists: Boolean(page),
+        },
       });
     } catch (error) {
       alert(error.message);
@@ -175,6 +181,7 @@ export const getDiscoverSeries = ({
   runtime,
   rating,
   providers,
+  page,
 }) => {
   return async (dispatch) => {
     try {
@@ -186,11 +193,16 @@ export const getDiscoverSeries = ({
       if (runtime.length > 0) discoverURL += `&runtime=${runtime}`;
       if (rating.length > 0) discoverURL += `&rating=${rating}`;
       if (providers.length > 0) discoverURL += `&providers=${providers}`;
+      if (page) discoverURL += `&page=${page}`;
 
       const { data } = await axios(discoverURL);
       return dispatch({
         type: GET_DISCOVER_SERIES,
-        payload: data,
+        payload: {
+          results: data.results,
+          totalPages: data.totalPages,
+          pageExists: Boolean(page),
+        },
       });
     } catch (error) {
       alert(error.message);

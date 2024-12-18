@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import Cards from "../../components/Cards/cards";
 import { useEffect, useState } from "react";
 import {
   getDiscoverFilms,
@@ -9,7 +8,13 @@ import {
   getProviders,
   removeTv,
 } from "../../redux/actions";
-import { Rating, Runtime, Streaming, YearRelease } from "../../components";
+import {
+  InfiniteScrollCards,
+  Rating,
+  Runtime,
+  Streaming,
+  YearRelease,
+} from "../../components";
 import style from "./popular.module.css";
 import imgStreaming from "../../assets/video-en-directo.png";
 
@@ -23,6 +28,7 @@ const Popular = () => {
     runtime: [],
     rating: [],
     providers: [],
+    page: "",
   });
   const [resetYear, setResetYear] = useState(false);
   const [activeLenguage, setActiveLenguage] = useState("");
@@ -59,11 +65,40 @@ const Popular = () => {
     }
   }, [dispatch, discover]);
 
+  //remove duplicates
+  let uniqueFilms =
+    discoverFilms.results &&
+    Array.from(
+      discoverFilms.results
+        ?.reduce((map, obj) => {
+          if (!map.has(obj.id)) {
+            map.set(obj.id, obj);
+          }
+          return map;
+        }, new Map())
+        .values()
+    );
+
+  let uniqueSeries =
+    discoverSeries.results &&
+    Array.from(
+      discoverSeries.results
+        ?.reduce((map, obj) => {
+          // Si el id no está en el Map, lo agregamos
+          if (!map.has(obj.id)) {
+            map.set(obj.id, obj);
+          }
+          return map;
+        }, new Map())
+        .values()
+    );
+
   //sort
   const handleSort = (e) => {
     e.preventDefault();
     setDiscover({
       ...discover,
+      page: "",
       sortBy: e.target.value,
     });
   };
@@ -71,7 +106,7 @@ const Popular = () => {
   //lenguages
   const handleLenguage = (index) => {
     setActiveLenguage(index);
-    setDiscover({ ...discover, lenguage: index });
+    setDiscover({ ...discover, page: "", lenguage: index });
   };
 
   const filteredLenguages = lenguages?.filter((len) =>
@@ -85,6 +120,7 @@ const Popular = () => {
   const handleResetLenguage = () => {
     setDiscover({
       ...discover,
+      page: "",
       lenguage: "",
     });
     setActiveLenguage("");
@@ -97,12 +133,14 @@ const Popular = () => {
       let filteredGenres = activeGenres.filter((gen) => gen !== index);
       setDiscover({
         ...discover,
+        page: "",
         genres: filteredGenres,
       });
       setActiveGenres(filteredGenres);
     } else {
       setDiscover({
         ...discover,
+        page: "",
         genres: [...activeGenres, index],
       });
       setActiveGenres([...activeGenres, index]);
@@ -112,6 +150,7 @@ const Popular = () => {
   const handleResetGenres = () => {
     setDiscover({
       ...discover,
+      page: "",
       genres: [],
     });
     setActiveGenres([]);
@@ -121,6 +160,7 @@ const Popular = () => {
   const handleChange = (property, newRange) => {
     setDiscover({
       ...discover,
+      page: "",
       [property]: newRange,
     });
   };
@@ -135,6 +175,7 @@ const Popular = () => {
       genres: [],
       runtime: [],
       providers: [],
+      page: "",
     });
     setResetYear(true);
     setActiveLenguage("");
@@ -453,11 +494,29 @@ const Popular = () => {
           </div>
         </div>
       </div>
-      {/* CARDS */}
+      {/* INFINITE SCROLL */}
       {discover.filmsOrSeries === "films" ? (
-        <>{discoverFilms.length > 0 && <Cards tvArray={discoverFilms} />}</>
+        <>
+          {uniqueFilms?.length > 0 && (
+            <InfiniteScrollCards
+              items={uniqueFilms}
+              totalPages={discoverFilms.totalPages}
+              setDiscover={setDiscover}
+              discover={discover}
+            />
+          )}
+        </>
       ) : (
-        <>{discoverSeries.length > 0 && <Cards tvArray={discoverSeries} />}</>
+        <>
+          {uniqueSeries?.length > 0 && (
+            <InfiniteScrollCards
+              items={uniqueSeries}
+              totalPages={discoverSeries.totalPages}
+              setDiscover={setDiscover}
+              discover={discover}
+            />
+          )}
+        </>
       )}
     </div>
   );
