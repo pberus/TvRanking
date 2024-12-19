@@ -29,8 +29,11 @@ export default function Runtime({
 
   const [val, setVal] = React.useState([MIN, MAX]);
   const handleChange = (_, newValue) => {
-    setVal(newValue);
-    onRuntimeChange("runtime", newValue);
+    if (JSON.stringify(newValue) === JSON.stringify([MIN, MAX])) {
+      onRuntimeChange("runtime", []);
+    } else {
+      onRuntimeChange("runtime", newValue);
+    }
   };
 
   React.useEffect(() => {
@@ -50,7 +53,8 @@ export default function Runtime({
         valueLabelDisplay='auto'
         min={MIN}
         max={MAX}
-        onChange={handleChange}
+        onChange={(_, newValue) => setVal(newValue)}
+        onChangeCommitted={handleChange}
         getAriaLabel={() => "Runtime range"}
         getAriaValueText={valuetext}
       />

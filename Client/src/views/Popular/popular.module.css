@@ -24,12 +24,24 @@
   width: 25px;
 }
 
+.spanStreaming {
+  font-size: 0.8em;
+  position: relative;
+  bottom: 6px;
+  left: 5px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  padding-left: 2px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+}
+
 .activeFilters {
-  font-size: 0.6em;
+  font-size: 0.7em;
   color: #f6c11a;
-  position: absolute;
-  margin-left: 1px;
-  padding: 2px;
+  position: relative;
+  bottom: 8px;
+  left: 5px;
 }
 
 .header {

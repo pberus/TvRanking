@@ -17,6 +17,7 @@ import {
 } from "../../components";
 import style from "./popular.module.css";
 import imgStreaming from "../../assets/video-en-directo.png";
+import iconoCerrar from "../../assets/cerrar-simbolo-de-boton-circular.png";
 
 const Popular = () => {
   const [discover, setDiscover] = useState({
@@ -37,7 +38,7 @@ const Popular = () => {
   const [resetRuntime, setResetRuntime] = useState(false);
   const [resetRating, setResetRating] = useState(false);
   const [resetProviders, setResetProviders] = useState(false);
-  const [activeFilters, setActiveFilters] = useState(0);  
+  const [activeFilters, setActiveFilters] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -58,20 +59,20 @@ const Popular = () => {
 
   useEffect(() => {
     //active filters
-      let count = 0;
-      for (const prop in discover) {
-        if (
-          prop === "yearRange" ||
-          prop === "genres" ||
-          prop === "runtime" ||
-          prop === "rating"
-        ) {
-          discover[prop].length > 0 && count++;
-        } else if (prop === "lenguage") {
-          discover[prop] && count++;
-        }
+    let count = 0;
+    for (const prop in discover) {
+      if (
+        prop === "yearRange" ||
+        prop === "genres" ||
+        prop === "runtime" ||
+        prop === "rating"
+      ) {
+        discover[prop].length > 0 && count++;
+      } else if (prop === "lenguage") {
+        discover[prop] && count++;
       }
-      setActiveFilters(count);
+    }
+    setActiveFilters(count);
     // films/series
     if (discover.filmsOrSeries === "films") {
       dispatch(getDiscoverFilms(discover));
@@ -123,8 +124,8 @@ const Popular = () => {
   //lenguages
   const handleLenguage = (index) => {
     if (index === activeLenguage) {
-      setActiveLenguage("")
-      setDiscover({ ...discover, page: "", lenguage: "" });  
+      setActiveLenguage("");
+      setDiscover({ ...discover, page: "", lenguage: "" });
     } else {
       setActiveLenguage(index);
       setDiscover({ ...discover, page: "", lenguage: index });
@@ -179,6 +180,26 @@ const Popular = () => {
   };
 
   //all filters
+
+  const handleResetFilters = () => {
+    setDiscover({
+      ...discover,
+      yearRange: [],
+      lenguage: "",
+      genres: [],
+      runtime: [],
+      rating: [],
+      page: "",
+    });
+    setResetYear(true);
+    setActiveLenguage("");
+    setSearchTerm("");
+    setActiveGenres([]);
+    setResetRuntime(true);
+    setResetRating(true);
+  };
+
+  //all options
   const handleChange = (property, newRange) => {
     setDiscover({
       ...discover,
@@ -196,6 +217,7 @@ const Popular = () => {
       lenguage: "",
       genres: [],
       runtime: [],
+      rating: [],
       providers: [],
       page: "",
     });
@@ -253,6 +275,21 @@ const Popular = () => {
                   src={imgStreaming}
                   alt='streaming'
                 />
+                {filmsProviders?.length > 0 && (
+                  <span
+                    className={`${style.spanStreaming} ${
+                      discover.providers.length > 0 && "text-warning"
+                    }`}
+                  >
+                    {discover.filmsOrSeries === "films"
+                      ? discover.providers.length > 0
+                        ? `${discover.providers.length}/${filmsProviders.length}`
+                        : filmsProviders?.length
+                      : discover.providers.length > 0
+                      ? `${discover.providers.length}/${seriesProviders.length}`
+                      : seriesProviders?.length}
+                  </span>
+                )}
               </button>
             </p>
           </div>
@@ -298,15 +335,19 @@ const Popular = () => {
           <div>
             <p className='d-inline-flex gap-1'>
               <button
-                className={`btn btn-secondary ${activeFilters > 0 && "text-warning"}`}
+                className={`btn btn-secondary ${
+                  activeFilters > 0 && "text-warning"
+                }`}
                 type='button'
                 data-bs-toggle='collapse'
                 data-bs-target='#collapseExample'
                 aria-expanded='false'
                 aria-controls='collapseExample'
               >
-                Filtros 
-                {activeFilters > 0 && <span className={style.activeFilters}>{activeFilters}</span>}
+                Filtros
+                {activeFilters > 0 && (
+                  <span className={style.activeFilters}>{activeFilters}</span>
+                )}
               </button>
             </p>
           </div>
@@ -333,10 +374,12 @@ const Popular = () => {
       <div className='collapse mb-2' id='collapseExample'>
         <div className='card card-body'>
           {/* DROPDOWNS */}
-          <div className='dropdown d-flex gap-3'>
+          <div className='dropdown d-flex gap-3 d-flex align-items-baseline'>
             {/* year release */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${discover.yearRange.length > 0 && "text-warning"}`}
+              className={`btn btn-secondary dropdown-toggle ${
+                discover.yearRange.length > 0 && "text-warning"
+              }`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
@@ -358,7 +401,9 @@ const Popular = () => {
             </div>
             {/* lenguages */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${discover.lenguage && "text-warning"}`}
+              className={`btn btn-secondary dropdown-toggle ${
+                discover.lenguage && "text-warning"
+              }`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
@@ -404,7 +449,9 @@ const Popular = () => {
             </ul>
             {/* genres */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${discover.genres.length > 0 && "text-warning"}`}
+              className={`btn btn-secondary dropdown-toggle ${
+                discover.genres.length > 0 && "text-warning"
+              }`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
@@ -467,7 +514,9 @@ const Popular = () => {
             </ul>
             {/* runtime */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${discover.runtime.length > 0 && "text-warning"}`}
+              className={`btn btn-secondary dropdown-toggle ${
+                discover.runtime.length > 0 && "text-warning"
+              }`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
@@ -494,7 +543,9 @@ const Popular = () => {
             </div>
             {/* rating */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${discover.rating.length > 0 && "text-warning"}`}
+              className={`btn btn-secondary dropdown-toggle ${
+                discover.rating.length > 0 && "text-warning"
+              }`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
@@ -514,6 +565,15 @@ const Popular = () => {
                 setReset={setResetRating}
               />
             </div>
+            <button
+              className='border-0 bg-white d-inline'
+              onClick={handleResetFilters}
+            >
+              <p className='text-secondary m-0'>
+                <img className={style.imgStreaming} src={iconoCerrar} />{" "}
+                REINICIAR
+              </p>
+            </button>
           </div>
         </div>
       </div>

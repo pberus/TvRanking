@@ -8,7 +8,7 @@ const getApiProvidersController = async () => {
     PROVIDERS_URL + `movie?api_key=${API_KEY}&language=en-US&watch_region=AR`
   );
   const seriesProviders = await axios(
-    PROVIDERS_URL + `tv?api_key=${API_KEY}&language=en-US&watch_region=AR`
+    PROVIDERS_URL + `movie?api_key=${API_KEY}&language=en-US&watch_region=AR`
   );
   return {
     filmsProviders: filmsProviders.data.results,

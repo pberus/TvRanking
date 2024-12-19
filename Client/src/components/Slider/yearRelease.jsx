@@ -24,8 +24,11 @@ const marks = [
 export default function YearRelease({ onYearChange, reset, setReset }) {
   const [val, setVal] = React.useState([MIN, MAX]);
   const handleChange = (_, newValue) => {
-    setVal(newValue);
-    onYearChange("yearRange", newValue);
+    if (JSON.stringify(newValue) === JSON.stringify([MIN, MAX])) {
+      onYearChange("yearRange", []);
+    } else {
+      onYearChange("yearRange", newValue);
+    }
   };
 
   React.useEffect(() => {
@@ -45,7 +48,8 @@ export default function YearRelease({ onYearChange, reset, setReset }) {
         valueLabelDisplay='auto'
         min={MIN}
         max={MAX}
-        onChange={handleChange}
+        onChange={(_, newValue) => setVal(newValue)}
+        onChangeCommitted={handleChange}
         getAriaLabel={() => "Release year range"}
         getAriaValueText={valuetext}
       />

@@ -24,8 +24,11 @@ const marks = [
 export default function Rating({ onRatingChange, reset, setReset }) {
   const [val, setVal] = React.useState([MIN, MAX]);
   const handleChange = (_, newValue) => {
-    setVal(newValue);
-    onRatingChange("rating", newValue);
+    if (JSON.stringify(newValue) === JSON.stringify([MIN, MAX])) {
+      onRatingChange("rating", []);
+    } else {
+      onRatingChange("rating", newValue);
+    }
   };
 
   React.useEffect(() => {
@@ -45,7 +48,8 @@ export default function Rating({ onRatingChange, reset, setReset }) {
         valueLabelDisplay='auto'
         min={MIN}
         max={MAX}
-        onChange={handleChange}
+        onChange={(_, newValue) => setVal(newValue)}
+        onChangeCommitted={handleChange}
         getAriaLabel={() => "Rating range"}
         getAriaValueText={valuetext}
       />
