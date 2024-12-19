@@ -24,6 +24,14 @@
   width: 25px;
 }
 
+.activeFilters {
+  font-size: 0.6em;
+  color: #f6c11a;
+  position: absolute;
+  margin-left: 1px;
+  padding: 2px;
+}
+
 .header {
   display: flex;
   justify-content: space-between;

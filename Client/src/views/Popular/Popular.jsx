@@ -37,6 +37,7 @@ const Popular = () => {
   const [resetRuntime, setResetRuntime] = useState(false);
   const [resetRating, setResetRating] = useState(false);
   const [resetProviders, setResetProviders] = useState(false);
+  const [activeFilters, setActiveFilters] = useState(0);  
 
   const dispatch = useDispatch();
 
@@ -56,6 +57,22 @@ const Popular = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    //active filters
+      let count = 0;
+      for (const prop in discover) {
+        if (
+          prop === "yearRange" ||
+          prop === "genres" ||
+          prop === "runtime" ||
+          prop === "rating"
+        ) {
+          discover[prop].length > 0 && count++;
+        } else if (prop === "lenguage") {
+          discover[prop] && count++;
+        }
+      }
+      setActiveFilters(count);
+    // films/series
     if (discover.filmsOrSeries === "films") {
       dispatch(getDiscoverFilms(discover));
       dispatch(removeTv("discoverSeries"));
@@ -105,8 +122,13 @@ const Popular = () => {
 
   //lenguages
   const handleLenguage = (index) => {
-    setActiveLenguage(index);
-    setDiscover({ ...discover, page: "", lenguage: index });
+    if (index === activeLenguage) {
+      setActiveLenguage("")
+      setDiscover({ ...discover, page: "", lenguage: "" });  
+    } else {
+      setActiveLenguage(index);
+      setDiscover({ ...discover, page: "", lenguage: index });
+    }
   };
 
   const filteredLenguages = lenguages?.filter((len) =>
@@ -219,7 +241,7 @@ const Popular = () => {
           <div>
             <p className='d-inline-flex gap-1'>
               <button
-                className='btn btn-primary'
+                className='btn btn-light border-secondary-subtle'
                 type='button'
                 data-bs-toggle='collapse'
                 data-bs-target='#collapseExample1'
@@ -237,7 +259,7 @@ const Popular = () => {
           {/* ORDENAMIENTOS */}
           <select
             name='sortBy'
-            className='form-select w-auto'
+            className='form-select w-auto border-secondary-subtle'
             aria-label='Default select example'
             value={discover.sortBy}
             onChange={handleSort}
@@ -276,14 +298,15 @@ const Popular = () => {
           <div>
             <p className='d-inline-flex gap-1'>
               <button
-                className='btn btn-primary'
+                className={`btn btn-secondary ${activeFilters > 0 && "text-warning"}`}
                 type='button'
                 data-bs-toggle='collapse'
                 data-bs-target='#collapseExample'
                 aria-expanded='false'
                 aria-controls='collapseExample'
               >
-                Filtros
+                Filtros 
+                {activeFilters > 0 && <span className={style.activeFilters}>{activeFilters}</span>}
               </button>
             </p>
           </div>
@@ -313,7 +336,7 @@ const Popular = () => {
           <div className='dropdown d-flex gap-3'>
             {/* year release */}
             <button
-              className='btn btn-secondary dropdown-toggle'
+              className={`btn btn-secondary dropdown-toggle ${discover.yearRange.length > 0 && "text-warning"}`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
@@ -335,7 +358,7 @@ const Popular = () => {
             </div>
             {/* lenguages */}
             <button
-              className='btn btn-secondary dropdown-toggle'
+              className={`btn btn-secondary dropdown-toggle ${discover.lenguage && "text-warning"}`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
@@ -381,7 +404,7 @@ const Popular = () => {
             </ul>
             {/* genres */}
             <button
-              className='btn btn-secondary dropdown-toggle'
+              className={`btn btn-secondary dropdown-toggle ${discover.genres.length > 0 && "text-warning"}`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
@@ -444,7 +467,7 @@ const Popular = () => {
             </ul>
             {/* runtime */}
             <button
-              className='btn btn-secondary dropdown-toggle'
+              className={`btn btn-secondary dropdown-toggle ${discover.runtime.length > 0 && "text-warning"}`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
@@ -471,7 +494,7 @@ const Popular = () => {
             </div>
             {/* rating */}
             <button
-              className='btn btn-secondary dropdown-toggle'
+              className={`btn btn-secondary dropdown-toggle ${discover.rating.length > 0 && "text-warning"}`}
               type='button'
               data-bs-toggle='dropdown'
               data-bs-auto-close='outside'
