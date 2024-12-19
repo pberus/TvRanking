@@ -21,7 +21,7 @@ import imgStreaming from "../../assets/video-en-directo.png";
 const Popular = () => {
   const [discover, setDiscover] = useState({
     filmsOrSeries: "films",
-    sortBy: "popularity",
+    sortBy: "",
     yearRange: [],
     lenguage: "",
     genres: [],
@@ -169,7 +169,7 @@ const Popular = () => {
     setDiscover({
       ...discover,
       filmsOrSeries: mediaType,
-      sortBy: "popularity",
+      sortBy: "",
       yearRange: [],
       lenguage: "",
       genres: [],
