@@ -1,8 +1,40 @@
 .Card {
-    width: 200px;
+  width: 200px;
+  border: 2px solid red;
+  position: relative;
 }
 
 .Card img {
-    width: 100%;
+  width: 100%;
+  height: auto;
+}
+
+.icons {
+  width: 100%;
+  position: absolute;
+  top: 15px;
+  display: flex;
+  justify-content: space-around;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.Card:hover .icons {
+  opacity: 1;
+}
+
+.iconsButton {
+    background: none;
+    width: auto;
     height: auto;
+    border-radius: 10px;
+    border: none;
+    padding: 0;
+}
+
+.icon {
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  padding: 3px;
 }
