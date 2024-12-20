@@ -2,13 +2,13 @@ import { useSelector } from "react-redux";
 import { TabsLists } from "../../components";
 
 const Lists = () => {
-    const watchList = useSelector((state) => state.watchList)
+    const watchlist = useSelector((state) => state.watchlist)
     const seen = useSelector((state) => state.seen)
     const liked = useSelector((state) => state.liked)
 
   return (
     <div>
-      <TabsLists watchList={watchList} seen={seen} liked={liked}/>
+      <TabsLists watchlist={watchlist} seen={seen} liked={liked}/>
     </div>
   );
 };

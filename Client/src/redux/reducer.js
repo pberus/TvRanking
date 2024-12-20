@@ -39,7 +39,7 @@ const initialState = {
   //PROVIDERS
   providers: {},
   //LISTS
-  watchList: [
+  watchlist: [
     {
       id: 845781,
       title: "Red One",
