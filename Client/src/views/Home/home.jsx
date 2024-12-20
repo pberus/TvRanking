@@ -62,39 +62,55 @@ const Home = () => {
       {filmsOrSeries ? (
         <>
           <h2>En cines</h2>
-          {nowPlayingFilms.length > 0 && (
+          {nowPlayingFilms.length > 0 ? (
             <HomeCarousel tvArray={nowPlayingFilms} position='1' />
+          ) : (
+            <h4>LOADING...</h4>
           )}
           <h2>Mas populares del momento</h2>
-          {popularFilms.length > 0 && (
+          {popularFilms.length > 0 ? (
             <HomeCarousel tvArray={popularFilms} position='2' />
+          ) : (
+            <h4>LOADING...</h4>
           )}
           <h2>Mejor calificadas</h2>
-          {topRatedFilms.length > 0 && (
+          {topRatedFilms.length > 0 ? (
             <HomeCarousel tvArray={topRatedFilms} position='3' />
+          ) : (
+            <h4>LOADING...</h4>
           )}
           <h2>Proximamente</h2>
-          {upcomingFilms.length > 0 && (
+          {upcomingFilms.length > 0 ? (
             <HomeCarousel tvArray={upcomingFilms} position='4' />
+          ) : (
+            <h4>LOADING...</h4>
           )}
         </>
       ) : (
         <>
           <h2>Se estrenan hoy...</h2>
-          {airingTodaySeries.length > 0 && (
+          {airingTodaySeries.length > 0 ? (
             <HomeCarousel tvArray={airingTodaySeries} position='1' />
+          ) : (
+            <h4>LOADING...</h4>
           )}
           <h2>Mas populares del momento</h2>
-          {popularSeries.length > 0 && (
+          {popularSeries.length > 0 ? (
             <HomeCarousel tvArray={popularSeries} position='2' />
+          ) : (
+            <h4>LOADING...</h4>
           )}
           <h2>Mejor calificadas</h2>
-          {topRatedSeries.length > 0 && (
+          {topRatedSeries.length > 0 ? (
             <HomeCarousel tvArray={topRatedSeries} position='3' />
+          ) : (
+            <h4>LOADING...</h4>
           )}
           <h2>Proximamente</h2>
-          {onTheAirSeries.length > 0 && (
+          {onTheAirSeries.length > 0 ? (
             <HomeCarousel tvArray={onTheAirSeries} position='4' />
+          ) : (
+            <h4>LOADING...</h4>
           )}
         </>
       )}
