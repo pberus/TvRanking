@@ -13,16 +13,17 @@ const getApiDiscoverFilmsHandler = async (req, res) => {
       page,
     } = req.query;
 
-    let { results, totalPages } = await getApiDiscoverFilmsController(
-      sort_by,
-      year_range,
-      lenguage,
-      genres,
-      runtime,
-      rating,
-      providers,
-      page
-    );
+    let { results, totalPages, totalResults } =
+      await getApiDiscoverFilmsController(
+        sort_by,
+        year_range,
+        lenguage,
+        genres,
+        runtime,
+        rating,
+        providers,
+        page
+      );
     results = results?.map(
       ({
         id,
@@ -41,7 +42,7 @@ const getApiDiscoverFilmsHandler = async (req, res) => {
         media_type: "movie",
       })
     );
-    return res.json({ results, totalPages });
+    return res.json({ results, totalPages, totalResults });
   } catch (error) {
     console.log("error: ", error.message);
   }

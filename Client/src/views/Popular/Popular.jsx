@@ -257,6 +257,16 @@ const Popular = () => {
           >
             Series
           </button>
+          <div>
+            {(discoverFilms.totalResults || discoverSeries.totalResults) && (
+              <p className='text-secondary'>
+                {discover.filmsOrSeries === "films"
+                  ? discoverFilms.totalResults?.toLocaleString("es-ES")
+                  : discoverSeries.totalResults?.toLocaleString("es-ES")}{" "}
+                titulos
+              </p>
+            )}
+          </div>
         </div>
         <div className={style.ordeFiltButtons}>
           {/* STREAMING */}

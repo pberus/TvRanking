@@ -164,6 +164,7 @@ export const getDiscoverFilms = ({
         payload: {
           results: data.results,
           totalPages: data.totalPages,
+          totalResults: data.totalResults,
           pageExists: Boolean(page),
         },
       });
@@ -201,6 +202,7 @@ export const getDiscoverSeries = ({
         payload: {
           results: data.results,
           totalPages: data.totalPages,
+          totalResults: data.totalResults,
           pageExists: Boolean(page),
         },
       });

@@ -96,6 +96,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
             ? [...state.discoverFilms.results, ...payload.results]
             : payload.results,
           totalPages: payload.totalPages,
+          totalResults: payload.totalResults,
         },
       };
     case GET_DISCOVER_SERIES:
@@ -106,6 +107,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
             ? [...state.discoverSeries.results, ...payload.results]
             : payload.results,
           totalPages: payload.totalPages,
+          totalResults: payload.totalResults,
         },
       };
     case GET_DISCOVER_TV:

@@ -73,6 +73,7 @@ const getApiDiscoverFilmsController = async (
   return {
     results: data.results,
     totalPages: data.total_pages,
+    totalResults: data.total_results,
   };
 };
 
