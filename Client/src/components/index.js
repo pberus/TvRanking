@@ -8,6 +8,7 @@ import YearRelease from "./Slider/yearRelease";
 import Runtime from "./Slider/runtime";
 import Rating from "./Slider/rating";
 import InfiniteScrollCards from "./InfiniteScroll/infiniteScrollCards";
+import TabsLists from "./Tabs/lists";
 
 export {
   Card,
@@ -20,4 +21,5 @@ export {
   Runtime,
   Rating,
   InfiniteScrollCards,
+  TabsLists,
 };

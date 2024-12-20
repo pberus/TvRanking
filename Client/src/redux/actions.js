@@ -16,6 +16,8 @@ export const REMOVE_TV = "REMOVE_TV";
 export const GET_LENGUAGES = "GET_LENGUAGES";
 export const GET_GENRES = "GET_GENRES";
 export const GET_PROVIDERS = "GET_PROVIDERS";
+export const ADD_CARD_LIST = "ADD_CARD_LIST";
+export const REMOVE_CARD_LIST = "REMOVE_CARD_LIST";
 
 const URL = "http://localhost:3001";
 
@@ -276,6 +278,36 @@ export const getProviders = () => {
       const { data } = await axios(`${URL}/providers`);
       return dispatch({
         type: GET_PROVIDERS,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+//LISTS
+
+export const addCardList = (tv) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`${URL}/lists`, tv);
+      return dispatch({
+        type: ADD_CARD_LIST,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const removeCardList = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`${URL}/lists/${id}`);
+      return dispatch({
+        type: REMOVE_CARD_LIST,
         payload: data,
       });
     } catch (error) {
