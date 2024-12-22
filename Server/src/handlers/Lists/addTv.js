@@ -1,21 +1,24 @@
-const getApiLenguagesController = require("../../../controllers/API/Lenguages/getLenguages");
+const addTvListController = require("../../controllers/Lists/addTv");
 
-const getApiLenguagesHandler = async (req, res) => {
+const addTvListHandler = async (req, res) => {
   try {
-    let lenguages = await getApiLenguagesController();
-    lenguages = lenguages?.map(
-      ({
-        iso_639_1,
-        english_name
-      }) => ({
-        iso: iso_639_1,
-        name: english_name
-      })
-    );    
-    return res.json(lenguages);
+    const { id, title, overview, image, date, rating, media_type, list_type } =
+      req.body;
+
+    const allTv = await addTvListController(
+      id,
+      title,
+      overview,
+      image,
+      date,
+      rating,
+      media_type,
+      list_type
+    );
+    return res.json({allTv, list_type});
   } catch (error) {
     console.log("error: ", error.message);
   }
 };
 
-module.exports = getApiLenguagesHandler;
+module.exports = addTvListHandler;

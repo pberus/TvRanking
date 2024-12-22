@@ -18,6 +18,7 @@ export const GET_GENRES = "GET_GENRES";
 export const GET_PROVIDERS = "GET_PROVIDERS";
 export const ADD_CARD_LIST = "ADD_CARD_LIST";
 export const REMOVE_CARD_LIST = "REMOVE_CARD_LIST";
+export const GET_ALL_LISTS = "GET_ALL_LISTS";
 
 const URL = "http://localhost:3001";
 
@@ -294,7 +295,10 @@ export const addCardList = (tv) => {
       const { data } = await axios.post(`${URL}/lists`, tv);
       return dispatch({
         type: ADD_CARD_LIST,
-        payload: data,
+        payload: {
+          allTv: data.allTv,
+          listType: data.list_type,
+        },
       });
     } catch (error) {
       alert(error.message);
@@ -309,6 +313,24 @@ export const removeCardList = (id) => {
       return dispatch({
         type: REMOVE_CARD_LIST,
         payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const getAllLists = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/lists/`);
+      return dispatch({
+        type: GET_ALL_LISTS,
+        payload: {
+          watchlist: data.watchlist,
+          seen: data.seen,
+          liked: data.liked,
+        },
       });
     } catch (error) {
       alert(error.message);

@@ -1,7 +1,9 @@
-const getLenguages = require("../../handlers/API/Lenguages/getLenguages");
+const addTv = require("../../handlers/Lists/addTv");
+const getAll = require("../../handlers/Lists/getAll");
 
-const routerLenguages = require("express").Router();
+const routerLists = require("express").Router();
 
-routerLenguages.get("/", getLenguages);
+routerLists.post("/", addTv);
+routerLists.get("/", getAll);
 
-module.exports = routerLenguages;
+module.exports = routerLists;
