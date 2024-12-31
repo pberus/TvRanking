@@ -7,18 +7,11 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Tooltip from "@mui/material/Tooltip";
 import { addCardList, removeCardList } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
 const Card = ({ tv }) => {
   const { id, title, image } = tv;
-
-  const [isInList, setIsInList] = useState({
-    watchlist: false,
-    seen: false,
-    liked: false,
-  });
 
   const dispatch = useDispatch();
 
@@ -26,40 +19,17 @@ const Card = ({ tv }) => {
   const seen = useSelector((state) => state.seen);
   const liked = useSelector((state) => state.liked);
 
-  useEffect(() => {
-    const updatedList = { ...isInList };
-    watchlist.forEach((tv) => {
-      if (tv.id === id) {
-        updatedList[tv.list_type] = true;
-      }
-    });
-    seen.forEach((tv) => {
-      if (tv.id === id) {
-        updatedList[tv.list_type] = true;
-      }
-    });
-    liked.forEach((tv) => {
-      if (tv.id === id) {
-        updatedList[tv.list_type] = true;
-      }
-    });
-    setIsInList(updatedList);
-  }, [watchlist, seen, liked]);
+  const isInList = {
+    watchlist: watchlist.some((item) => item.id === id),
+    seen: seen.some((item) => item.id === id),
+    liked: liked.some((item) => item.id === id),
+  };
 
   const handleList = (list) => {
     if (isInList[list]) {
-      setIsInList({
-        ...isInList,
-        [list]: false,
-      });
       dispatch(removeCardList({ id, list }));
     } else {
-      setIsInList({
-        ...isInList,
-        [list]: true,
-      });
-      let obj = { ...tv };
-      obj.list_type = list;
+      const obj = { ...tv, list_type: list };
       dispatch(addCardList(obj));
     }
   };
