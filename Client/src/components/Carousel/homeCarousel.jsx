@@ -73,7 +73,7 @@ const HomeCarousel = ({ tvArray, position }) => {
           </div>
         </div>
         <button
-          className='carousel-control-prev'
+          className='carousel-control-prev w-auto'
           type='button'
           data-bs-target={`#carouselExampleIndicators${position}`}
           data-bs-slide='prev'
@@ -85,7 +85,7 @@ const HomeCarousel = ({ tvArray, position }) => {
           <span className='visually-hidden'>Previous</span>
         </button>
         <button
-          className='carousel-control-next'
+          className='carousel-control-next w-auto'
           type='button'
           data-bs-target={`#carouselExampleIndicators${position}`}
           data-bs-slide='next'

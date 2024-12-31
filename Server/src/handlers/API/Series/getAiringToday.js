@@ -18,6 +18,7 @@ const getApiAiringTodaySeriesHandler = async (req, res) => {
         image: poster_path,
         date: first_air_date,
         rating: vote_average,
+        media_type: "tv",
       })
     );
     return res.json(series);

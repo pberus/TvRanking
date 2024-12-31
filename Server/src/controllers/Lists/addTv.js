@@ -15,7 +15,8 @@ const addTvListController = async (
   if (list_type === "liked") model = Liked;
 
   const [tv, created] = await model.findOrCreate({
-    where: { id, title, overview, image, date, rating, media_type, list_type },
+    where: { id }, // Busca solo por ID
+    defaults: { title, overview, image, date, rating, media_type, list_type }, // Valores por defecto
   });
 
   if (!created) throw new Error("The title already exists!");

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
-  getAllLists,
   getDiscoverFilms,
   getDiscoverSeries,
   getGenres,
@@ -56,7 +55,6 @@ const Popular = () => {
     dispatch(getLenguages());
     dispatch(getGenres());
     dispatch(getProviders());
-    dispatch(getAllLists())
   }, [dispatch]);
 
   useEffect(() => {

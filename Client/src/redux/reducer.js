@@ -15,6 +15,7 @@ import {
   GET_TOP_RATED_FILMS,
   GET_TOP_RATED_SERIES,
   GET_UPCOMING_FILMS,
+  REMOVE_CARD_LIST,
   REMOVE_TV,
   SEARCH_TV,
 } from "./actions";
@@ -157,6 +158,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         watchlist: payload.watchlist,
         seen: payload.seen,
         liked: payload.liked,
+      };
+    case REMOVE_CARD_LIST:
+      return {
+        ...state,
+        [payload.listType]: payload.allTv,
       };
     //
     case SEARCH_TV:

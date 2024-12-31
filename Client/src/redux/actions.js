@@ -306,13 +306,18 @@ export const addCardList = (tv) => {
   };
 };
 
-export const removeCardList = (id) => {
+export const removeCardList = ({ id, list }) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`${URL}/lists/${id}`);
+      const { data } = await axios.delete(
+        `${URL}/lists?list_type=${list}&id=${id}`
+      );
       return dispatch({
         type: REMOVE_CARD_LIST,
-        payload: data,
+        payload: {
+          allTv: data.allTv,
+          listType: data.list_type,
+        },
       });
     } catch (error) {
       alert(error.message);
