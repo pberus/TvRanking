@@ -70,7 +70,9 @@ const Card = ({ tv }) => {
       <div className={style.icons}>
         <Tooltip arrow title='Watchlist'>
           <button
-            className={style.iconsButton}
+            className={`${style.iconsButton} ${
+              isInList.watchlist && "opacity-100"
+            }`}
             onClick={() => handleList("watchlist")}
           >
             <BookmarkIcon
@@ -82,7 +84,7 @@ const Card = ({ tv }) => {
         </Tooltip>
         <Tooltip arrow title={`${isInList.seen ? "No visto" : "Visto"}`}>
           <button
-            className={style.iconsButton}
+            className={`${style.iconsButton} ${isInList.seen && "opacity-100"}`}
             onClick={() => handleList("seen")}
           >
             <DoneIcon
@@ -95,7 +97,9 @@ const Card = ({ tv }) => {
           title={`${isInList.liked ? "Eliminar de me gusta" : "Me gusta"}`}
         >
           <button
-            className={style.iconsButton}
+            className={`${style.iconsButton} ${
+              isInList.liked && "opacity-100"
+            }`}
             onClick={() => handleList("liked")}
           >
             <ThumbUpIcon

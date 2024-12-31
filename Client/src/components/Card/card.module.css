@@ -16,11 +16,10 @@
   top: 15px;
   display: flex;
   justify-content: space-around;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  
 }
 
-.Card:hover .icons {
+.Card:hover .iconsButton {
   opacity: 1;
 }
 
@@ -31,6 +30,8 @@
     border-radius: 10px;
     border: none;
     padding: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .icon {
