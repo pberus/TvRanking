@@ -3,13 +3,9 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import Cards from "../Cards/cards";
 
-const InfiniteScrollCards = ({ items, totalPages, setDiscover, discover }) => {
+const InfiniteScrollLists = ({ items, totalPages, setPageList }) => {
   const [page, setPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
-
-  useEffect(() => {
-    discover.page === "" && setPage(2);
-  }, [discover.page]);
 
   useEffect(() => {
     if (page > totalPages) {
@@ -21,10 +17,7 @@ const InfiniteScrollCards = ({ items, totalPages, setDiscover, discover }) => {
 
   const fetchData = () => {
     if (page <= totalPages) {
-      setDiscover({
-        ...discover,
-        page,
-      });
+      setPageList(page);
       setPage((prevPage) => prevPage + 1);
     }
   };
@@ -48,11 +41,10 @@ const InfiniteScrollCards = ({ items, totalPages, setDiscover, discover }) => {
   );
 };
 
-InfiniteScrollCards.propTypes = {
+InfiniteScrollLists.propTypes = {
   items: PropTypes.array.isRequired,
   totalPages: PropTypes.number.isRequired,
-  setDiscover: PropTypes.func.isRequired,
-  discover: PropTypes.object.isRequired,
+  setPageList: PropTypes.func.isRequired,
 };
 
-export default InfiniteScrollCards;
+export default InfiniteScrollLists;

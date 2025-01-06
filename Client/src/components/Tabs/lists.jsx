@@ -1,4 +1,3 @@
-import * as React from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -6,7 +5,9 @@ import Box from "@mui/material/Box";
 import TvIcon from "@mui/icons-material/Tv";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import InfiniteScrollCards from "../InfiniteScroll/infiniteScrollCards";
+import InfiniteScrollLists from "../InfiniteScroll/lists";
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -37,15 +38,52 @@ function a11yProps(index) {
   };
 }
 
-export default function TabsLists({ watchList, seen, liked }) {
-  const [value, setValue] = React.useState(0);
+export default function TabsLists() {
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setPageList(1);
+  };
+
+  const watchlist = useSelector((state) => state.watchlist);
+  const seen = useSelector((state) => state.seen);
+  const liked = useSelector((state) => state.liked);
+
+  const [pageList, setPageList] = useState(1);
+  const [list, setList] = useState({
+    watchlist: [],
+    seen: [],
+    liked: [],
+  });
+
+  useEffect(() => {
+    if (watchlist.length > 0 || seen.length > 0 || liked.length > 0) {
+      const sliceList = (list) => {
+        return list.slice(0, pageList * 20);
+      };
+
+      setList({
+        watchlist: sliceList(watchlist),
+        seen: sliceList(seen),
+        liked: sliceList(liked),
+      });
+    }
+  }, [pageList, watchlist, seen, liked]);
+
+  const totalPages = (list) => {
+    return Math.ceil(list.length / 20);
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box
+      sx={{
+        ".MuiBox-root": {
+          padding: "5px",
+        },
+        width: "100%",
+      }}
+    >
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -73,25 +111,32 @@ export default function TabsLists({ watchList, seen, liked }) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <InfiniteScrollCards
-          items={watchList}
-          totalPages={1}
-          setDiscover={setDiscover}
-          discover={discover}
-        />
+        {list.watchlist.length > 0 && (
+          <InfiniteScrollLists
+            items={list.watchlist}
+            totalPages={totalPages(watchlist)}
+            setPageList={setPageList}
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        {list.seen.length > 0 && (
+          <InfiniteScrollLists
+            items={list.seen}
+            totalPages={totalPages(seen)}
+            setPageList={setPageList}
+          />
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        {list.liked.length > 0 && (
+          <InfiniteScrollLists
+            items={list.liked}
+            totalPages={totalPages(liked)}
+            setPageList={setPageList}
+          />
+        )}
       </CustomTabPanel>
     </Box>
   );
 }
-
-TabsLists.propTypes = {
-  watchList: PropTypes.array.isRequired,
-  seen: PropTypes.array.isRequired,
-  liked: PropTypes.array.isRequired,
-};

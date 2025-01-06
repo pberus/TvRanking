@@ -9,7 +9,7 @@ import {
   removeTv,
 } from "../../redux/actions";
 import {
-  InfiniteScrollCards,
+  InfiniteScrollPopular,
   Rating,
   Runtime,
   Streaming,
@@ -591,7 +591,7 @@ const Popular = () => {
       {discover.filmsOrSeries === "films" ? (
         <>
           {uniqueFilms?.length > 0 && (
-            <InfiniteScrollCards
+            <InfiniteScrollPopular
               items={uniqueFilms}
               totalPages={discoverFilms.totalPages}
               setDiscover={setDiscover}
@@ -602,7 +602,7 @@ const Popular = () => {
       ) : (
         <>
           {uniqueSeries?.length > 0 && (
-            <InfiniteScrollCards
+            <InfiniteScrollPopular
               items={uniqueSeries}
               totalPages={discoverSeries.totalPages}
               setDiscover={setDiscover}
