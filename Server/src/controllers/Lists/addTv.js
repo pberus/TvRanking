@@ -21,7 +21,10 @@ const addTvListController = async (
 
   if (!created) throw new Error("The title already exists!");
 
-  const allTv = await model.findAll();
+  const allTv = await model.findAll({
+    order: [["createdAt", "DESC"]],
+    attributes: { exclude: ["createdAt", "updatedAt"] },
+  });
   return allTv;
 };
 

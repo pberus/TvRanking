@@ -14,7 +14,10 @@ const removeTvListController = async (list_type, id) => {
   if (!registersDeleted)
     throw new Error("The title could not be deleted because it is not saved!");
 
-  const allTv = await model.findAll();
+  const allTv = await model.findAll({
+    order: [["createdAt", "DESC"]],
+    attributes: { exclude: ["createdAt", "updatedAt"] },
+  });
   return allTv;
 };
 
