@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     rating: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
     },
     media_type: {
       type: DataTypes.STRING,

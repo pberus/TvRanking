@@ -1,5 +1,7 @@
 import Card from "./Card/card";
 import Cards from "./Cards/cards";
+import ListCard from "./Card/ListCard";
+import ListCards from "./Cards/listCards";
 import Nav from "./Nav/nav";
 import SearchBar from "./SearchBar/searchBar";
 import HomeCarousel from "./Carousel/homeCarousel";
@@ -14,6 +16,8 @@ import TabsLists from "./Tabs/lists";
 export {
   Card,
   Cards,
+  ListCard,
+  ListCards,
   Nav,
   SearchBar,
   HomeCarousel,

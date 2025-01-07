@@ -1,7 +1,7 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import Cards from "../Cards/cards";
+import ListCards from "../Cards/listCards";
 
 const InfiniteScrollLists = ({ items, totalPages, setPageList }) => {
   const [page, setPage] = useState(2);
@@ -35,7 +35,7 @@ const InfiniteScrollLists = ({ items, totalPages, setPageList }) => {
           </p>
         }
       >
-        <Cards tvArray={items} />
+        <ListCards tvArray={items} />
       </InfiniteScroll>
     </div>
   );
