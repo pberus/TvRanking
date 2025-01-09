@@ -5,11 +5,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DoneIcon from "@mui/icons-material/Done";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Tooltip from "@mui/material/Tooltip";
-import {
-  addCardList,
-  cardAddedRemoved,
-  removeCardList,
-} from "../../redux/actions";
+import { addCardList, removeCardList } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
@@ -32,10 +28,8 @@ const Card = ({ tv, cardStyle }) => {
   const handleList = (list) => {
     if (isInList[list]) {
       dispatch(removeCardList({ id, list }));
-      dispatch(cardAddedRemoved(true));
     } else {
       dispatch(addCardList({ id, list, media_type }));
-      dispatch(cardAddedRemoved(true));
     }
   };
 

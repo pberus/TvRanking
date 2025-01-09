@@ -18,7 +18,6 @@ import {
   GET_UPCOMING_FILMS,
   REMOVE_CARD_LIST,
   REMOVE_TV,
-  CARD_ADDED_REMOVED,
   SEARCH_TV,
 } from "./actions";
 
@@ -47,7 +46,9 @@ const initialState = {
   watchlist: [],
   seen: [],
   liked: [],
-  cardAddedRemovedBool: false,
+  watchlistFiltered: [],
+  seenFiltered: [],
+  likedFiltered: [],
   //
   miTv: [],
   tvDetail: {},
@@ -170,12 +171,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_FILTERED_LIST:
       return {
         ...state,
-        [payload.listType]: payload.results,
-      };
-    case CARD_ADDED_REMOVED:
-      return {
-        ...state,
-        cardAddedRemovedBool: payload,
+        [`${payload.listType}Filtered`]: payload.results,
       };
     //
     case SEARCH_TV:

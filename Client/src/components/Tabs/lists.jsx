@@ -46,11 +46,16 @@ export default function TabsLists() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setPageList(1);
+    setList({
+      watchlist: [],
+      seen: [],
+      liked: [],
+    });
   };
 
-  const watchlist = useSelector((state) => state.watchlist);
-  const seen = useSelector((state) => state.seen);
-  const liked = useSelector((state) => state.liked);  
+  const watchlistFiltered = useSelector((state) => state.watchlistFiltered);
+  const seenFiltered = useSelector((state) => state.seenFiltered);
+  const likedFiltered = useSelector((state) => state.likedFiltered);
 
   const [pageList, setPageList] = useState(1);
   const [list, setList] = useState({
@@ -65,20 +70,20 @@ export default function TabsLists() {
     };
 
     setList({
-      watchlist: sliceList(watchlist),
-      seen: sliceList(seen),
-      liked: sliceList(liked),
+      watchlist: sliceList(watchlistFiltered),
+      seen: sliceList(seenFiltered),
+      liked: sliceList(likedFiltered),
     });
-  }, [pageList, watchlist, seen, liked]);
+  }, [pageList, watchlistFiltered, seenFiltered, likedFiltered]);
 
   const totalPages = (list) => {
     return Math.ceil(list.length / 20);
   };
 
   let totalResults = 0;
-  if (value === 0) totalResults = watchlist.length;
-  else if (value === 1) totalResults = seen.length;
-  else totalResults = liked.length;
+  if (value === 0) totalResults = watchlistFiltered.length;
+  else if (value === 1) totalResults = seenFiltered.length;
+  else totalResults = likedFiltered.length;
 
   return (
     <Box
@@ -123,7 +128,7 @@ export default function TabsLists() {
         {list.watchlist.length > 0 && (
           <InfiniteScrollLists
             items={list.watchlist}
-            totalPages={totalPages(watchlist)}
+            totalPages={totalPages(watchlistFiltered)}
             setPageList={setPageList}
           />
         )}
@@ -132,7 +137,7 @@ export default function TabsLists() {
         {list.seen.length > 0 && (
           <InfiniteScrollLists
             items={list.seen}
-            totalPages={totalPages(seen)}
+            totalPages={totalPages(seenFiltered)}
             setPageList={setPageList}
           />
         )}
@@ -141,7 +146,7 @@ export default function TabsLists() {
         {list.liked.length > 0 && (
           <InfiniteScrollLists
             items={list.liked}
-            totalPages={totalPages(liked)}
+            totalPages={totalPages(likedFiltered)}
             setPageList={setPageList}
           />
         )}

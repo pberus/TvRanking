@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
-  cardAddedRemoved,
   getFilteredList,
   getGenres,
   getLenguages,
@@ -14,10 +13,6 @@ import iconoCerrar from "../../assets/cerrar-simbolo-de-boton-circular.png";
 import style from "./lists.module.css";
 
 const ToolbarLists = ({ list, totalResults }) => {
-  const cardAddedRemovedBool = useSelector(
-    (state) => state.cardAddedRemovedBool
-  );
-
   const [filtersList, setFiltersList] = useState({
     filmsOrSeries: "movie",
     sortBy: "",
@@ -72,13 +67,6 @@ const ToolbarLists = ({ list, totalResults }) => {
     dispatch(getFilteredList(filtersList));
     //dispatch(removeTv("discoverSeries")); TENGO QUE ELIMINAR LAS LISTAS NO ACTIVAS?
   }, [dispatch, filtersList]);
-
-  useEffect(() => {
-    if (cardAddedRemovedBool) {
-      dispatch(getFilteredList(filtersList));
-      dispatch(cardAddedRemoved(false));
-    }
-  }, [dispatch, filtersList, cardAddedRemovedBool]);
 
   useEffect(() => {
     setFiltersList((prevValues) => ({

@@ -20,7 +20,6 @@ export const ADD_CARD_LIST = "ADD_CARD_LIST";
 export const REMOVE_CARD_LIST = "REMOVE_CARD_LIST";
 export const GET_ALL_LISTS = "GET_ALL_LISTS";
 export const GET_FILTERED_LIST = "GET_FILTERED_LIST";
-export const CARD_ADDED_REMOVED = "CARD_ADDED_REMOVED";
 
 const URL = "http://localhost:3001";
 
@@ -383,14 +382,6 @@ export const getFilteredList = ({
     } catch (error) {
       alert(error.message);
     }
-  };
-};
-
-//para saber cuando se agrega o se quita una card y asi poder actualizar la lista de cards en lists con los filtros
-export const cardAddedRemoved = (bool) => {
-  return {
-    type: CARD_ADDED_REMOVED,
-    payload: bool,
   };
 };
 
