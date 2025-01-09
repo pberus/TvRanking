@@ -48,7 +48,7 @@ const getApiDiscoverFilmsController = async (
     }
 
     if (genres) {
-      genres = genres.replace(new RegExp(",", "g"), "%2C");
+      genres = genres.replace(new RegExp(",", "g"), "%7C");
       discoverURL += `&with_genres=${genres}`;
     }
 
@@ -63,7 +63,7 @@ const getApiDiscoverFilmsController = async (
     }
 
     if (providers) {
-      providers = providers.replace(new RegExp(",", "g"), "%2C");
+      providers = providers.replace(new RegExp(",", "g"), "%7C");
       discoverURL += `&watch_region=AR&with_watch_providers=${providers}`;
     }
   }

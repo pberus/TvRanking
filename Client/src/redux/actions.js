@@ -19,6 +19,8 @@ export const GET_PROVIDERS = "GET_PROVIDERS";
 export const ADD_CARD_LIST = "ADD_CARD_LIST";
 export const REMOVE_CARD_LIST = "REMOVE_CARD_LIST";
 export const GET_ALL_LISTS = "GET_ALL_LISTS";
+export const GET_FILTERED_LIST = "GET_FILTERED_LIST";
+export const CARD_ADDED_REMOVED = "CARD_ADDED_REMOVED";
 
 const URL = "http://localhost:3001";
 
@@ -289,10 +291,14 @@ export const getProviders = () => {
 
 //LISTS
 
-export const addCardList = (tv) => {
+export const addCardList = ({ id, list, media_type }) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`${URL}/lists`, tv);
+      const { data } = await axios.post(`${URL}/lists`, {
+        id,
+        list,
+        media_type,
+      });
       return dispatch({
         type: ADD_CARD_LIST,
         payload: {
@@ -340,6 +346,51 @@ export const getAllLists = () => {
     } catch (error) {
       alert(error.message);
     }
+  };
+};
+
+export const getFilteredList = ({
+  filmsOrSeries,
+  sortBy,
+  yearRange,
+  lenguage,
+  genres,
+  runtime,
+  rating,
+  providers,
+  list,
+}) => {
+  return async (dispatch) => {
+    try {
+      let listURL = `${URL}/lists/filter?media_type=${filmsOrSeries}&list=${list}`;
+
+      if (sortBy) listURL += `&sort_by=${sortBy}`;
+      if (yearRange.length > 0) listURL += `&year_range=${yearRange}`;
+      if (lenguage) listURL += `&lenguage=${lenguage}`;
+      if (genres.length > 0) listURL += `&genres=${genres}`;
+      if (runtime.length > 0) listURL += `&runtime=${runtime}`;
+      if (rating.length > 0) listURL += `&rating=${rating}`;
+      if (providers.length > 0) listURL += `&providers=${providers}`;
+
+      const { data } = await axios(listURL);
+      return dispatch({
+        type: GET_FILTERED_LIST,
+        payload: {
+          results: data,
+          listType: list,
+        },
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+//para saber cuando se agrega o se quita una card y asi poder actualizar la lista de cards en lists con los filtros
+export const cardAddedRemoved = (bool) => {
+  return {
+    type: CARD_ADDED_REMOVED,
+    payload: bool,
   };
 };
 

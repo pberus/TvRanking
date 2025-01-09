@@ -25,16 +25,9 @@ const getApiDiscoverSeriesHandler = async (req, res) => {
         page
       );
     results = results?.map(
-      ({
+      ({ id, name, overview, poster_path, first_air_date, vote_average }) => ({
         id,
-        original_name,
-        overview,
-        poster_path,
-        first_air_date,
-        vote_average,
-      }) => ({
-        id,
-        title: original_name,
+        title: name,
         overview,
         image: poster_path,
         date: first_air_date,

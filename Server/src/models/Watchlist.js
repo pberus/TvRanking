@@ -18,7 +18,6 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     date: {
       type: DataTypes.STRING,
@@ -34,6 +33,36 @@ module.exports = (sequelize) => {
     list_type: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    genres: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      allowNull: false,
+    },
+    homepage: {
+      type: DataTypes.STRING,
+    },
+    lenguage: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    popularity: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    vote_count: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    runtime: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    revenue: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+    },
+    providers: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
     },
   });
 };

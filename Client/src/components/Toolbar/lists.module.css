@@ -1,0 +1,67 @@
+.popular {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  border-bottom: 2px solid gray;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav .filmsSeriesButtons {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.nav .ordeFiltButtons {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.imgStreaming {
+  width: 25px;
+}
+
+.spanStreaming {
+  font-size: 0.8em;
+  position: relative;
+  bottom: 6px;
+  left: 5px;
+  border: 1px solid gray;
+  border-radius: 15px;
+  padding-left: 2px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+}
+
+.activeFilters {
+  font-size: 0.7em;
+  color: #f6c11a;
+  position: relative;
+  bottom: 8px;
+  left: 5px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.dropdownList {
+  max-height: 400px; /* Ajusta según el tamaño que prefieras */
+  overflow-y: auto; /* Habilita el scroll cuando los elementos excedan el límite de altura */
+  width: 400px;
+}
+
+.dropdownList .search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 380px;
+}

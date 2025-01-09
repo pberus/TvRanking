@@ -20,7 +20,7 @@ export default function ListCard({ tv }) {
         height: "15rem",
       }}
     >
-      <TvCard tv={tv} />
+      <TvCard tv={tv} cardStyle={true} />
       <CardContent sx={{ width: "70%", "&:last-child": { paddingBottom: 0 } }}>
         <Typography
           variant='h5'
@@ -55,9 +55,24 @@ export default function ListCard({ tv }) {
             height: "20%",
             margin: 0,
             padding: 0,
+            display: "flex",
+            justifyContent: "space-around",
           }}
         >
-          <Button size='small'>Share</Button>
+          <Button variant='contained' color='dark' size='small'>
+            Share
+          </Button>
+          {tv.homepage && (
+            <Button
+              href={tv.homepage}
+              target='_blank'
+              variant='contained'
+              color='dark'
+              size='small'
+            >
+              Visit
+            </Button>
+          )}
         </CardActions>
       </CardContent>
     </Card>

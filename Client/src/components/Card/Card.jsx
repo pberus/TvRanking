@@ -5,13 +5,17 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DoneIcon from "@mui/icons-material/Done";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Tooltip from "@mui/material/Tooltip";
-import { addCardList, removeCardList } from "../../redux/actions";
+import {
+  addCardList,
+  cardAddedRemoved,
+  removeCardList,
+} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
-const Card = ({ tv }) => {
-  const { id, title, image } = tv;
+const Card = ({ tv, cardStyle }) => {
+  const { id, title, image, media_type } = tv;
 
   const dispatch = useDispatch();
 
@@ -28,14 +32,15 @@ const Card = ({ tv }) => {
   const handleList = (list) => {
     if (isInList[list]) {
       dispatch(removeCardList({ id, list }));
+      dispatch(cardAddedRemoved(true));
     } else {
-      const obj = { ...tv, list_type: list };
-      dispatch(addCardList(obj));
+      dispatch(addCardList({ id, list, media_type }));
+      dispatch(cardAddedRemoved(true));
     }
   };
 
   return (
-    <div className={style.Card}>
+    <div className={`${style.Card} ${cardStyle && style.listCard}`}>
       <img src={image ? IMAGE_URL + image : noImageAvailable} alt={title} />
       <div className={style.icons}>
         <Tooltip arrow title='Watchlist'>
@@ -84,6 +89,7 @@ const Card = ({ tv }) => {
 
 Card.propTypes = {
   tv: PropTypes.object.isRequired,
+  cardStyle: PropTypes.bool,
 };
 
 export default Card;

@@ -2,20 +2,10 @@ const addTvListController = require("../../controllers/Lists/addTv");
 
 const addTvListHandler = async (req, res) => {
   try {
-    const { id, title, overview, image, date, rating, media_type, list_type } =
-      req.body;
+    const { id, list, media_type } = req.body;
 
-    const allTv = await addTvListController(
-      id,
-      title,
-      overview,
-      image,
-      date,
-      rating,
-      media_type,
-      list_type
-    );
-    return res.json({allTv, list_type});
+    const allTv = await addTvListController(id, list, media_type);
+    return res.json({ allTv, list_type: list });
   } catch (error) {
     console.log("error: ", error.message);
   }

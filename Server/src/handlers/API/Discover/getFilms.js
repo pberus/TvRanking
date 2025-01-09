@@ -25,16 +25,9 @@ const getApiDiscoverFilmsHandler = async (req, res) => {
         page
       );
     results = results?.map(
-      ({
+      ({ id, title, overview, poster_path, release_date, vote_average }) => ({
         id,
-        original_title,
-        overview,
-        poster_path,
-        release_date,
-        vote_average,
-      }) => ({
-        id,
-        title: original_title,
+        title,
         overview,
         image: poster_path,
         date: release_date,

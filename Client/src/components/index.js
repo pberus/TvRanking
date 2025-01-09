@@ -12,6 +12,7 @@ import Rating from "./Slider/rating";
 import InfiniteScrollPopular from "./InfiniteScroll/popular";
 import InfiniteScrollLists from "./InfiniteScroll/lists";
 import TabsLists from "./Tabs/lists";
+import ToolbarLists from "./Toolbar/lists";
 
 export {
   Card,
@@ -28,4 +29,5 @@ export {
   InfiniteScrollPopular,
   InfiniteScrollLists,
   TabsLists,
+  ToolbarLists,
 };
