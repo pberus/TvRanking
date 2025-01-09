@@ -214,7 +214,7 @@ const ToolbarLists = ({ list, totalResults }) => {
             Series
           </button>
           <div>
-            {totalResults && (
+            {totalResults > 0 && (
               <p className='text-secondary'>
                 {totalResults?.toLocaleString("es-ES")} titulos
               </p>

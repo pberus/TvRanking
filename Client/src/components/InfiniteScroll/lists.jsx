@@ -21,7 +21,6 @@ const InfiniteScrollLists = ({ items, totalPages, setPageList }) => {
       setPage((prevPage) => prevPage + 1);
     }
   };
-
   return (
     <div>
       <InfiniteScroll
@@ -31,7 +30,7 @@ const InfiniteScrollLists = ({ items, totalPages, setPageList }) => {
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
-            <b>¡Lo sentimos! No hay mas contenido para mostrar.</b>
+            <b>¡Llegaste al final de la lista!</b>
           </p>
         }
       >

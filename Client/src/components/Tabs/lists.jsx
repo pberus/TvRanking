@@ -47,9 +47,9 @@ export default function TabsLists() {
     setValue(newValue);
     setPageList(1);
     setList({
-      watchlist: [],
-      seen: [],
-      liked: [],
+      watchlist: "",
+      seen: "",
+      liked: "",
     });
   };
 
@@ -59,9 +59,9 @@ export default function TabsLists() {
 
   const [pageList, setPageList] = useState(1);
   const [list, setList] = useState({
-    watchlist: [],
-    seen: [],
-    liked: [],
+    watchlist: "",
+    seen: "",
+    liked: "",
   });
 
   useEffect(() => {
@@ -125,31 +125,40 @@ export default function TabsLists() {
         totalResults={totalResults}
       />
       <CustomTabPanel value={value} index={0}>
-        {list.watchlist.length > 0 && (
-          <InfiniteScrollLists
-            items={list.watchlist}
-            totalPages={totalPages(watchlistFiltered)}
-            setPageList={setPageList}
-          />
-        )}
+        {list.watchlist &&
+          (list.watchlist.length > 0 ? (
+            <InfiniteScrollLists
+              items={list.watchlist}
+              totalPages={totalPages(watchlistFiltered)}
+              setPageList={setPageList}
+            />
+          ) : (
+            <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+          ))}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        {list.seen.length > 0 && (
-          <InfiniteScrollLists
-            items={list.seen}
-            totalPages={totalPages(seenFiltered)}
-            setPageList={setPageList}
-          />
-        )}
+        {list.seen &&
+          (list.seen.length > 0 ? (
+            <InfiniteScrollLists
+              items={list.seen}
+              totalPages={totalPages(seenFiltered)}
+              setPageList={setPageList}
+            />
+          ) : (
+            <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+          ))}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        {list.liked.length > 0 && (
-          <InfiniteScrollLists
-            items={list.liked}
-            totalPages={totalPages(likedFiltered)}
-            setPageList={setPageList}
-          />
-        )}
+        {list.liked &&
+          (list.liked.length > 0 ? (
+            <InfiniteScrollLists
+              items={list.liked}
+              totalPages={totalPages(likedFiltered)}
+              setPageList={setPageList}
+            />
+          ) : (
+            <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+          ))}
       </CustomTabPanel>
     </Box>
   );
