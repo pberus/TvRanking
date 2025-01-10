@@ -17,7 +17,7 @@ export default function ListCard({ tv }) {
   const slugTitle = title
     .toLowerCase()
     .replace(/[\s]+/g, "-")
-    .replace(/[^\w-]+/g, "");
+    .replace(/[^a-z0-9áéíóúüñ-]+/gi, "");
 
   return (
     <Card
@@ -77,7 +77,7 @@ export default function ListCard({ tv }) {
           }}
         >
           <Button variant='contained' color='dark' size='small'>
-            Share
+            Compartir
           </Button>
           {homepage && (
             <Button
@@ -87,7 +87,7 @@ export default function ListCard({ tv }) {
               color='dark'
               size='small'
             >
-              Visit
+              Visitar
             </Button>
           )}
         </CardActions>

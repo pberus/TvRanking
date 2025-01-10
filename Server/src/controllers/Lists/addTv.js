@@ -3,7 +3,7 @@ const axios = require("axios");
 
 const { API_KEY } = process.env;
 const URL = (id, media) =>
-  `https://api.themoviedb.org/3/${media}/${id}?api_key=${API_KEY}&language=en-US&append_to_response=watch%2Fproviders`;
+  `https://api.themoviedb.org/3/${media}/${id}?api_key=${API_KEY}&language=es-AR&append_to_response=watch%2Fproviders`;
 
 const addTvListController = async (id, list, media_type) => {
   const { data } = await axios(URL(id, media_type));

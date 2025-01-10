@@ -1,8 +1,8 @@
 const axios = require("axios");
 
 const { API_KEY } = process.env;
-const FILMS_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&include_video=false&language=en-US`;
-const TRENDING_URL = `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}&language=en-US`;
+const FILMS_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&include_adult=false&include_video=false&language=es-AR`;
+const TRENDING_URL = `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}&language=es-AR`;
 
 const getApiDiscoverFilmsController = async (
   sortBy,

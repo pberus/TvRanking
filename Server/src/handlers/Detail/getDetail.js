@@ -7,7 +7,7 @@ const getDetailHandler = async (req, res) => {
     const detail = await getDetailController(title, media_type);
     return res.json(detail);
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error detail handler: ", error.message);
   }
 };
 

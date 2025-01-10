@@ -6,7 +6,8 @@ import Nav from "./Nav/nav";
 import SearchBar from "./SearchBar/searchBar";
 import HomeCarousel from "./Carousel/homeCarousel";
 import Streaming from "./Carousel/streaming";
-import DetailCarousel from "./Carousel/detail";
+import DetailImagesCarousel from "./Carousel/detailImages";
+import DetailCastCarousel from "./Carousel/detailCast";
 import YearRelease from "./Slider/yearRelease";
 import Runtime from "./Slider/runtime";
 import Rating from "./Slider/rating";
@@ -24,7 +25,8 @@ export {
   SearchBar,
   HomeCarousel,
   Streaming,
-  DetailCarousel,
+  DetailImagesCarousel,
+  DetailCastCarousel,
   YearRelease,
   Runtime,
   Rating,

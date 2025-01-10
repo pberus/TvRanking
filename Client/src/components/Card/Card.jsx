@@ -37,7 +37,7 @@ const Card = ({ tv, cardStyle }) => {
   const slugTitle = title
     .toLowerCase()
     .replace(/[\s]+/g, "-")
-    .replace(/[^\w-]+/g, "");
+    .replace(/[^a-z0-9áéíóúüñ-]+/gi, "");
 
   return (
     <div className={`${style.Card} ${cardStyle && style.listCard}`}>
