@@ -5,6 +5,8 @@ const SEARCH_URL = (media, title, year, yearQuery) =>
   `https://api.themoviedb.org/3/search/${media}?api_key=${API_KEY}&include_adult=false&language=en-US&page=1&${yearQuery}=${year}&query=${title}`;
 const DETAILS_URL = (media, id) =>
   `https://api.themoviedb.org/3/${media}/${id}?api_key=${API_KEY}&language=en-US`;
+const IMAGES_URL = (media, id) =>
+  `https://api.themoviedb.org/3/${media}/${id}/images?api_key=${API_KEY}`;
 
 const getDetailController = async (title, media_type) => {
   const array = title.split("-");
@@ -19,7 +21,12 @@ const getDetailController = async (title, media_type) => {
 
   const detailData = await axios(DETAILS_URL(media_type, id));
 
-  return detailData.data;
+  const imagesData = await axios(IMAGES_URL(media_type, id));
+  const images = imagesData.data.backdrops
+    .slice(0, 5)
+    .map((image) => image.file_path);
+
+  return { ...detailData.data, images };
 };
 
 module.exports = getDetailController;
