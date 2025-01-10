@@ -2,6 +2,7 @@ import {
   ADD_CARD_LIST,
   GET_AIRING_TODAY_SERIES,
   GET_ALL_LISTS,
+  GET_DETAIL,
   GET_DISCOVER_FILMS,
   GET_DISCOVER_SERIES,
   GET_DISCOVER_TV,
@@ -17,6 +18,7 @@ import {
   GET_TOP_RATED_SERIES,
   GET_UPCOMING_FILMS,
   REMOVE_CARD_LIST,
+  REMOVE_DETAIL,
   REMOVE_TV,
   SEARCH_TV,
 } from "./actions";
@@ -49,6 +51,8 @@ const initialState = {
   watchlistFiltered: [],
   seenFiltered: [],
   likedFiltered: [],
+  //DETAIL
+  detail: {},
   //
   miTv: [],
   tvDetail: {},
@@ -172,6 +176,17 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         [`${payload.listType}Filtered`]: payload.results,
+      };
+    //DETAIL
+    case GET_DETAIL:
+      return {
+        ...state,
+        detail: payload,
+      };
+    case REMOVE_DETAIL:
+      return {
+        ...state,
+        detail: {},
       };
     //
     case SEARCH_TV:

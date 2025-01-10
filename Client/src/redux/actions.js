@@ -20,6 +20,8 @@ export const ADD_CARD_LIST = "ADD_CARD_LIST";
 export const REMOVE_CARD_LIST = "REMOVE_CARD_LIST";
 export const GET_ALL_LISTS = "GET_ALL_LISTS";
 export const GET_FILTERED_LIST = "GET_FILTERED_LIST";
+export const GET_DETAIL = "GET_DETAIL";
+export const REMOVE_DETAIL = "REMOVE_DETAIL";
 
 const URL = "http://localhost:3001";
 
@@ -382,6 +384,30 @@ export const getFilteredList = ({
     } catch (error) {
       alert(error.message);
     }
+  };
+};
+
+//DETAIL
+
+export const getDetail = (title, media_type) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(
+        `${URL}/detail?title=${title}&media_type=${media_type}`
+      );
+      return dispatch({
+        type: GET_DETAIL,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const removeDetail = () => {
+  return {
+    type: REMOVE_DETAIL,
   };
 };
 

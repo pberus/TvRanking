@@ -65,7 +65,6 @@ const ToolbarLists = ({ list, totalResults }) => {
     }
     setActiveFilters(count);
     dispatch(getFilteredList(filtersList));
-    //dispatch(removeTv("discoverSeries")); TENGO QUE ELIMINAR LAS LISTAS NO ACTIVAS?
   }, [dispatch, filtersList]);
 
   useEffect(() => {

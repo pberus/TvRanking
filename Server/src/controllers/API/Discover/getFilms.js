@@ -67,7 +67,6 @@ const getApiDiscoverFilmsController = async (
       discoverURL += `&watch_region=AR&with_watch_providers=${providers}`;
     }
   }
-  console.log(discoverURL);
 
   const { data } = await axios(discoverURL);
   return {

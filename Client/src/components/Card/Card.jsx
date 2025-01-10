@@ -7,11 +7,12 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Tooltip from "@mui/material/Tooltip";
 import { addCardList, removeCardList } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
 const Card = ({ tv, cardStyle }) => {
-  const { id, title, image, media_type } = tv;
+  const { id, title, image, media_type, date } = tv;
 
   const dispatch = useDispatch();
 
@@ -33,9 +34,20 @@ const Card = ({ tv, cardStyle }) => {
     }
   };
 
+  const slugTitle = title
+    .toLowerCase()
+    .replace(/[\s]+/g, "-")
+    .replace(/[^\w-]+/g, "");
+
   return (
     <div className={`${style.Card} ${cardStyle && style.listCard}`}>
-      <img src={image ? IMAGE_URL + image : noImageAvailable} alt={title} />
+      <Link
+        to={`/${media_type === "movie" ? "pelicula" : "serie"}/${slugTitle}-${
+          date.split("-")[0]
+        }`}
+      >
+        <img src={image ? IMAGE_URL + image : noImageAvailable} alt={title} />
+      </Link>
       <div className={style.icons}>
         <Tooltip arrow title='Watchlist'>
           <button

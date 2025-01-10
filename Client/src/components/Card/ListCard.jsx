@@ -7,8 +7,18 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TvCard from "./card";
 import tmdbIcono from "../../assets/tmdb-logo.svg";
+import { Link } from "react-router-dom";
 
 export default function ListCard({ tv }) {
+  const { title, date, overview, media_type, rating, homepage } = tv;
+
+  const year = date.split("-")[0];
+
+  const slugTitle = title
+    .toLowerCase()
+    .replace(/[\s]+/g, "-")
+    .replace(/[^\w-]+/g, "");
+
   return (
     <Card
       sx={{
@@ -27,13 +37,20 @@ export default function ListCard({ tv }) {
           component='div'
           sx={{ fontSize: "1.2rem", height: "25%", overflow: "hidden" }}
         >
-          <span>{`${tv.title} (${tv.date.split("-")[0]})`}</span>
+          <Link
+            to={`/${
+              media_type === "movie" ? "pelicula" : "serie"
+            }/${slugTitle}-${year}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <span>{`${title} (${year})`}</span>
+          </Link>
         </Typography>
         <Typography
           variant='body2'
           sx={{ color: "text.secondary", height: "35%", overflow: "hidden" }}
         >
-          {tv.overview}
+          {overview}
         </Typography>
         <Typography
           variant='body2'
@@ -47,7 +64,7 @@ export default function ListCard({ tv }) {
         >
           <img src={tmdbIcono} alt='tmdb-logo' width='60' />
           <span className='d-flex align-items-center mb-0'>
-            {tv.rating.toFixed(2)}
+            {rating.toFixed(2)}
           </span>
         </Typography>
         <CardActions
@@ -62,9 +79,9 @@ export default function ListCard({ tv }) {
           <Button variant='contained' color='dark' size='small'>
             Share
           </Button>
-          {tv.homepage && (
+          {homepage && (
             <Button
-              href={tv.homepage}
+              href={homepage}
               target='_blank'
               variant='contained'
               color='dark'
