@@ -9,6 +9,8 @@ const IMAGES_URL = (media, id) =>
   `https://api.themoviedb.org/3/${media}/${id}/images?api_key=${API_KEY}`;
 const CAST_URL = (media, id) =>
   `https://api.themoviedb.org/3/${media}/${id}/credits?api_key=${API_KEY}&language=es-AR`;
+const PROVIDERS_URL = (media, id) =>
+  `https://api.themoviedb.org/3/${media}/${id}/watch/providers?api_key=${API_KEY}`;
 
 const getDetailController = async (title, media_type) => {
   const array = title.split("-");
@@ -19,8 +21,7 @@ const getDetailController = async (title, media_type) => {
     media_type === "movie" ? "primary_release_year" : "first_air_date_year";
 
   const searchData = await axios(SEARCH_URL(media_type, name, year, yearQuery));
-  console.log(SEARCH_URL(media_type, name, year, yearQuery));
-  
+
   const id = searchData.data.results[0].id;
 
   const detailData = await axios(DETAILS_URL(media_type, id));
@@ -36,8 +37,35 @@ const getDetailController = async (title, media_type) => {
     character: act.character,
     image: act.profile_path,
   }));
+  const director = castData.data.crew
+    .filter((per) => per.job === "Director")
+    .map((per) => per.name)[0];
 
-  return { ...detailData.data, images, cast };
+  const providersData = await axios(PROVIDERS_URL(media_type, id));
+  const providers = providersData.data.results.AR
+    ? {
+        streaming: [
+          ...(providersData.data.results.AR.flatrate || []).map((provider) => ({
+            name: provider.provider_name,
+            image: provider.logo_path,
+          })),
+        ],
+        buy: [
+          ...(providersData.data.results.AR.buy || []).map((provider) => ({
+            name: provider.provider_name,
+            image: provider.logo_path,
+          })),
+        ],
+        rent: [
+          ...(providersData.data.results.AR.rent || []).map((provider) => ({
+            name: provider.provider_name,
+            image: provider.logo_path,
+          })),
+        ],
+      }
+    : [];
+
+  return { ...detailData.data, images, cast, director, providers, media_type };
 };
 
 module.exports = getDetailController;
