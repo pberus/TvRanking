@@ -8,6 +8,9 @@ const getDetailHandler = async (req, res) => {
     return res.json(detail);
   } catch (error) {
     console.log("error detail handler: ", error.message);
+    return error.message.includes("película")
+    ? res.status(404).send(error.message)
+    : res.status(500).send(error.message);
   }
 };
 

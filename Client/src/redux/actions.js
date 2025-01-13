@@ -400,7 +400,14 @@ export const getDetail = (title, media_type) => {
         payload: data,
       });
     } catch (error) {
-      alert(error.message);
+      console.log(error);
+      if (error.name === "AxiosError") {
+        return dispatch({
+          type: GET_DETAIL,
+          payload:
+            "No se encontró información de la película o serie solicitada!",
+        });
+      }
     }
   };
 };

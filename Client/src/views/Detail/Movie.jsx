@@ -9,8 +9,8 @@ import {
 } from "../../redux/actions";
 import noImageAvailable from "../../assets/no_image_available.jpg";
 import {
-  DetailCastCarousel,
   DetailImagesCarousel,
+  TabsDetailInfo,
   TabsDetailProviders,
 } from "../../components";
 import {
@@ -56,6 +56,12 @@ const MovieDetail = () => {
     director,
     providers,
     homepage,
+    production_companies,
+    production_countries,
+    original_language,
+    origin_country,
+    spoken_languages,
+    status,
   } = detail;
 
   useEffect(() => {
@@ -88,7 +94,11 @@ const MovieDetail = () => {
   const [loading, setLoading] = useState(true);
 
   if (loading) {
-    return <h4>Cargando detalles de la película...</h4>; // Muestra un mensaje de carga
+    return <h4 className='ms-3'>Cargando detalles de la película...</h4>; // Muestra un mensaje de carga
+  }
+
+  if (typeof detail === "string") {
+    return <h4 className='ms-3'>{detail}</h4>; // Muestra un mensaje de error
   }
 
   return (
@@ -139,11 +149,13 @@ const MovieDetail = () => {
               </p>
             </div>
             <div>
-              <button className='me-2'>
-                <Link to={homepage} target='blank'>
-                  <Language />
-                </Link>
-              </button>
+              {homepage && (
+                <button className='me-2'>
+                  <Link to={homepage} target='blank'>
+                    <Language />
+                  </Link>
+                </button>
+              )}
               <button>
                 <Share />
               </button>
@@ -214,7 +226,19 @@ const MovieDetail = () => {
           </div>
         </div>
       </div>
-      {cast?.length > 0 && <DetailCastCarousel cast={cast} />}
+      <div className='d-flex justify-content-center'>
+        <TabsDetailInfo
+          info={{
+            cast,
+            production_companies,
+            production_countries,
+            original_language,
+            origin_country,
+            spoken_languages,
+            status,
+          }}
+        />
+      </div>
       {images?.length > 0 && <DetailImagesCarousel images={images} />}
     </div>
   );

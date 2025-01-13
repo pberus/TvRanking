@@ -15,6 +15,7 @@ import InfiniteScrollPopular from "./InfiniteScroll/popular";
 import InfiniteScrollLists from "./InfiniteScroll/lists";
 import TabsLists from "./Tabs/lists";
 import TabsDetailProviders from "./Tabs/detailProviders";
+import TabsDetailInfo from "./Tabs/detailInfo";
 import ToolbarLists from "./Toolbar/lists";
 
 export {
@@ -35,5 +36,6 @@ export {
   InfiniteScrollLists,
   TabsLists,
   TabsDetailProviders,
+  TabsDetailInfo,
   ToolbarLists,
 };

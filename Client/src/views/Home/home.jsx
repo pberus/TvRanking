@@ -28,6 +28,8 @@ const Home = () => {
   const popularSeries = useSelector((state) => state.popularSeries);
   const topRatedSeries = useSelector((state) => state.topRatedSeries);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (filmsOrSeries) {
       dispatch(getNowPlayingFilms());
@@ -40,7 +42,17 @@ const Home = () => {
       dispatch(getPopularSeries());
       dispatch(getTopRatedSeries());
     }
+    setLoading(false);
   }, [dispatch, filmsOrSeries]);
+
+  if (loading) {
+    return (
+      <div>
+        <h1>Tv Ranking</h1>
+        <h4>Cargando inicio...</h4>; // Muestra un mensaje de carga
+      </div>
+    );
+  }
 
   return (
     <div>

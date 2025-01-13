@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import noImageAvailable from "../../assets/no_image_available.jpg";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -14,7 +15,7 @@ const DetailCastCarousel = ({ cast }) => {
   const castChunks = chunkArray(cast, 6); // Divide el array en grupos de 6
 
   return (
-    <div className='bg-dark'>
+    <div>
       <div id='carouselExample' className='carousel slide'>
         <div className='carousel-inner'>
           {castChunks.map((chunk, index) => (
@@ -24,13 +25,15 @@ const DetailCastCarousel = ({ cast }) => {
             >
               <div className='d-flex justify-content-around'>
                 {chunk.map((actor, i) => (
-                  <div key={i} className='text-center text-light'>
+                  <div key={i} className='text-center'>
                     <p>
                       <strong>{actor.name}</strong>
                     </p>
                     <p>{actor.character}</p>
                     <img
-                      src={IMAGE_URL + actor.image}
+                      src={
+                        actor.image ? IMAGE_URL + actor.image : noImageAvailable
+                      }
                       className='d-block w-100'
                       alt={`image of ${actor.name}`}
                     />
@@ -41,7 +44,7 @@ const DetailCastCarousel = ({ cast }) => {
           ))}
         </div>
         <button
-          className='carousel-control-prev w-auto'
+          className='carousel-control-prev w-auto bg-secondary-subtle'
           type='button'
           data-bs-target='#carouselExample'
           data-bs-slide='prev'
@@ -53,7 +56,7 @@ const DetailCastCarousel = ({ cast }) => {
           <span className='visually-hidden'>Previous</span>
         </button>
         <button
-          className='carousel-control-next w-auto'
+          className='carousel-control-next w-auto bg-secondary-subtle'
           type='button'
           data-bs-target='#carouselExample'
           data-bs-slide='next'

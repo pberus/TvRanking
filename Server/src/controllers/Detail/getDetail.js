@@ -22,6 +22,11 @@ const getDetailController = async (title, media_type) => {
 
   const searchData = await axios(SEARCH_URL(media_type, name, year, yearQuery));
 
+  if (!searchData.data.results.length)
+    throw new Error(
+      "No se encontró información de la película o serie solicitada!"
+    );
+
   const id = searchData.data.results[0].id;
 
   const detailData = await axios(DETAILS_URL(media_type, id));
@@ -63,7 +68,7 @@ const getDetailController = async (title, media_type) => {
           })),
         ],
       }
-    : [];
+    : {};
 
   return { ...detailData.data, images, cast, director, providers, media_type };
 };

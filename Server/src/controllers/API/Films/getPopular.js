@@ -5,8 +5,6 @@ const URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&langu
 
 const getApiPopularFilmsController = async () => {
   const { data } = await axios(URL);
-  console.log(data);
-  
   return data.results;
 };
 
