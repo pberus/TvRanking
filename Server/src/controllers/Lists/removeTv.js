@@ -5,6 +5,8 @@ const removeTvListController = async (list_type, id) => {
   if (list_type === "seen") model = Seen;
   if (list_type === "liked") model = Liked;
 
+  const { title } = await model.findByPk(id);
+
   const registersDeleted = await model.destroy({
     where: {
       id,
@@ -18,7 +20,7 @@ const removeTvListController = async (list_type, id) => {
     order: [["createdAt", "DESC"]],
     attributes: { exclude: ["createdAt", "updatedAt"] },
   });
-  return allTv;
+  return { allTv, title };
 };
 
 module.exports = removeTvListController;

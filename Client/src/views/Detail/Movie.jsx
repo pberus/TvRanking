@@ -94,6 +94,23 @@ const MovieDetail = () => {
     }
   };
 
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Título de la página",
+          text: "¡Mira esta página interesante!",
+          url: window.location.href,
+        });
+        console.log("Contenido compartido con éxito");
+      } catch (error) {
+        console.error("Error al compartir:", error);
+      }
+    } else {
+      alert("La función de compartir no está disponible en este navegador");
+    }
+  };
+
   const [loading, setLoading] = useState(true);
 
   if (loading) {
@@ -161,7 +178,7 @@ const MovieDetail = () => {
                   </Link>
                 </button>
               )}
-              <button>
+              <button onClick={handleShare}>
                 <Share />
               </button>
             </div>

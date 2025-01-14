@@ -76,7 +76,7 @@ const addTvListController = async (id, list, media_type) => {
     order: [["createdAt", "DESC"]],
     attributes: { exclude: ["createdAt", "updatedAt"] },
   });
-  return allTv;
+  return { allTv, title: media_type === "movie" ? title : name };
 };
 
 module.exports = addTvListController;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const SEARCH_TV = "SEARCH_TV";
 export const GET_NOW_PLAYING_FILMS = "GET_NOW_PLAYING_FILMS";
@@ -300,13 +301,17 @@ export const addCardList = ({ id, list, media_type }) => {
         list,
         media_type,
       });
-      return dispatch({
+      dispatch({
         type: ADD_CARD_LIST,
         payload: {
           allTv: data.allTv,
           listType: data.list_type,
         },
       });
+      if (list === "watchlist") list = "Watchlist";
+      else if (list === "seen") list = "Visto";
+      else list = "Me gusta";
+      toast.success(`${data.title} añadida a ${list}.`);
     } catch (error) {
       alert(error.message);
     }
@@ -319,13 +324,17 @@ export const removeCardList = ({ id, list }) => {
       const { data } = await axios.delete(
         `${URL}/lists?list_type=${list}&id=${id}`
       );
-      return dispatch({
+      dispatch({
         type: REMOVE_CARD_LIST,
         payload: {
           allTv: data.allTv,
           listType: data.list_type,
         },
       });
+      if (list === "watchlist") list = "Watchlist";
+      else if (list === "seen") list = "Visto";
+      else list = "Me gusta";
+      toast.success(`${data.title} eliminada de ${list}.`);
     } catch (error) {
       alert(error.message);
     }

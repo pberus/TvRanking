@@ -5,6 +5,7 @@ import { Nav } from "./components";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAllLists } from "./redux/actions";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function App() {
   return (
     <div>
       <Nav />
+      <ToastContainer position='bottom-center' theme='dark' />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/popular' element={<Popular />} />
