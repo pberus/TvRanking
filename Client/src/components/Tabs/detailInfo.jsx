@@ -97,7 +97,7 @@ export default function TabsDetailInfo({ info }) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <div className='d-flex justify-content-around mt-2'>
+        <div className='d-flex justify-content-around mt-3'>
           <div>
             <h5>Detalles de la pelicula</h5>
             <p>País/es: {uncodedCountries.join(", ")}</p>

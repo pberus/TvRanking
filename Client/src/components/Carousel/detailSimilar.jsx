@@ -13,7 +13,7 @@ const DetailSimilarCarousel = ({ similar }) => {
   const similarChunks = chunkArray(similar, 6); // Divide el array en grupos de 6
 
   return (
-    <div>
+    <div className='bg-dark'>
       <div id='carouselExample' className='carousel slide'>
         <div className='carousel-inner'>
           {similarChunks.map((chunk, index) => (
