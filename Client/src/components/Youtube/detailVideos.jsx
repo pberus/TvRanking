@@ -12,7 +12,7 @@ const YoutubeDetailVideos = ({ videos }) => {
   };
 
   return (
-    <div className='d-flex flex-wrap justify-content-around'>
+    <div className='d-flex flex-wrap justify-content-around mt-2'>
       {videos.map((vid) => (
         <div key={vid.id}>
           <h5>

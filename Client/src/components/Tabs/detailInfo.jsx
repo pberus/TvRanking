@@ -8,6 +8,7 @@ import YoutubeDetailVideos from "../Youtube/detailVideos";
 import countries from "i18n-iso-countries";
 import es from "i18n-iso-countries/langs/es.json";
 import ISO6391 from "iso-639-1";
+import DetailSimilarCarousel from "../Carousel/detailSimilar";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,6 +55,7 @@ export default function TabsDetailInfo({ info }) {
     spoken_languages,
     status,
     youtubeVideos,
+    similar,
   } = info;
 
   countries.registerLocale(es);
@@ -77,9 +79,7 @@ export default function TabsDetailInfo({ info }) {
         borderColor: "#e0e0e0",
         marginBottom: 3,
         ".MuiBox-root": {
-          paddingBottom: "0",
-          paddingLeft: "0",
-          paddingRight: "0",
+          padding: "0",
         },
       }}
     >
@@ -97,7 +97,7 @@ export default function TabsDetailInfo({ info }) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <div className='d-flex justify-content-around'>
+        <div className='d-flex justify-content-around mt-2'>
           <div>
             <h5>Detalles de la pelicula</h5>
             <p>País/es: {uncodedCountries.join(", ")}</p>
@@ -120,15 +120,29 @@ export default function TabsDetailInfo({ info }) {
         </div>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        {cast?.length > 0 && <DetailCastCarousel cast={cast} />}
+        {cast?.length > 0 ? (
+          <DetailCastCarousel cast={cast} />
+        ) : (
+          <h5 className='ps-3'>No se encuentra disponible el elenco.</h5>
+        )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        {youtubeVideos?.length > 0 && (
+        {youtubeVideos?.length > 0 ? (
           <YoutubeDetailVideos videos={youtubeVideos} />
+        ) : (
+          <h5 className='ps-3'>
+            No se encuentran disponibles videos relacionados.
+          </h5>
         )}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        Item Three
+        {similar?.length > 0 ? (
+          <DetailSimilarCarousel similar={similar} />
+        ) : (
+          <h5 className='ps-3'>
+            No se encuentran disponibles peliculas relacionadas.
+          </h5>
+        )}
       </CustomTabPanel>
     </Box>
   );

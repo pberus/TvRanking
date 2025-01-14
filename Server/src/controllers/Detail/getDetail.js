@@ -13,6 +13,8 @@ const PROVIDERS_URL = (media, id) =>
   `https://api.themoviedb.org/3/${media}/${id}/watch/providers?api_key=${API_KEY}`;
 const VIDEOS_URL = (media, id) =>
   `https://api.themoviedb.org/3/${media}/${id}/videos?api_key=${API_KEY}&language=es-AR`;
+const SIMILAR_URL = (media, id) =>
+  `https://api.themoviedb.org/3/${media}/${id}/similar?api_key=${API_KEY}&language=es-AR&page=1`;
 
 const getDetailController = async (title, media_type) => {
   const array = title.split("-");
@@ -76,8 +78,22 @@ const getDetailController = async (title, media_type) => {
   let youtubeVideos = videosData.data.results.filter(
     (vid) => vid.site === "YouTube"
   );
-  const trailer = youtubeVideos.find((vid) => vid.type === "Trailer");
-  youtubeVideos = [trailer, ...youtubeVideos.slice(0, 3)];
+  if (!youtubeVideos.length) youtubeVideos = [];
+  else {
+    const trailer = youtubeVideos.find((vid) => vid.type === "Trailer");
+    youtubeVideos = trailer
+      ? [trailer, ...youtubeVideos.filter((vid) => vid !== trailer).slice(0, 3)]
+      : youtubeVideos.slice(0, 4);
+  }
+
+  const similarData = await axios(SIMILAR_URL(media_type, id));
+  const similar = similarData.data.results.map((sim) => ({
+    id: sim.id,
+    title: sim.title,
+    image: sim.poster_path,
+    media_type,
+    date: sim.release_date,
+  }));
 
   return {
     ...detailData.data,
@@ -87,6 +103,7 @@ const getDetailController = async (title, media_type) => {
     providers,
     media_type,
     youtubeVideos,
+    similar,
   };
 };
 

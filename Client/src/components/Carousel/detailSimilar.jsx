@@ -1,9 +1,7 @@
 import PropTypes from "prop-types";
-import noImageAvailable from "../../assets/no_image_available.jpg";
+import Card from "../Card/card";
 
-const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
-
-const DetailCastCarousel = ({ cast }) => {
+const DetailSimilarCarousel = ({ similar }) => {
   const chunkArray = (array, size) => {
     const chunks = [];
     for (let i = 0; i < array.length; i += size) {
@@ -12,31 +10,21 @@ const DetailCastCarousel = ({ cast }) => {
     return chunks;
   };
 
-  const castChunks = chunkArray(cast, 6); // Divide el array en grupos de 6
+  const similarChunks = chunkArray(similar, 6); // Divide el array en grupos de 6
 
   return (
-    <div className="mt-2">
+    <div>
       <div id='carouselExample' className='carousel slide'>
         <div className='carousel-inner'>
-          {castChunks.map((chunk, index) => (
+          {similarChunks.map((chunk, index) => (
             <div
               key={index}
               className={`carousel-item ${index === 0 ? "active" : ""}`}
             >
               <div className='d-flex justify-content-around'>
-                {chunk.map((actor, i) => (
-                  <div key={i} className='text-center'>
-                    <p>
-                      <strong>{actor.name}</strong>
-                    </p>
-                    <p>{actor.character}</p>
-                    <img
-                      src={
-                        actor.image ? IMAGE_URL + actor.image : noImageAvailable
-                      }
-                      className='d-block w-100'
-                      alt={`image of ${actor.name}`}
-                    />
+                {chunk.map((similar, i) => (
+                  <div key={i}>
+                    <Card tv={similar} />
                   </div>
                 ))}
               </div>
@@ -44,7 +32,7 @@ const DetailCastCarousel = ({ cast }) => {
           ))}
         </div>
         <button
-          className='carousel-control-prev w-auto bg-secondary-subtle'
+          className='carousel-control-prev w-auto bg-secondary'
           type='button'
           data-bs-target='#carouselExample'
           data-bs-slide='prev'
@@ -56,7 +44,7 @@ const DetailCastCarousel = ({ cast }) => {
           <span className='visually-hidden'>Previous</span>
         </button>
         <button
-          className='carousel-control-next w-auto bg-secondary-subtle'
+          className='carousel-control-next w-auto bg-secondary'
           type='button'
           data-bs-target='#carouselExample'
           data-bs-slide='next'
@@ -72,13 +60,8 @@ const DetailCastCarousel = ({ cast }) => {
   );
 };
 
-DetailCastCarousel.propTypes = {
-  cast: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      character: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+DetailSimilarCarousel.propTypes = {
+  similar: PropTypes.array.isRequired,
 };
 
-export default DetailCastCarousel;
+export default DetailSimilarCarousel;

@@ -63,16 +63,19 @@ const MovieDetail = () => {
     spoken_languages,
     status,
     youtubeVideos,
+    similar,
   } = detail;
 
   useEffect(() => {
+    setLoading(true); // Reinicia el estado de carga al cambiar el slug
     dispatch(getDetail(slug, "movie")).then(() => {
       setLoading(false); // Cambia el estado a false cuando los datos estén listos
     });
+
     return () => {
       dispatch(removeDetail());
     };
-  }, [dispatch, slug]);
+  }, [dispatch, slug]); // Agrega slug como dependencia
 
   const watchlist = useSelector((state) => state.watchlist);
   const seen = useSelector((state) => state.seen);
@@ -192,7 +195,11 @@ const MovieDetail = () => {
             <div className='d-flex align-items-center'>
               <AccessTime className='me-1' />
               <b className='me-2'>Duración: </b>
-              {Math.floor(runtime / 60)}h{Math.ceil((runtime / 60 - 1) * 60)}min
+              {runtime <= 60
+                ? `${runtime} min`
+                : `${Math.floor(runtime / 60)}h ${Math.ceil(
+                    (runtime / 60 - 1) * 60
+                  )}min`}
             </div>
             <div className='d-flex align-items-center'>
               <Grade className='me-1' />
@@ -238,6 +245,7 @@ const MovieDetail = () => {
             spoken_languages,
             status,
             youtubeVideos,
+            similar,
           }}
         />
       </div>

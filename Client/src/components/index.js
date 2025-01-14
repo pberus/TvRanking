@@ -8,6 +8,7 @@ import HomeCarousel from "./Carousel/homeCarousel";
 import Streaming from "./Carousel/streaming";
 import DetailImagesCarousel from "./Carousel/detailImages";
 import DetailCastCarousel from "./Carousel/detailCast";
+import DetailSimilarCarousel from "./Carousel/detailSimilar";
 import YearRelease from "./Slider/yearRelease";
 import Runtime from "./Slider/runtime";
 import Rating from "./Slider/rating";
@@ -30,6 +31,7 @@ export {
   Streaming,
   DetailImagesCarousel,
   DetailCastCarousel,
+  DetailSimilarCarousel,
   YearRelease,
   Runtime,
   Rating,
