@@ -250,7 +250,14 @@ const MovieDetail = () => {
           }}
         />
       </div>
-      {images?.length > 0 && <DetailImagesCarousel images={images} />}
+      {images?.length > 0 && (
+        <div className='m-3'>
+          <h3>
+            <u>Imagenes</u>
+          </h3>
+          <DetailImagesCarousel images={images} />
+        </div>
+      )}
     </div>
   );
 };

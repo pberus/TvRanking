@@ -9,6 +9,7 @@ import Streaming from "./Carousel/streaming";
 import DetailImagesCarousel from "./Carousel/detailImages";
 import DetailCastCarousel from "./Carousel/detailCast";
 import DetailSimilarCarousel from "./Carousel/detailSimilar";
+import DetailSeasonsCarousel from "./Carousel/detailSeasons";
 import YearRelease from "./Slider/yearRelease";
 import Runtime from "./Slider/runtime";
 import Rating from "./Slider/rating";
@@ -19,6 +20,7 @@ import TabsDetailProviders from "./Tabs/detailProviders";
 import TabsDetailInfo from "./Tabs/detailInfo";
 import ToolbarLists from "./Toolbar/lists";
 import YoutubeDetailVideos from "./Youtube/detailVideos";
+import DetailSeasonsModal from "./Modal/detailSeasons";
 
 export {
   Card,
@@ -32,6 +34,7 @@ export {
   DetailImagesCarousel,
   DetailCastCarousel,
   DetailSimilarCarousel,
+  DetailSeasonsCarousel,
   YearRelease,
   Runtime,
   Rating,
@@ -42,4 +45,5 @@ export {
   TabsDetailInfo,
   ToolbarLists,
   YoutubeDetailVideos,
+  DetailSeasonsModal,
 };

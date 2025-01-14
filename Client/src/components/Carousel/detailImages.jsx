@@ -8,7 +8,7 @@ const DetailImagesCarousel = ({ images }) => {
     <div className='d-flex justify-content-center'>
       <div
         id='carouselExampleIndicators'
-        className='carousel slide carousel-fade w-75'
+        className='carousel slide carousel-fade w-100'
         data-bs-ride='carousel'
         data-bs-interval='2000'
       >

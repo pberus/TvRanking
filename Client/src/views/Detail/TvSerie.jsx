@@ -10,6 +10,7 @@ import {
 import noImageAvailable from "../../assets/no_image_available.jpg";
 import {
   DetailImagesCarousel,
+  DetailSeasonsCarousel,
   TabsDetailInfo,
   TabsDetailProviders,
 } from "../../components";
@@ -63,6 +64,7 @@ const TvSerieDetail = () => {
     similar,
     number_of_episodes,
     number_of_seasons,
+    seasons,
   } = detail;
   console.log(detail);
 
@@ -249,6 +251,17 @@ const TvSerieDetail = () => {
           </div>
         </div>
       </div>
+      <div>
+        {seasons?.length > 0 && (
+          <div className='m-3'>
+            <h3>
+              <u>Temporadas</u>
+            </h3>
+            <DetailSeasonsCarousel seasons={seasons} />
+          </div>
+        )}
+      </div>
+      <div></div>
       <div className='d-flex justify-content-center'>
         <TabsDetailInfo
           info={{
@@ -264,7 +277,14 @@ const TvSerieDetail = () => {
           }}
         />
       </div>
-      {images?.length > 0 && <DetailImagesCarousel images={images} />}
+      {images?.length > 0 && (
+        <div className='m-3'>
+          <h3>
+            <u>Imagenes</u>
+          </h3>
+          <DetailImagesCarousel images={images} />
+        </div>
+      )}
     </div>
   );
 };
