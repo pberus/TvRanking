@@ -17,6 +17,7 @@ import TabsLists from "./Tabs/lists";
 import TabsDetailProviders from "./Tabs/detailProviders";
 import TabsDetailInfo from "./Tabs/detailInfo";
 import ToolbarLists from "./Toolbar/lists";
+import YoutubeDetailVideos from "./Youtube/detailVideos";
 
 export {
   Card,
@@ -38,4 +39,5 @@ export {
   TabsDetailProviders,
   TabsDetailInfo,
   ToolbarLists,
+  YoutubeDetailVideos,
 };

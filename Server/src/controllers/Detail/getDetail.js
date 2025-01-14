@@ -11,6 +11,8 @@ const CAST_URL = (media, id) =>
   `https://api.themoviedb.org/3/${media}/${id}/credits?api_key=${API_KEY}&language=es-AR`;
 const PROVIDERS_URL = (media, id) =>
   `https://api.themoviedb.org/3/${media}/${id}/watch/providers?api_key=${API_KEY}`;
+const VIDEOS_URL = (media, id) =>
+  `https://api.themoviedb.org/3/${media}/${id}/videos?api_key=${API_KEY}&language=es-AR`;
 
 const getDetailController = async (title, media_type) => {
   const array = title.split("-");
@@ -70,7 +72,22 @@ const getDetailController = async (title, media_type) => {
       }
     : {};
 
-  return { ...detailData.data, images, cast, director, providers, media_type };
+  const videosData = await axios(VIDEOS_URL(media_type, id));
+  let youtubeVideos = videosData.data.results.filter(
+    (vid) => vid.site === "YouTube"
+  );
+  const trailer = youtubeVideos.find((vid) => vid.type === "Trailer");
+  youtubeVideos = [trailer, ...youtubeVideos.slice(0, 3)];
+
+  return {
+    ...detailData.data,
+    images,
+    cast,
+    director,
+    providers,
+    media_type,
+    youtubeVideos,
+  };
 };
 
 module.exports = getDetailController;

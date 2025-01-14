@@ -62,6 +62,7 @@ const MovieDetail = () => {
     origin_country,
     spoken_languages,
     status,
+    youtubeVideos,
   } = detail;
 
   useEffect(() => {
@@ -236,6 +237,7 @@ const MovieDetail = () => {
             origin_country,
             spoken_languages,
             status,
+            youtubeVideos,
           }}
         />
       </div>

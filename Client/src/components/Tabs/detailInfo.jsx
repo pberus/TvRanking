@@ -4,6 +4,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import DetailCastCarousel from "../Carousel/detailCast";
+import YoutubeDetailVideos from "../Youtube/detailVideos";
 import countries from "i18n-iso-countries";
 import es from "i18n-iso-countries/langs/es.json";
 import ISO6391 from "iso-639-1";
@@ -52,6 +53,7 @@ export default function TabsDetailInfo({ info }) {
     origin_country,
     spoken_languages,
     status,
+    youtubeVideos,
   } = info;
 
   countries.registerLocale(es);
@@ -90,7 +92,8 @@ export default function TabsDetailInfo({ info }) {
         >
           <Tab label='Detalles' {...a11yProps(0)} />
           <Tab label='Elenco' {...a11yProps(1)} />
-          <Tab label='Item Three' {...a11yProps(2)} />
+          <Tab label='Videos' {...a11yProps(2)} />
+          <Tab label='Relacionadas' {...a11yProps(3)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -120,6 +123,11 @@ export default function TabsDetailInfo({ info }) {
         {cast?.length > 0 && <DetailCastCarousel cast={cast} />}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
+        {youtubeVideos?.length > 0 && (
+          <YoutubeDetailVideos videos={youtubeVideos} />
+        )}
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
         Item Three
       </CustomTabPanel>
     </Box>
