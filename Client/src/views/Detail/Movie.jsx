@@ -37,7 +37,6 @@ const MovieDetail = () => {
   const dispatch = useDispatch();
 
   const detail = useSelector((state) => state.detail);
-  console.log("detail:", detail);
   const {
     id,
     media_type,
@@ -147,12 +146,14 @@ const MovieDetail = () => {
         <div className={style.startInfo}>
           <div className='d-flex justify-content-between'>
             <div className='d-flex align-items-baseline'>
-              <h2>{title}</h2>
-              <p className='fs-4 ms-1'>
-                ({new Date(release_date).getFullYear()})
-              </p>
+              <h2>
+                {title}{" "}
+                <span style={{ color: "#585c59", fontSize: "0.8em" }}>
+                  ({new Date(release_date).getFullYear()})
+                </span>
+              </h2>
             </div>
-            <div>
+            <div className='d-flex h-50 p-1'>
               {homepage && (
                 <button className='me-2'>
                   <Link to={homepage} target='blank'>

@@ -89,10 +89,10 @@ const getDetailController = async (title, media_type) => {
   const similarData = await axios(SIMILAR_URL(media_type, id));
   const similar = similarData.data.results.map((sim) => ({
     id: sim.id,
-    title: sim.title,
+    title: media_type === "movie" ? sim.title : sim.name,
     image: sim.poster_path,
     media_type,
-    date: sim.release_date,
+    date: media_type === "movie" ? sim.release_date : sim.first_air_date,
   }));
 
   return {

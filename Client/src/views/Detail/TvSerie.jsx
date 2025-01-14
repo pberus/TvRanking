@@ -1,7 +1,35 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getDetail, removeDetail } from "../../redux/actions";
+import { Link, useParams } from "react-router-dom";
+import {
+  addCardList,
+  getDetail,
+  removeCardList,
+  removeDetail,
+} from "../../redux/actions";
+import noImageAvailable from "../../assets/no_image_available.jpg";
+import {
+  DetailImagesCarousel,
+  TabsDetailInfo,
+  TabsDetailProviders,
+} from "../../components";
+import {
+  CalendarToday,
+  AccessTime,
+  Grade,
+  Share,
+  Bookmark,
+  Done,
+  ThumbUp,
+  Language,
+  Create,
+  LocalMovies,
+  PlayCircle,
+} from "@mui/icons-material";
+import tmdbIcono from "../../assets/tmdb-logo.svg";
+import style from "./movie.module.css";
+
+const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
 const TvSerieDetail = () => {
   const { slug } = useParams();
@@ -9,18 +37,234 @@ const TvSerieDetail = () => {
   const dispatch = useDispatch();
 
   const detail = useSelector((state) => state.detail);
-  console.log("detail:", detail);
+  const {
+    id,
+    media_type,
+    name,
+    poster_path,
+    original_name,
+    images,
+    cast,
+    genres,
+    overview,
+    first_air_date,
+    episode_run_time,
+    vote_average,
+    created_by,
+    providers,
+    homepage,
+    production_companies,
+    production_countries,
+    original_language,
+    origin_country,
+    spoken_languages,
+    status,
+    youtubeVideos,
+    similar,
+    number_of_episodes,
+    number_of_seasons,
+  } = detail;
+  console.log(detail);
 
   useEffect(() => {
-    dispatch(getDetail(slug, "tv"));
+    setLoading(true); // Reinicia el estado de carga al cambiar el slug
+    dispatch(getDetail(slug, "tv")).then(() => {
+      setLoading(false); // Cambia el estado a false cuando los datos estén listos
+    });
+
     return () => {
       dispatch(removeDetail());
     };
-  }, [dispatch, slug]);
+  }, [dispatch, slug]); // Agrega slug como dependencia
+
+  const watchlist = useSelector((state) => state.watchlist);
+  const seen = useSelector((state) => state.seen);
+  const liked = useSelector((state) => state.liked);
+
+  const isInList = {
+    watchlist: watchlist.some((item) => item.id === id),
+    seen: seen.some((item) => item.id === id),
+    liked: liked.some((item) => item.id === id),
+  };
+
+  const handleList = (list) => {
+    if (isInList[list]) {
+      dispatch(removeCardList({ id, list }));
+    } else {
+      dispatch(addCardList({ id, list, media_type }));
+    }
+  };
+
+  function average(arr) {
+    return arr.reduce((sum, num) => sum + num, 0) / arr.length;
+  }
+  const runtime = episode_run_time?.length > 0 ? average(episode_run_time) : [];
+
+  const [loading, setLoading] = useState(true);
+
+  if (loading) {
+    return <h4 className='ms-3'>Cargando detalles de la serie...</h4>; // Muestra un mensaje de carga
+  }
+
+  if (typeof detail === "string") {
+    return <h4 className='ms-3'>{detail}</h4>; // Muestra un mensaje de error
+  }
 
   return (
     <div>
-      <h2>Detalle de la Serie: {slug}</h2>
+      <div className={style.start}>
+        <div className={style.startPoster}>
+          <img
+            src={
+              poster_path === null ? noImageAvailable : IMAGE_URL + poster_path
+            }
+            alt={name}
+            className={style.poster}
+          />
+          <div className={style.listIcons}>
+            <button
+              className={`${style.listIcon} ${
+                isInList.watchlist && "text-warning"
+              }`}
+              onClick={() => handleList("watchlist")}
+            >
+              <Bookmark />
+              Watchlist
+            </button>
+            <button
+              className={`${style.listIcon} ${isInList.seen && "text-warning"}`}
+              onClick={() => handleList("seen")}
+            >
+              <Done />
+              Visto
+            </button>
+            <button
+              className={`${style.listIcon} ${
+                isInList.liked && "text-warning"
+              }`}
+              onClick={() => handleList("liked")}
+            >
+              <ThumbUp />
+              Me gusta
+            </button>
+          </div>
+        </div>
+        <div className={style.startInfo}>
+          <div className='d-flex justify-content-between'>
+            <div className='d-flex align-items-baseline'>
+              <h2>
+                {name}{" "}
+                <span style={{ color: "#585c59", fontSize: "0.8em" }}>
+                  ({new Date(first_air_date).getFullYear()})
+                </span>
+              </h2>
+            </div>
+            <div className='d-flex h-50 p-1'>
+              {homepage && (
+                <button className='me-2'>
+                  <Link to={homepage} target='blank'>
+                    <Language />
+                  </Link>
+                </button>
+              )}
+              <button>
+                <Share />
+              </button>
+            </div>
+          </div>
+          {original_name && original_name !== name && (
+            <h4 className='text-secondary'>Titulo original: {original_name}</h4>
+          )}
+          {genres?.length > 0 && (
+            <div className='d-flex mt-3'>
+              {genres.map((genre) => (
+                <span
+                  key={genre.id}
+                  className='badge rounded-pill text-body-emphasis bg-body-secondary fw-medium me-2'
+                >
+                  {genre.name}
+                </span>
+              ))}
+            </div>
+          )}
+          <p className='text-secondary mt-3'>{overview}</p>
+          <div
+            className='d-flex align-items-center flex-wrap'
+            style={{ gap: "1rem" }}
+          >
+            <div className='d-flex align-items-center'>
+              <CalendarToday className='me-1' />
+              <b className='me-2'>Fecha de estreno: </b>
+              {new Date(first_air_date + "T00:00:00").toLocaleDateString(
+                "es-AR"
+              )}
+            </div>
+            {episode_run_time?.length > 0 && (
+              <div className='d-flex align-items-center'>
+                <AccessTime className='me-1' />
+                <b className='me-2'>Duración episodios: </b>
+                {runtime <= 60
+                  ? `${runtime} min`
+                  : `${Math.floor(runtime / 60)}h ${Math.ceil(
+                      (runtime / 60 - 1) * 60
+                    )}min`}
+              </div>
+            )}
+            <div className='d-flex align-items-center'>
+              <Grade className='me-1' />
+              <b className='me-2'>Calificación: </b>
+              {vote_average.toFixed(2)}
+              <img
+                src={tmdbIcono}
+                alt='tmdb-logo'
+                width='60'
+                className='ms-2'
+              />
+            </div>
+            {created_by?.length > 0 && (
+              <div className='d-flex align-items-center'>
+                <Create className='me-1' />
+                <b className='me-2'>Creada por: </b>
+                {created_by[0].name}
+              </div>
+            )}
+            {number_of_seasons && (
+              <div className='d-flex align-items-center'>
+                <LocalMovies className='me-1' />
+                <b className='me-2'>Temporadas: </b>
+                {number_of_seasons}
+              </div>
+            )}
+            {number_of_episodes && (
+              <div className='d-flex align-items-center'>
+                <PlayCircle className='me-1' />
+                <b className='me-2'>Episodios: </b>
+                {number_of_episodes}
+              </div>
+            )}
+          </div>
+          <div className={`mt-3 ${style.providers}`}>
+            <h5 className='p-3'>Dónde ver</h5>
+            <TabsDetailProviders providers={providers} title={name} />
+          </div>
+        </div>
+      </div>
+      <div className='d-flex justify-content-center'>
+        <TabsDetailInfo
+          info={{
+            cast,
+            production_companies,
+            production_countries,
+            original_language,
+            origin_country,
+            spoken_languages,
+            status,
+            youtubeVideos,
+            similar,
+          }}
+        />
+      </div>
+      {images?.length > 0 && <DetailImagesCarousel images={images} />}
     </div>
   );
 };
