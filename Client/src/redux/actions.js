@@ -23,6 +23,8 @@ export const GET_ALL_LISTS = "GET_ALL_LISTS";
 export const GET_FILTERED_LIST = "GET_FILTERED_LIST";
 export const GET_DETAIL = "GET_DETAIL";
 export const REMOVE_DETAIL = "REMOVE_DETAIL";
+export const SEARCH_TV_POPOVER = "SEARCH_TV_POPOVER";
+export const REMOVE_POPOVER_RESULTS = "REMOVE_POPOVER_RESULTS";
 
 const URL = "http://localhost:3001";
 
@@ -432,7 +434,7 @@ export const removeDetail = () => {
 export const searchTv = (tv) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios(`${URL}/search/${tv}`);
+      const { data } = await axios(`${URL}/search/resultsPage/${tv}`);
 
       return dispatch({
         type: SEARCH_TV,
@@ -441,5 +443,26 @@ export const searchTv = (tv) => {
     } catch (error) {
       alert(error.message);
     }
+  };
+};
+
+export const searchTvPopover = (tv) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/search/popover/${tv}`);
+
+      return dispatch({
+        type: SEARCH_TV_POPOVER,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const removePopoverResults = () => {
+  return {
+    type: REMOVE_POPOVER_RESULTS,
   };
 };

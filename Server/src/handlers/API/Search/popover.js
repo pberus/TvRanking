@@ -1,10 +1,10 @@
-const searchController = require("../../../controllers/API/Search/search");
+const searchPopoverController = require("../../../controllers/API/Search/popover");
 
-const searchHandler = async (req, res) => {
+const searchPopoverHandler = async (req, res) => {
   try {
     const { tv } = req.params;
 
-    let results = await searchController(tv);
+    let { movies, series } = await searchPopoverController(tv);
 
     function searchAndSort(items, searchTerm) {
       const lowerTerm = searchTerm.toLowerCase();
@@ -30,11 +30,12 @@ const searchHandler = async (req, res) => {
         .sort((a, b) => b.totalScore - a.totalScore); // Ordenar por puntuación total
     }
 
-    results = searchAndSort(results, tv);
-    return res.json(results);
+    movies = searchAndSort(movies, tv).slice(0, 4);
+    series = searchAndSort(series, tv).slice(0, 4);
+    return res.json({ movies, series });
   } catch (error) {
     console.log("error: ", error.message);
   }
 };
 
-module.exports = searchHandler;
+module.exports = searchPopoverHandler;

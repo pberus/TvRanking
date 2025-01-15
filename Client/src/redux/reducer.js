@@ -19,8 +19,10 @@ import {
   GET_UPCOMING_FILMS,
   REMOVE_CARD_LIST,
   REMOVE_DETAIL,
+  REMOVE_POPOVER_RESULTS,
   REMOVE_TV,
   SEARCH_TV,
+  SEARCH_TV_POPOVER,
 } from "./actions";
 
 const initialState = {
@@ -55,6 +57,7 @@ const initialState = {
   detail: {},
   //SEARCH
   searchResults: [],
+  searchPopoverResults: {},
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -192,6 +195,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         searchResults: payload,
+      };
+    case SEARCH_TV_POPOVER:
+      return {
+        ...state,
+        searchPopoverResults: payload,
+      };
+    case REMOVE_POPOVER_RESULTS:
+      return {
+        ...state,
+        searchPopoverResults: {},
       };
     default:
       return { ...state };

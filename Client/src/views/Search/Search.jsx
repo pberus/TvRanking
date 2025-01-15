@@ -30,10 +30,15 @@ const Search = () => {
 
   return (
     <div className='m-3'>
-      <h2 className='border-bottom p-3 text-secondary'>
-        Resultados de búsqueda de:{" "}
-        <span className='text-dark'>{searchTerm}</span>
-      </h2>
+      <div className='p-2 border-bottom'>
+        <h2>
+          Resultados de búsqueda de:{" "}
+          <span className='text-primary'>{searchTerm}</span>
+        </h2>
+        <h5 className='text-secondary'>
+          Se encontraron {searchResults?.length} resultados
+        </h5>
+      </div>
       {searchResults?.length > 0 && (
         <div className='m-3'>
           {searchResults.map((tv) => (

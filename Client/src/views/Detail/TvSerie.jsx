@@ -271,7 +271,7 @@ const TvSerieDetail = () => {
       <div>
         {seasons?.length > 0 && (
           <div className='m-3'>
-            <h3>
+            <h3 className='pb-1'>
               <u>Temporadas</u>
             </h3>
             <DetailSeasonsCarousel seasons={seasons} />
@@ -296,7 +296,7 @@ const TvSerieDetail = () => {
       </div>
       {images?.length > 0 && (
         <div className='m-3'>
-          <h3>
+          <h3 className='pb-1'>
             <u>Imagenes</u>
           </h3>
           <DetailImagesCarousel images={images} />
