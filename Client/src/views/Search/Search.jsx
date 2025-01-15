@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { searchTv } from "../../redux/actions";
 import { Card } from "../../components";
+import tmdbIcono from "../../assets/tmdb-logo.svg";
 
 const Search = () => {
   const location = useLocation();
@@ -20,7 +21,6 @@ const Search = () => {
   }, [location.search, dispatch]);
 
   const searchResults = useSelector((state) => state.searchResults);
-  console.log("searchResults", searchResults);
 
   const [loading, setLoading] = useState(true);
 
@@ -29,13 +29,59 @@ const Search = () => {
   }
 
   return (
-    <div>
-      <h2>Resultados de búsqueda de: {searchTerm}</h2>
+    <div className='m-3'>
+      <h2 className='border-bottom p-3 text-secondary'>
+        Resultados de búsqueda de:{" "}
+        <span className='text-dark'>{searchTerm}</span>
+      </h2>
       {searchResults?.length > 0 && (
-        <div>
+        <div className='m-3'>
           {searchResults.map((tv) => (
-            <div key={tv.id}>
-              <Card tv={tv} />
+            <div key={tv.id} className='mb-3 pb-3 border-bottom d-flex'>
+              <div>
+                <Card
+                  tv={{
+                    id: tv.id,
+                    title: tv.media_type === "movie" ? tv.title : tv.name,
+                    image: tv.poster_path,
+                    media_type: tv.media_type,
+                    date:
+                      tv.media_type === "movie"
+                        ? tv.release_date
+                        : tv.first_air_date,
+                  }}
+                />
+              </div>
+              <div className='ms-3'>
+                <h4>
+                  {tv.media_type === "movie" ? tv.title : tv.name}{" "}
+                  <span style={{ color: "#585c59", fontSize: "0.8em" }}>
+                    (
+                    {new Date(
+                      tv.media_type === "movie"
+                        ? tv.release_date
+                        : tv.first_air_date
+                    ).getFullYear()}
+                    )
+                  </span>
+                </h4>
+                <h4 className='text-secondary fs-5'>
+                  Titulo original:{" "}
+                  {tv.media_type === "movie"
+                    ? tv.original_title
+                    : tv.original_name}
+                </h4>
+                <p className='text-secondary mt-3'>{tv.overview}</p>
+                <div>
+                  <img
+                    src={tmdbIcono}
+                    alt='tmdb-logo'
+                    width='60'
+                    className='me-2'
+                  />
+                  {tv.vote_average.toFixed(2)}
+                </div>
+              </div>
             </div>
           ))}
         </div>
