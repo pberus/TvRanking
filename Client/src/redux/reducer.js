@@ -53,9 +53,8 @@ const initialState = {
   likedFiltered: [],
   //DETAIL
   detail: {},
-  //
-  miTv: [],
-  tvDetail: {},
+  //SEARCH
+  searchResults: [],
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -188,11 +187,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         detail: {},
       };
-    //
+    //SEARCH
     case SEARCH_TV:
       return {
         ...state,
-        tvDetail: payload,
+        searchResults: payload,
       };
     default:
       return { ...state };

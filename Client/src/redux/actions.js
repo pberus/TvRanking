@@ -427,11 +427,19 @@ export const removeDetail = () => {
   };
 };
 
-//
+//SEARCH
 
 export const searchTv = (tv) => {
-  return {
-    type: SEARCH_TV,
-    payload: tv,
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(`${URL}/search/${tv}`);
+
+      return dispatch({
+        type: SEARCH_TV,
+        payload: data,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 };

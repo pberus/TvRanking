@@ -1,6 +1,13 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { Home, Lists, MovieDetail, Popular, TvSerieDetail } from "./views";
+import {
+  Home,
+  Lists,
+  MovieDetail,
+  Popular,
+  Search,
+  TvSerieDetail,
+} from "./views";
 import { Nav } from "./components";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -24,6 +31,7 @@ function App() {
         <Route path='/listas' element={<Lists />} />
         <Route path='/pelicula/:slug' element={<MovieDetail />} />
         <Route path='/serie/:slug' element={<TvSerieDetail />} />
+        <Route path='/buscar' element={<Search />} />
       </Routes>
     </div>
   );

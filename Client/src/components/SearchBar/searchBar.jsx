@@ -1,44 +1,47 @@
-import axios from "axios"
 import { useState } from "react";
-import {useDispatch} from "react-redux"
-
-const tvURL = "http://localhost:3001/tv/";
+import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
+import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = () => {
-    const dispatch = useDispatch()
-    const [name, setName] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
-    const onSearch = async (name) => {
-        try {
-          const searchURL = tvURL + `name?name=${name}`;
-          const { data } = await axios(searchURL);
+  const handleChange = (event) => {
+    const { value } = event.target;
+    setSearchTerm(value);
+  };
 
-          dispatch(searchTv(data));
-        } catch (error) {
-          error.response && error.response.data
-            ? alert(error.response.data)
-            : alert(error.message);
-        }
-      };
-    
-      const handleChange = (event) => {
-        const inputValue = event.target.value;
-        setName(inputValue);
-      };
-    
-      const handleSearch = () => {
-        onSearch(name);
-        setName("");
-      };    
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/buscar?query=${searchTerm}`);
+    }
+  };
 
   return (
     <div>
-      <input
-        type='text'
-        value={name}
-        onChange={handleChange}
-      />
-      <button onClick={handleSearch}>Buscar</button>
+      <Box sx={{ "& > :not(style)": { m: 1 } }}>
+        <TextField
+          id='input-with-icon-textfield'
+          type='search'
+          placeholder='Buscar peliculas y series de TV.'
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+              autoComplete: "off",
+            },
+          }}
+          variant='filled'
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
+      </Box>
     </div>
   );
 };
