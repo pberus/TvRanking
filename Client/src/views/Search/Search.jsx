@@ -35,9 +35,13 @@ const Search = () => {
           Resultados de búsqueda de:{" "}
           <span className='text-primary'>{searchTerm}</span>
         </h2>
-        <h5 className='text-secondary'>
-          Se encontraron {searchResults?.length} resultados
-        </h5>
+        {searchTerm ? (
+          <h5 className='text-secondary'>
+            Se encontraron {searchResults?.length} resultados
+          </h5>
+        ) : (
+          <h5 className='text-secondary'>Tendencias de hoy</h5>
+        )}
       </div>
       {searchResults?.length > 0 && (
         <div className='m-3'>
@@ -68,6 +72,18 @@ const Search = () => {
                         : tv.first_air_date
                     ).getFullYear()}
                     )
+                  </span>
+                  <span
+                    style={{
+                      color: "#3f5ebe",
+                      fontSize: "0.6em",
+                      marginLeft: "10px",
+                      backgroundColor: "#dbeafe",
+                      borderRadius: "10px",
+                      padding: "2px 7px",
+                    }}
+                  >
+                    {tv.media_type === "movie" ? "Película" : "Serie"}
                   </span>
                 </h4>
                 <h4 className='text-secondary fs-5'>

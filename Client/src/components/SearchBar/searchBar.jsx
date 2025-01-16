@@ -62,7 +62,7 @@ const SearchBar = () => {
   }, [typingTimeout]);
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && searchTerm.trim()) {
+    if (e.key === "Enter") {
       navigate(`/buscar?query=${searchTerm}`);
       setAnchorEl(null); // Cierra el popover después de buscar
     }
