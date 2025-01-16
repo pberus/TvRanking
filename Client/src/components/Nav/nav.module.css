@@ -1,7 +1,0 @@
-.Nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    background-color: rgb(216, 213, 213);
-    margin-bottom: 10px;
-}

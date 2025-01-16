@@ -1,10 +1,12 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import {
+  Error,
   Home,
   Lists,
   MovieDetail,
   Popular,
+  Ranking,
   Search,
   TvSerieDetail,
 } from "./views";
@@ -32,6 +34,8 @@ function App() {
         <Route path='/pelicula/:slug' element={<MovieDetail />} />
         <Route path='/serie/:slug' element={<TvSerieDetail />} />
         <Route path='/buscar' element={<Search />} />
+        <Route path='/ranking' element={<Ranking />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   );

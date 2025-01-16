@@ -81,22 +81,45 @@ const SearchBar = () => {
 
   return (
     <div>
-      <Box sx={{ "& > :not(style)": { m: 1 } }}>
+      <Box sx={{ "& > :not(style)": { m: 1, border: 1, borderRadius: 1 } }}>
         <TextField
           id='input-with-icon-textfield'
           type='search'
-          placeholder='Buscar películas y series de TV.'
+          placeholder='Buscar películas y series de TV...'
           value={searchTerm}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           onClick={handleClick} // Abre el popover al hacer clic
           autoComplete='off'
-          variant='filled'
+          variant='outlined'
+          color='info'
+          focused
+          sx={{
+            input: { color: "white" }, // Color del texto
+            "& .MuiInputBase-input::placeholder": {
+              color: "inherent",
+              opacity: 0.5,
+            }, // Color del placeholder
+            "& .MuiFilledInput-root": {
+              backgroundColor: "transparent", // Fondo transparente
+            },
+            "& .MuiFilledInput-underline:before": {
+              borderBottom: "1px solid white", // Borde blanco
+            },
+            "& .MuiFilledInput-underline:hover:before": {
+              borderBottom: "2px solid white", // Borde al pasar el mouse
+            },
+            "& .MuiFilledInput-underline:after": {
+              borderBottom: "2px solid white", // Borde activo
+            },
+            backgroundColor: "#3b8ad9",
+            width: "90%",
+          }}
           slotProps={{
             input: {
               startAdornment: (
                 <InputAdornment position='start'>
-                  <SearchIcon />
+                  <SearchIcon sx={{ color: "white" }} />
                 </InputAdornment>
               ),
             },
