@@ -6,6 +6,8 @@ import TvSerieDetail from "./Detail/TvSerie";
 import Search from "./Search/Search";
 import Ranking from "./Ranking/Ranking";
 import Error from "./Error/Error";
+import Login from "./Auth/Login";
+import Register from "./Auth/Register";
 
 export {
   Home,
@@ -16,4 +18,6 @@ export {
   Search,
   Ranking,
   Error,
+  Login,
+  Register,
 };

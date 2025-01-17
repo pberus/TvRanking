@@ -1,31 +1,27 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import {
   Error,
   Home,
   Lists,
+  Login,
   MovieDetail,
   Popular,
   Ranking,
+  Register,
   Search,
   TvSerieDetail,
 } from "./views";
 import { Nav } from "./components";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getAllLists } from "./redux/actions";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllLists());
-  }, [dispatch]);
+  const location = useLocation();
+  const hideNavRoutes = ["/login", "/register"];
 
   return (
     <div>
-      <Nav />
+      {!hideNavRoutes.includes(location.pathname) && <Nav />}
       <ToastContainer position='bottom-center' theme='dark' />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -35,7 +31,9 @@ function App() {
         <Route path='/serie/:slug' element={<TvSerieDetail />} />
         <Route path='/buscar' element={<Search />} />
         <Route path='/ranking' element={<Ranking />} />
-        <Route path="*" element={<Error />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='*' element={<Error />} />
       </Routes>
     </div>
   );

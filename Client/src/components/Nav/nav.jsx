@@ -13,11 +13,14 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../assets/television.png";
 import SearchBar from "../SearchBar/searchBar";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["INICIO", "POPULAR", "LISTAS", "RANKING"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Nav() {
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -37,7 +40,7 @@ function Nav() {
   };
 
   return (
-    <AppBar position='static' color='primary'>
+    <AppBar position='static' color='primary' sx={{ marginBottom: 2 }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Typography
@@ -153,6 +156,20 @@ function Nav() {
           </Box>
           <Box sx={{ flexGrow: 1 }}>
             <SearchBar />
+          </Box>
+          <Box sx={{ flexGrow: 0, marginRight: 1 }}>
+            <Button
+              sx={{ color: "white", border: 1 }}
+              onClick={() => navigate("/login")}
+            >
+              INICIAR SESION
+            </Button>
+            <Button
+              sx={{ color: "white", border: 1 }}
+              onClick={() => navigate("/register")}
+            >
+              REGISTRAR
+            </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title='Open settings'>

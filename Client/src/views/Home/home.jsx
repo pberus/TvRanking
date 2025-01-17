@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAiringTodaySeries,
+  getAllLists,
   getNowPlayingFilms,
   getOnTheAirSeries,
   getPopularFilms,
@@ -29,6 +30,10 @@ const Home = () => {
   const topRatedSeries = useSelector((state) => state.topRatedSeries);
 
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(getAllLists());
+  }, [dispatch]);
 
   useEffect(() => {
     if (filmsOrSeries) {

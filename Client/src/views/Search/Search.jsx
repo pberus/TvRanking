@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { searchTv } from "../../redux/actions";
+import { getAllLists, searchTv } from "../../redux/actions";
 import { Card } from "../../components";
 import tmdbIcono from "../../assets/tmdb-logo.svg";
 
@@ -9,6 +9,10 @@ const Search = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    dispatch(getAllLists());
+  }, [dispatch]);
 
   useEffect(() => {
     setLoading(true); // Reinicia el estado de carga al cambiar el slug

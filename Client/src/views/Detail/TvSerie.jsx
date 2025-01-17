@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import {
   addCardList,
+  getAllLists,
   getDetail,
   removeCardList,
   removeDetail,
@@ -66,7 +67,10 @@ const TvSerieDetail = () => {
     number_of_seasons,
     seasons,
   } = detail;
-  console.log(detail);
+
+  useEffect(() => {
+    dispatch(getAllLists());
+  }, [dispatch]);
 
   useEffect(() => {
     setLoading(true); // Reinicia el estado de carga al cambiar el slug

@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-//import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TvCard from "./card";
@@ -72,13 +71,8 @@ export default function ListCard({ tv }) {
             height: "20%",
             margin: 0,
             padding: 0,
-            display: "flex",
-            justifyContent: "space-around",
           }}
         >
-          <Button variant='contained' color='dark' size='small'>
-            Compartir
-          </Button>
           {homepage && (
             <Button
               href={homepage}

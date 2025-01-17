@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import {
   addCardList,
+  getAllLists,
   getDetail,
   removeCardList,
   removeDetail,
@@ -64,6 +65,10 @@ const MovieDetail = () => {
     youtubeVideos,
     similar,
   } = detail;
+
+  useEffect(() => {
+    dispatch(getAllLists());
+  }, [dispatch]);
 
   useEffect(() => {
     setLoading(true); // Reinicia el estado de carga al cambiar el slug
