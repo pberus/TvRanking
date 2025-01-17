@@ -1,5 +1,7 @@
 const { User } = require("../../db");
 const { Op } = require("sequelize");
+const bcrypt = require("bcrypt");
+const { SALT_ROUNDS } = process.env;
 
 const signUpController = async (name, email, password) => {
   const userFound = await User.findOne({
@@ -10,15 +12,15 @@ const signUpController = async (name, email, password) => {
     },
   });
 
-  if (userFound) throw new Error("Este email ya se encuentra registrado");
+  if (userFound) throw new Error("Este email ya se encuentra registrado!");
 
-  await User.create({
+  const hashedPassword = await bcrypt.hash(password, Number(SALT_ROUNDS));
+
+  return await User.create({
     name,
     email,
-    password,
+    password: hashedPassword,
   });
-
-  return "Usuario registrado con exito!";
 };
 
 module.exports = signUpController;

@@ -18,6 +18,8 @@ import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import { GoogleIcon, FacebookIcon } from "./components/CustomIcons";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -67,6 +69,8 @@ export default function SignIn(props) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
 
+  const navigate = useNavigate();
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -76,17 +80,25 @@ export default function SignIn(props) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (emailError || passwordError) {
-      return;
-    }
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+    try {
+      event.preventDefault();
+      if (emailError || passwordError) {
+        return;
+      }
+      const email = event.target.email.value;
+      const password = event.target.password.value;
 
-    const { data } = await axios(
-      `http://localhost:3001/auth?email=${email}&password=${password}`
-    );
-    alert(data);
+      const { data } = await axios(
+        `http://localhost:3001/auth?email=${email}&password=${password}`,
+        { withCredentials: true }
+      );
+      toast.success(data);
+      navigate("/");
+    } catch (error) {
+      error.response.data
+        ? toast.error(error.response.data)
+        : toast.error(error);
+    }
   };
 
   const validateInputs = () => {
@@ -221,7 +233,7 @@ export default function SignIn(props) {
             <Typography sx={{ textAlign: "center" }}>
               ¿No tienes una cuenta?{" "}
               <Link
-                href='/register'
+                href='/auth/register'
                 variant='body2'
                 sx={{ alignSelf: "center" }}
               >

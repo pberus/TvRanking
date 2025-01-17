@@ -14,10 +14,21 @@ import {
 } from "./views";
 import { Nav } from "./components";
 import { ToastContainer } from "react-toastify";
+import { useState } from "react";
+import useAuth from "./hooks/useAuth";
 
 function App() {
   const location = useLocation();
-  const hideNavRoutes = ["/login", "/register"];
+  const hideNavRoutes = ["/auth/login", "/auth/register"];
+
+  const [loading, setLoading] = useState(true);
+
+  useAuth(setLoading);
+
+  //Para que no muestre ninguna ruta protegida mientras carga
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -31,8 +42,8 @@ function App() {
         <Route path='/serie/:slug' element={<TvSerieDetail />} />
         <Route path='/buscar' element={<Search />} />
         <Route path='/ranking' element={<Ranking />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+        <Route path='/auth/login' element={<Login />} />
+        <Route path='/auth/register' element={<Register />} />
         <Route path='*' element={<Error />} />
       </Routes>
     </div>

@@ -14,6 +14,8 @@ import MenuItem from "@mui/material/MenuItem";
 import logo from "../../assets/television.png";
 import SearchBar from "../SearchBar/searchBar";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const pages = ["INICIO", "POPULAR", "LISTAS", "RANKING"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -37,6 +39,20 @@ function Nav() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const logoutFunction = async () => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3001/logout",
+        {},
+        { withCredentials: true }
+      );
+      navigate("/auth/login");
+      toast.success(data);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -158,17 +174,8 @@ function Nav() {
             <SearchBar />
           </Box>
           <Box sx={{ flexGrow: 0, marginRight: 1 }}>
-            <Button
-              sx={{ color: "white", border: 1 }}
-              onClick={() => navigate("/login")}
-            >
-              INICIAR SESION
-            </Button>
-            <Button
-              sx={{ color: "white", border: 1 }}
-              onClick={() => navigate("/register")}
-            >
-              REGISTRAR
+            <Button sx={{ color: "white", border: 1 }} onClick={logoutFunction}>
+              Cerrar sesion
             </Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>

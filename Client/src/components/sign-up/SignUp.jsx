@@ -17,6 +17,8 @@ import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import { GoogleIcon, FacebookIcon } from "./components/CustomIcons";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -67,6 +69,8 @@ export default function SignUp(props) {
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState("");
 
+  const navigate = useNavigate();
+
   const validateInputs = () => {
     const email = document.getElementById("email");
     const password = document.getElementById("password");
@@ -107,18 +111,29 @@ export default function SignUp(props) {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (nameError || emailError || passwordError) {
-      return;
-    }
+    try {
+      event.preventDefault();
+      if (nameError || emailError || passwordError) {
+        return;
+      }
 
-    const formData = {
-      name: event.target.name.value,
-      email: event.target.email.value,
-      password: event.target.password.value,
-    };
-    const { data } = await axios.post("http://localhost:3001/auth", formData);
-    alert(data);
+      const formData = {
+        name: event.target.name.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
+      };
+      const { data } = await axios.post(
+        "http://localhost:3001/auth",
+        formData,
+        { withCredentials: true }
+      );
+      toast.success(data);
+      navigate("/");
+    } catch (error) {
+      error.response.data
+        ? toast.error(error.response.data)
+        : toast.error(error);
+    }
   };
 
   return (
@@ -219,7 +234,11 @@ export default function SignUp(props) {
             </Button>
             <Typography sx={{ textAlign: "center" }}>
               ¿Ya tienes una cuenta?{" "}
-              <Link href='/login' variant='body2' sx={{ alignSelf: "center" }}>
+              <Link
+                href='/auth/login'
+                variant='body2'
+                sx={{ alignSelf: "center" }}
+              >
                 Iniciar sesión
               </Link>
             </Typography>
