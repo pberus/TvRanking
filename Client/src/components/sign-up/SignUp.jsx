@@ -16,6 +16,7 @@ import { styled } from "@mui/material/styles";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import { GoogleIcon, FacebookIcon } from "./components/CustomIcons";
+import axios from "axios";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -75,7 +76,7 @@ export default function SignUp(props) {
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage("Please enter a valid email address.");
+      setEmailErrorMessage("Por favor ingrese un email valido.");
       isValid = false;
     } else {
       setEmailError(false);
@@ -84,7 +85,9 @@ export default function SignUp(props) {
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 6 characters long.");
+      setPasswordErrorMessage(
+        "La contraseña tiene que tener por lo menos 6 caracteres."
+      );
       isValid = false;
     } else {
       setPasswordError(false);
@@ -93,7 +96,7 @@ export default function SignUp(props) {
 
     if (!name.value || name.value.length < 1) {
       setNameError(true);
-      setNameErrorMessage("Name is required.");
+      setNameErrorMessage("El nombre es requerido.");
       isValid = false;
     } else {
       setNameError(false);
@@ -103,18 +106,19 @@ export default function SignUp(props) {
     return isValid;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (nameError || emailError || passwordError) {
-      event.preventDefault();
       return;
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      name: data.get("name"),
-      lastName: data.get("lastName"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    const formData = {
+      name: event.target.name.value,
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+    const { data } = await axios.post("http://localhost:3001/auth", formData);
+    alert(data);
   };
 
   return (

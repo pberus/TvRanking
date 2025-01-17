@@ -17,6 +17,7 @@ import ForgotPassword from "./components/ForgotPassword";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import { GoogleIcon, FacebookIcon } from "./components/CustomIcons";
+import axios from "axios";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -74,16 +75,18 @@ export default function SignIn(props) {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (emailError || passwordError) {
-      event.preventDefault();
       return;
     }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    const { data } = await axios(
+      `http://localhost:3001/auth?email=${email}&password=${password}`
+    );
+    alert(data);
   };
 
   const validateInputs = () => {
@@ -103,7 +106,9 @@ export default function SignIn(props) {
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage("La contraseña tiene que tener por lo menos 6 caracteres.");
+      setPasswordErrorMessage(
+        "La contraseña tiene que tener por lo menos 6 caracteres."
+      );
       isValid = false;
     } else {
       setPasswordError(false);

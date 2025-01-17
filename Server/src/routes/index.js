@@ -9,6 +9,7 @@ const providers = require("./Providers/providers");
 const lists = require("./Lists/lists");
 const detail = require("./Detail/detail");
 const search = require("./Search/search");
+const auth = require("./Auth/auth");
 
 router.use("/films", films);
 router.use("/series", series);
@@ -19,6 +20,7 @@ router.use("/providers", providers);
 router.use("/lists", lists);
 router.use("/detail", detail);
 router.use("/search", search);
+router.use("/auth", auth);
 router.use("/", (req, res) => res.send("Server de TvRanking"));
 
 module.exports = router;
