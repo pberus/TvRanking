@@ -25,6 +25,7 @@ export const GET_DETAIL = "GET_DETAIL";
 export const REMOVE_DETAIL = "REMOVE_DETAIL";
 export const SEARCH_TV_POPOVER = "SEARCH_TV_POPOVER";
 export const REMOVE_POPOVER_RESULTS = "REMOVE_POPOVER_RESULTS";
+export const AUTHENTICATE = "AUTHENTICATE"
 
 const URL = "http://localhost:3001";
 
@@ -466,3 +467,12 @@ export const removePopoverResults = () => {
     type: REMOVE_POPOVER_RESULTS,
   };
 };
+
+//AUTH
+
+export const authenticate = (authData) => {
+  return {
+    type: AUTHENTICATE,
+    payload: authData,
+  }
+}

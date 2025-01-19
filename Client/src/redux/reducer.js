@@ -1,5 +1,6 @@
 import {
   ADD_CARD_LIST,
+  AUTHENTICATE,
   GET_AIRING_TODAY_SERIES,
   GET_ALL_LISTS,
   GET_DETAIL,
@@ -58,6 +59,8 @@ const initialState = {
   //SEARCH
   searchResults: [],
   searchPopoverResults: {},
+  //AUTH
+  isAuthenticated: false,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -205,6 +208,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         searchPopoverResults: {},
+      };
+    //AUTH
+    case AUTHENTICATE:
+      return {
+        ...state,
+        isAuthenticated: payload.authenticated,
       };
     default:
       return { ...state };

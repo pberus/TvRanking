@@ -13,15 +13,20 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import logo from "../../assets/television.png";
 import SearchBar from "../SearchBar/searchBar";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { authenticate } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["INICIO", "POPULAR", "LISTAS", "RANKING"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function Nav() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -48,8 +53,8 @@ function Nav() {
         {},
         { withCredentials: true }
       );
-      navigate("/auth/login");
-      toast.success(data);
+      dispatch(authenticate(data));
+      toast.success("Cierre de sesion exitoso");
     } catch (error) {
       toast.error(error.message);
     }
@@ -174,9 +179,29 @@ function Nav() {
             <SearchBar />
           </Box>
           <Box sx={{ flexGrow: 0, marginRight: 1 }}>
-            <Button sx={{ color: "white", border: 1 }} onClick={logoutFunction}>
-              Cerrar sesion
-            </Button>
+            {!isAuthenticated ? (
+              <div>
+                <Button
+                  sx={{ backgroundColor: "white", border: 1, marginRight: 1 }}
+                  onClick={() => navigate("/auth/login")}
+                >
+                  Iniciar sesion
+                </Button>
+                <Button
+                  sx={{ color: "white", border: 1 }}
+                  onClick={() => navigate("/auth/register")}
+                >
+                  Registrarse
+                </Button>
+              </div>
+            ) : (
+              <Button
+                sx={{ color: "white", border: 1 }}
+                onClick={logoutFunction}
+              >
+                Cerrar sesion
+              </Button>
+            )}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title='Open settings'>

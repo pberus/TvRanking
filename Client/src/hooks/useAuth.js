@@ -1,26 +1,29 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { authenticate } from "../redux/actions";
 
 const useAuth = (setLoading) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
-  const urlsPermitted = ["/auth/login", "/auth/register"];
-  const urlsNotPermitted = ["/popular", "/listas", "/ranking"];
-  const urlsNotPermittedStartsWith = ["/pelicula", "/serie", "/buscar"];
+  const urlsNotPermitted = ["/auth/login", "/auth/register"];
 
   //Para evaluar si tiene token o no para entrar en una ruta protegida
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios("http://localhost:3001/protected", {
+        const { data } = await axios("http://localhost:3001/protected", {
           withCredentials: true,
         });
         //Si no esta autenticado, tira error. Si esta autenticado, sigo y aclaro que ruta no puedo ir si estoy autenticado
-        if (urlsPermitted.some((url) => location.pathname.includes(url)))
+        if (urlsNotPermitted.some((url) => location.pathname.includes(url)))
           return navigate("/");
+
+        dispatch(authenticate(data));
       } catch (error) {
         console.log("useAuth:", error);
         //Si expiro el access token, hago una solicitud para crear uno nuevo
@@ -33,24 +36,6 @@ const useAuth = (setLoading) => {
             );
             return await checkAuth();
           } catch (error) {
-            navigate("/auth/login");
-            toast.error(
-              error.response && error.response.data
-                ? error.response.data
-                : error.message,
-              {
-                position: "top-center",
-              }
-            );
-          }
-        } else {
-          if (
-            urlsNotPermitted.some((url) => location.pathname.includes(url)) ||
-            urlsNotPermittedStartsWith.some((path) =>
-              location.pathname.startsWith(path)
-            ) ||
-            location.pathname === "/"
-          ) {
             navigate("/auth/login");
             toast.error(
               error.response && error.response.data
