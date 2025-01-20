@@ -61,6 +61,7 @@ const initialState = {
   searchPopoverResults: {},
   //AUTH
   isAuthenticated: false,
+  user: "",
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -214,6 +215,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isAuthenticated: payload.authenticated,
+        user: payload.user,
       };
     default:
       return { ...state };

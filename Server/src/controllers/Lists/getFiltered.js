@@ -10,13 +10,14 @@ const getFilteredListController = async (
   runtime,
   rating,
   providers,
-  list
+  list,
+  userId
 ) => {
   let model = Watchlist;
   if (list === "seen") model = Seen;
   if (list === "liked") model = Liked;
 
-  const whereClause = { media_type };
+  const whereClause = { UserId: userId, media_type };
 
   if (yearRange) {
     const [startYear, endYear] = yearRange.split(",");

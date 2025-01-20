@@ -9,21 +9,19 @@ routerRefreshToken.post("/", async (req, res) => {
     const refreshToken = req.cookies.refresh_token;
     if (!refreshToken) throw new Error("Refresh token not found");
 
-    const { username } = jwt.verify(refreshToken, JWT_REFRESH_SECRET_KEY);
+    const { id } = jwt.verify(refreshToken, JWT_REFRESH_SECRET_KEY);
 
     const user = await User.findOne({
       where: {
-        email: username,
+        id,
       },
     });
 
     if (!user) throw new Error("Vuelve a iniciar sesion");
 
-    const newAccessToken = jwt.sign(
-      { username: user.email },
-      JWT_ACCESS_SECRET_KEY,
-      { expiresIn: "1h" }
-    );
+    const newAccessToken = jwt.sign({ id: user.id }, JWT_ACCESS_SECRET_KEY, {
+      expiresIn: "1h",
+    });
 
     res.cookie("access_token", newAccessToken, {
       httpOnly: true,

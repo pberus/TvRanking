@@ -38,7 +38,16 @@ let capsEntries = entries.map((entry) => [
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Aca vendrian las relaciones
-const { } = sequelize.models;
+const { User, Watchlist, Seen, Liked } = sequelize.models;
+
+User.hasMany(Watchlist);
+Watchlist.belongsTo(User);
+
+User.hasMany(Seen);
+Seen.belongsTo(User);
+
+User.hasMany(Liked);
+Liked.belongsTo(User);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

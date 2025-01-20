@@ -10,10 +10,9 @@ const useAuth = (setLoading) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const urlsNotPermitted = ["/auth/login", "/auth/register"];
-
   //Para evaluar si tiene token o no para entrar en una ruta protegida
   useEffect(() => {
+    const urlsNotPermitted = ["/auth/login", "/auth/register"];
     const checkAuth = async () => {
       try {
         const { data } = await axios("http://localhost:3001/protected", {
@@ -53,7 +52,7 @@ const useAuth = (setLoading) => {
     };
 
     checkAuth();
-  }, [navigate, location.pathname, setLoading]);
+  }, [navigate, location.pathname, setLoading, dispatch]);
 };
 
 export default useAuth;

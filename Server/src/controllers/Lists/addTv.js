@@ -5,7 +5,7 @@ const { API_KEY } = process.env;
 const URL = (id, media) =>
   `https://api.themoviedb.org/3/${media}/${id}?api_key=${API_KEY}&language=es-AR&append_to_response=watch%2Fproviders`;
 
-const addTvListController = async (id, list, media_type) => {
+const addTvListController = async (id, list, media_type, userId) => {
   const { data } = await axios(URL(id, media_type));
   const {
     title,
@@ -44,7 +44,7 @@ const addTvListController = async (id, list, media_type) => {
   if (list === "liked") model = Liked;
 
   const [tv, created] = await model.findOrCreate({
-    where: { id }, // Busca solo por ID
+    where: { id, UserId: userId }, // Busca solo por ID
     defaults: {
       title: media_type === "movie" ? title : name,
       overview: overview ? overview : "No description available",
@@ -73,6 +73,9 @@ const addTvListController = async (id, list, media_type) => {
   if (!created) throw new Error("The title already exists!");
 
   const allTv = await model.findAll({
+    where: {
+      UserId: userId,
+    },
     order: [["createdAt", "DESC"]],
     attributes: { exclude: ["createdAt", "updatedAt"] },
   });

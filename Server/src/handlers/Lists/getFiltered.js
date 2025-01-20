@@ -13,6 +13,7 @@ const getFilteredListHandler = async (req, res) => {
       providers,
       list,
     } = req.query;
+    const userId = req.user.id;
 
     const filteredList = await getFilteredListController(
       media_type,
@@ -23,7 +24,8 @@ const getFilteredListHandler = async (req, res) => {
       runtime,
       rating,
       providers,
-      list
+      list,
+      userId
     );
     return res.json(filteredList);
   } catch (error) {

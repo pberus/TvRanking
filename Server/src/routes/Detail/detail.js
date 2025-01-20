@@ -1,4 +1,4 @@
-const getDetail = require("../../handlers/Detail/getDetail");
+const getDetail = require("../../handlers/API/Detail/getDetail");
 
 const routerDetail = require("express").Router();
 

@@ -25,7 +25,7 @@ export const GET_DETAIL = "GET_DETAIL";
 export const REMOVE_DETAIL = "REMOVE_DETAIL";
 export const SEARCH_TV_POPOVER = "SEARCH_TV_POPOVER";
 export const REMOVE_POPOVER_RESULTS = "REMOVE_POPOVER_RESULTS";
-export const AUTHENTICATE = "AUTHENTICATE"
+export const AUTHENTICATE = "AUTHENTICATE";
 
 const URL = "http://localhost:3001";
 
@@ -299,11 +299,15 @@ export const getProviders = () => {
 export const addCardList = ({ id, list, media_type }) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`${URL}/lists`, {
-        id,
-        list,
-        media_type,
-      });
+      const { data } = await axios.post(
+        `${URL}/lists`,
+        {
+          id,
+          list,
+          media_type,
+        },
+        { withCredentials: true }
+      );
       dispatch({
         type: ADD_CARD_LIST,
         payload: {
@@ -325,7 +329,8 @@ export const removeCardList = ({ id, list }) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(
-        `${URL}/lists?list_type=${list}&id=${id}`
+        `${URL}/lists?list_type=${list}&id=${id}`,
+        { withCredentials: true }
       );
       dispatch({
         type: REMOVE_CARD_LIST,
@@ -347,7 +352,7 @@ export const removeCardList = ({ id, list }) => {
 export const getAllLists = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios(`${URL}/lists/`);
+      const { data } = await axios(`${URL}/lists/`, { withCredentials: true });
       return dispatch({
         type: GET_ALL_LISTS,
         payload: {
@@ -385,7 +390,7 @@ export const getFilteredList = ({
       if (rating.length > 0) listURL += `&rating=${rating}`;
       if (providers.length > 0) listURL += `&providers=${providers}`;
 
-      const { data } = await axios(listURL);
+      const { data } = await axios(listURL, { withCredentials: true });
       return dispatch({
         type: GET_FILTERED_LIST,
         payload: {
@@ -474,5 +479,5 @@ export const authenticate = (authData) => {
   return {
     type: AUTHENTICATE,
     payload: authData,
-  }
-}
+  };
+};

@@ -1,4 +1,4 @@
-const getDetailController = require("../../controllers/Detail/getDetail");
+const getDetailController = require("../../../controllers/API/Detail/getDetail");
 
 const getDetailHandler = async (req, res) => {
   try {

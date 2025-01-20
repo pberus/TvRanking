@@ -8,12 +8,12 @@ const signUpHandler = async (req, res) => {
     const userCreated = await signUpController(name, email, password);
 
     const accessToken = jwt.sign(
-      { id: userCreated.id, username: userCreated.email },
+      { id: userCreated.id },
       JWT_ACCESS_SECRET_KEY,
       { expiresIn: "1h" }
     );
     const refreshToken = jwt.sign(
-      { id: userCreated.id, username: userCreated.email },
+      { id: userCreated.id },
       JWT_REFRESH_SECRET_KEY,
       { expiresIn: "7d" }
     );
