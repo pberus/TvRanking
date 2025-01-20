@@ -219,11 +219,14 @@ export default function SignUp(props) {
             <Button
               fullWidth
               variant='outlined'
-              onClick={() => alert("Regístrate con Google")}
+              onClick={() =>
+                window.location.replace("http://localhost:3001/auth/google")
+              }
               startIcon={<GoogleIcon />}
             >
               Regístrate con Google
             </Button>
+
             <Button
               fullWidth
               variant='outlined'

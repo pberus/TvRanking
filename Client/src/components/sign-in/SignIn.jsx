@@ -217,7 +217,9 @@ export default function SignIn(props) {
             <Button
               fullWidth
               variant='outlined'
-              onClick={() => alert("Iniciar sesión con Google")}
+              onClick={() =>
+                window.location.replace("http://localhost:3001/auth/google")
+              }
               startIcon={<GoogleIcon />}
             >
               Iniciar sesión con Google
