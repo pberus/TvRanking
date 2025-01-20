@@ -37,7 +37,7 @@ const getApiDiscoverSeriesHandler = async (req, res) => {
     );
     return res.json({ results, totalPages, totalResults });
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error discover: ", error.message);
   }
 };
 

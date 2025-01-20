@@ -32,7 +32,7 @@ const signUpHandler = async (req, res) => {
 
     return res.send("Usuario registrado con exito!");
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error signup: ", error.message);
     error.message.includes("email")
       ? res.status(409).send(error.message)
       : res.status(500).send(error.message);

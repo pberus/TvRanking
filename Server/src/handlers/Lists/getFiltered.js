@@ -29,7 +29,7 @@ const getFilteredListHandler = async (req, res) => {
     );
     return res.json(filteredList);
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error lists getfiltered: ", error.message);
   }
 };
 

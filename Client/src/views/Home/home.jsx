@@ -31,9 +31,11 @@ const Home = () => {
 
   const [loading, setLoading] = useState(true);
 
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+
   useEffect(() => {
-    dispatch(getAllLists());
-  }, [dispatch]);
+    isAuthenticated && dispatch(getAllLists());
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     if (filmsOrSeries) {

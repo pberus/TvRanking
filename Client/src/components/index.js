@@ -21,6 +21,7 @@ import TabsDetailInfo from "./Tabs/detailInfo";
 import ToolbarLists from "./Toolbar/lists";
 import YoutubeDetailVideos from "./Youtube/detailVideos";
 import DetailSeasonsModal from "./Modal/detailSeasons";
+import NotAuthenticateListsModal from "./Modal/notAuthenticateLists";
 import SignIn from "./sign-in/SignIn";
 import SignUp from "./sign-up/SignUp";
 
@@ -48,6 +49,7 @@ export {
   ToolbarLists,
   YoutubeDetailVideos,
   DetailSeasonsModal,
+  NotAuthenticateListsModal,
   SignIn,
   SignUp,
 };

@@ -14,7 +14,7 @@ const getApiLenguagesHandler = async (req, res) => {
     );    
     return res.json(lenguages);
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error lenguages: ", error.message);
   }
 };
 

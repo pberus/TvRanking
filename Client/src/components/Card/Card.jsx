@@ -5,7 +5,11 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import DoneIcon from "@mui/icons-material/Done";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Tooltip from "@mui/material/Tooltip";
-import { addCardList, removeCardList } from "../../redux/actions";
+import {
+  addCardList,
+  openNotAuthenticateListsModal,
+  removeCardList,
+} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -15,6 +19,8 @@ const Card = ({ tv, cardStyle }) => {
   const { id, title, image, media_type, date } = tv;
 
   const dispatch = useDispatch();
+
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   const watchlist = useSelector((state) => state.watchlist);
   const seen = useSelector((state) => state.seen);
@@ -27,10 +33,14 @@ const Card = ({ tv, cardStyle }) => {
   };
 
   const handleList = (list) => {
-    if (isInList[list]) {
-      dispatch(removeCardList({ id, list }));
+    if (isAuthenticated) {
+      if (isInList[list]) {
+        dispatch(removeCardList({ id, list }));
+      } else {
+        dispatch(addCardList({ id, list, media_type }));
+      }
     } else {
-      dispatch(addCardList({ id, list, media_type }));
+      dispatch(openNotAuthenticateListsModal(true));
     }
   };
 

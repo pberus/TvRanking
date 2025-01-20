@@ -21,11 +21,14 @@ export const ADD_CARD_LIST = "ADD_CARD_LIST";
 export const REMOVE_CARD_LIST = "REMOVE_CARD_LIST";
 export const GET_ALL_LISTS = "GET_ALL_LISTS";
 export const GET_FILTERED_LIST = "GET_FILTERED_LIST";
+export const REMOVE_LISTS = "REMOVE_LISTS";
 export const GET_DETAIL = "GET_DETAIL";
 export const REMOVE_DETAIL = "REMOVE_DETAIL";
 export const SEARCH_TV_POPOVER = "SEARCH_TV_POPOVER";
 export const REMOVE_POPOVER_RESULTS = "REMOVE_POPOVER_RESULTS";
 export const AUTHENTICATE = "AUTHENTICATE";
+export const OPEN_NOT_AUTHENTICATE_LISTS_MODAL =
+  "OPEN_NOT_AUTHENTICATE_LISTS_MODAL";
 
 const URL = "http://localhost:3001";
 
@@ -404,6 +407,12 @@ export const getFilteredList = ({
   };
 };
 
+export const removeLists = () => {
+  return {
+    type: REMOVE_LISTS,
+  };
+};
+
 //DETAIL
 
 export const getDetail = (title, media_type) => {
@@ -479,5 +488,12 @@ export const authenticate = (authData) => {
   return {
     type: AUTHENTICATE,
     payload: authData,
+  };
+};
+
+export const openNotAuthenticateListsModal = (bool) => {
+  return {
+    type: OPEN_NOT_AUTHENTICATE_LISTS_MODAL,
+    payload: bool,
   };
 };

@@ -52,8 +52,13 @@ const Popular = () => {
     (state) => state.providers
   );
 
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+
   useEffect(() => {
-    dispatch(getAllLists());
+    isAuthenticated && dispatch(getAllLists());
+  }, [dispatch, isAuthenticated]);
+
+  useEffect(() => {
     dispatch(getLenguages());
     dispatch(getGenres());
     dispatch(getProviders());

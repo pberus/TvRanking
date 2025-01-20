@@ -6,7 +6,7 @@ const queryEmptyHandler = async (req, res) => {
 
     return res.json(results);
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error search query empty: ", error.message);
   }
 };
 

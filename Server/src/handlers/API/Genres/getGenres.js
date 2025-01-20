@@ -6,7 +6,7 @@ const getApiGenresHandler = async (req, res) => {
 
     return res.json(genres);
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error genres: ", error.message);
   }
 };
 

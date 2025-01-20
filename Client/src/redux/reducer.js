@@ -18,8 +18,10 @@ import {
   GET_TOP_RATED_FILMS,
   GET_TOP_RATED_SERIES,
   GET_UPCOMING_FILMS,
+  OPEN_NOT_AUTHENTICATE_LISTS_MODAL,
   REMOVE_CARD_LIST,
   REMOVE_DETAIL,
+  REMOVE_LISTS,
   REMOVE_POPOVER_RESULTS,
   REMOVE_TV,
   SEARCH_TV,
@@ -61,7 +63,7 @@ const initialState = {
   searchPopoverResults: {},
   //AUTH
   isAuthenticated: false,
-  user: "",
+  notAuthenticateListsModal: false,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -183,6 +185,13 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         [`${payload.listType}Filtered`]: payload.results,
       };
+    case REMOVE_LISTS:
+      return {
+        ...state,
+        watchlist: [],
+        seen: [],
+        liked: [],
+      };
     //DETAIL
     case GET_DETAIL:
       return {
@@ -215,7 +224,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isAuthenticated: payload.authenticated,
-        user: payload.user,
+      };
+    case OPEN_NOT_AUTHENTICATE_LISTS_MODAL:
+      return {
+        ...state,
+        notAuthenticateListsModal: payload,
       };
     default:
       return { ...state };

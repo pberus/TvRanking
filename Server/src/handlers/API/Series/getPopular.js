@@ -16,7 +16,7 @@ const getApiPopularSeriesHandler = async (req, res) => {
     );
     return res.json(series);
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error series: ", error.message);
   }
 };
 

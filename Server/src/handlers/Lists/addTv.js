@@ -13,7 +13,7 @@ const addTvListHandler = async (req, res) => {
     );
     return res.json({ allTv, list_type: list, title });
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error lists addtv: ", error.message);
   }
 };
 

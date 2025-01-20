@@ -34,7 +34,7 @@ const signInHandler = async (req, res) => {
 
     return res.send("Usuario logueado con exito!");
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error signin: ", error.message);
     switch (error.message) {
       case "Usuario no encontrado.":
         return res.status(404).send(error.message);

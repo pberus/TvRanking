@@ -5,6 +5,7 @@ import {
   addCardList,
   getAllLists,
   getDetail,
+  openNotAuthenticateListsModal,
   removeCardList,
   removeDetail,
 } from "../../redux/actions";
@@ -68,9 +69,11 @@ const TvSerieDetail = () => {
     seasons,
   } = detail;
 
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+
   useEffect(() => {
-    dispatch(getAllLists());
-  }, [dispatch]);
+    isAuthenticated && dispatch(getAllLists());
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     setLoading(true); // Reinicia el estado de carga al cambiar el slug
@@ -94,10 +97,14 @@ const TvSerieDetail = () => {
   };
 
   const handleList = (list) => {
-    if (isInList[list]) {
-      dispatch(removeCardList({ id, list }));
+    if (isAuthenticated) {
+      if (isInList[list]) {
+        dispatch(removeCardList({ id, list }));
+      } else {
+        dispatch(addCardList({ id, list, media_type }));
+      }
     } else {
-      dispatch(addCardList({ id, list, media_type }));
+      dispatch(openNotAuthenticateListsModal(true));
     }
   };
 

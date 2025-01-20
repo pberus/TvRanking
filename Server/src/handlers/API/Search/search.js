@@ -33,7 +33,7 @@ const searchHandler = async (req, res) => {
     results = searchAndSort(results, tv);
     return res.json(results);
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error search: ", error.message);
   }
 };
 

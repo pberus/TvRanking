@@ -7,7 +7,7 @@ const getAllListsHandler = async (req, res) => {
     const allLists = await getAllListsController(userId);
     return res.json(allLists);
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error lists getall: ", error.message);
   }
 };
 

@@ -16,7 +16,7 @@ const getApiUpcomingFilmsHandler = async (req, res) => {
     );
     return res.json(films);
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error films: ", error.message);
   }
 };
 

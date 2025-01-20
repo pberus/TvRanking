@@ -34,7 +34,7 @@ const searchPopoverHandler = async (req, res) => {
     series = searchAndSort(series, tv).slice(0, 4);
     return res.json({ movies, series });
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error search popover: ", error.message);
   }
 };
 

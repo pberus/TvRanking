@@ -12,14 +12,19 @@ import {
   Search,
   TvSerieDetail,
 } from "./views";
-import { Nav } from "./components";
+import { Nav, NotAuthenticateListsModal } from "./components";
 import { ToastContainer } from "react-toastify";
 import { useState } from "react";
 import useAuth from "./hooks/useAuth";
+import { useSelector } from "react-redux";
 
 function App() {
   const location = useLocation();
   const hideNavRoutes = ["/auth/login", "/auth/register"];
+
+  const notAuthenticateListsModal = useSelector(
+    (state) => state.notAuthenticateListsModal
+  );
 
   const [loading, setLoading] = useState(true);
 
@@ -34,6 +39,7 @@ function App() {
     <div>
       {!hideNavRoutes.includes(location.pathname) && <Nav />}
       <ToastContainer position='bottom-center' theme='dark' />
+      {notAuthenticateListsModal && <NotAuthenticateListsModal />}
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/popular' element={<Popular />} />

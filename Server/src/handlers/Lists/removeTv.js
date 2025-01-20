@@ -12,7 +12,7 @@ const removeTvListHandler = async (req, res) => {
     );
     return res.json({ allTv, list_type, title });
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error lists removetv: ", error.message);
   }
 };
 

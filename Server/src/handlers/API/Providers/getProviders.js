@@ -21,7 +21,7 @@ const getApiProvidersHandler = async (req, res) => {
     );
     return res.json({ filmsProviders, seriesProviders });
   } catch (error) {
-    console.log("error: ", error.message);
+    console.log("error providers: ", error.message);
   }
 };
 

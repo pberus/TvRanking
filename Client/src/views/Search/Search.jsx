@@ -10,9 +10,11 @@ const Search = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
 
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+
   useEffect(() => {
-    dispatch(getAllLists());
-  }, [dispatch]);
+    isAuthenticated && dispatch(getAllLists());
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     setLoading(true); // Reinicia el estado de carga al cambiar el slug

@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllLists } from "../../redux/actions";
 
 const Ranking = () => {
   const dispatch = useDispatch();
 
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+
   useEffect(() => {
-    dispatch(getAllLists());
-  }, [dispatch]);
+    isAuthenticated && dispatch(getAllLists());
+  }, [dispatch, isAuthenticated]);
 
   return (
     <div>
