@@ -21,8 +21,6 @@ routerAuth.get(
     failureRedirect: "http://localhost:5173/auth/login",
   }),
   async (req, res) => {
-    console.log("req.user auth.js", req.user);
-
     // Generar un token de acceso JWT para el usuario
     const accessToken = req.user.token;
 
@@ -48,7 +46,45 @@ routerAuth.get(
     });
 
     // Redirigir a la página principal u otra página segura
-    res.redirect("http://localhost:5173/");
+    res.redirect("http://localhost:5173");
+  }
+);
+
+routerAuth.get(
+  "/facebook",
+  passport.authenticate("facebook", {
+    session: false,
+  })
+);
+
+routerAuth.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
+    session: false,
+    failureRedirect: "http://localhost:5173/auth/login",
+  }),
+  async function (req, res) {
+    const accessToken = req.user.token;
+
+    const refreshToken = jwt.sign(
+      { id: req.user.user.id },
+      JWT_REFRESH_SECRET_KEY,
+      { expiresIn: "7d" }
+    );
+
+    res.cookie("access_token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    });
+
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    });
+
+    res.redirect("http://localhost:5173");
   }
 );
 

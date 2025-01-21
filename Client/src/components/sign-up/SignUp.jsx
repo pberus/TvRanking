@@ -230,7 +230,9 @@ export default function SignUp(props) {
             <Button
               fullWidth
               variant='outlined'
-              onClick={() => alert("Regístrate con Facebook")}
+              onClick={() =>
+                window.location.replace("http://localhost:3001/auth/facebook")
+              }
               startIcon={<FacebookIcon />}
             >
               Regístrate con Facebook

@@ -227,7 +227,9 @@ export default function SignIn(props) {
             <Button
               fullWidth
               variant='outlined'
-              onClick={() => alert("Iniciar sesión con Facebook")}
+              onClick={() =>
+                window.location.replace("http://localhost:3001/auth/facebook")
+              }
               startIcon={<FacebookIcon />}
             >
               Iniciar sesión con Facebook
