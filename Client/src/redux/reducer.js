@@ -6,7 +6,6 @@ import {
   GET_DETAIL,
   GET_DISCOVER_FILMS,
   GET_DISCOVER_SERIES,
-  GET_DISCOVER_TV,
   GET_FILTERED_LIST,
   GET_GENRES,
   GET_LENGUAGES,
@@ -17,6 +16,7 @@ import {
   GET_PROVIDERS,
   GET_TOP_RATED_FILMS,
   GET_TOP_RATED_SERIES,
+  GET_TRENDING,
   GET_UPCOMING_FILMS,
   OPEN_NOT_AUTHENTICATE_LISTS_MODAL,
   REMOVE_CARD_LIST,
@@ -42,7 +42,8 @@ const initialState = {
   //DISCOVER
   discoverFilms: {},
   discoverSeries: {},
-  discoverTv: [],
+  //TRENDING
+  trending: [],
   //LENGUAGES
   lenguages: [],
   //GENRES
@@ -133,10 +134,10 @@ const rootReducer = (state = initialState, { type, payload }) => {
           totalResults: payload.totalResults,
         },
       };
-    case GET_DISCOVER_TV:
+    case GET_TRENDING:
       return {
         ...state,
-        discoverTv: payload,
+        trending: payload,
       };
     //REMOVE TV
     case REMOVE_TV:

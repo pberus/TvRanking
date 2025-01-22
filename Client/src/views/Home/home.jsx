@@ -9,9 +9,10 @@ import {
   getPopularSeries,
   getTopRatedFilms,
   getTopRatedSeries,
+  getTrending,
   getUpcomingFilms,
 } from "../../redux/actions";
-import { HomeCarousel } from "../../components";
+import { HomeCarousel, TrendingCarousel } from "../../components";
 
 const Home = () => {
   const [filmsOrSeries, setFilmsOrSeries] = useState(true);
@@ -39,11 +40,13 @@ const Home = () => {
 
   useEffect(() => {
     if (filmsOrSeries) {
+      dispatch(getTrending("movie"));
       dispatch(getNowPlayingFilms());
       dispatch(getPopularFilms());
       dispatch(getTopRatedFilms());
       dispatch(getUpcomingFilms());
     } else {
+      dispatch(getTrending("tv"));
       dispatch(getAiringTodaySeries());
       dispatch(getOnTheAirSeries());
       dispatch(getPopularSeries());
@@ -55,24 +58,28 @@ const Home = () => {
   if (loading) {
     return (
       <div>
-        <h1>Tv Ranking</h1>
         <h4>Cargando inicio...</h4>; // Muestra un mensaje de carga
       </div>
     );
   }
 
   return (
-    <div>
+    <div className='text-white'>
+      <TrendingCarousel />
       <h1>Tv Ranking</h1>
       <button
-        className={`btn ${filmsOrSeries ? "btn-primary" : "btn-secondary"}`}
+        className={`btn ${
+          filmsOrSeries ? "btn-dark" : "btn-dark"
+        } border rounded-0 rounded-start`}
         disabled={filmsOrSeries}
         onClick={() => setFilmsOrSeries(true)}
       >
         Peliculas
       </button>
       <button
-        className={`btn ${!filmsOrSeries ? "btn-primary" : "btn-secondary"}`}
+        className={`btn ${
+          !filmsOrSeries ? "btn-dark" : "btn-dark"
+        } border rounded-0 rounded-end`}
         disabled={!filmsOrSeries}
         onClick={() => setFilmsOrSeries(false)}
       >

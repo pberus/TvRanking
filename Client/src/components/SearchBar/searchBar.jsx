@@ -92,12 +92,12 @@ const SearchBar = () => {
           onClick={handleClick} // Abre el popover al hacer clic
           autoComplete='off'
           variant='outlined'
-          color='info'
+          color='dark'
           focused
           sx={{
             input: { color: "white" }, // Color del texto
             "& .MuiInputBase-input::placeholder": {
-              color: "inherent",
+              color: "dark",
               opacity: 0.5,
             }, // Color del placeholder
             "& .MuiFilledInput-root": {
@@ -112,7 +112,7 @@ const SearchBar = () => {
             "& .MuiFilledInput-underline:after": {
               borderBottom: "2px solid white", // Borde activo
             },
-            backgroundColor: "#3b8ad9",
+            backgroundColor: "#333333",
             width: "90%",
           }}
           slotProps={{

@@ -12,7 +12,7 @@ export const GET_POPULAR_SERIES = "GET_POPULAR_SERIES";
 export const GET_TOP_RATED_SERIES = "GET_TOP_RATED_SERIES";
 export const GET_DISCOVER_FILMS = "GET_DISCOVER_FILMS";
 export const GET_DISCOVER_SERIES = "GET_DISCOVER_SERIES";
-export const GET_DISCOVER_TV = "GET_DISCOVER_TV";
+export const GET_TRENDING = "GET_TRENDING";
 export const REMOVE_TV = "REMOVE_TV";
 export const GET_LENGUAGES = "GET_LENGUAGES";
 export const GET_GENRES = "GET_GENRES";
@@ -225,14 +225,13 @@ export const getDiscoverSeries = ({
   };
 };
 
-export const getDiscoverTv = (sortBy) => {
+export const getTrending = (mediaType) => {
   return async (dispatch) => {
     try {
-      const films = await axios(`${URL}/discover/films?sort_by=${sortBy}`);
-      const series = await axios(`${URL}/discover/series?sort_by=${sortBy}`);
+      const { data } = await axios(`${URL}/trending?media_type=${mediaType}`);
       return dispatch({
-        type: GET_DISCOVER_TV,
-        payload: [...films.data, ...series.data],
+        type: GET_TRENDING,
+        payload: data,
       });
     } catch (error) {
       alert(error.message);

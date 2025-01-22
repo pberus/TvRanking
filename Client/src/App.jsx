@@ -38,20 +38,22 @@ function App() {
   return (
     <div>
       {!hideNavRoutes.includes(location.pathname) && <Nav />}
-      <ToastContainer position='bottom-center' theme='dark' />
-      {notAuthenticateListsModal && <NotAuthenticateListsModal />}
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/popular' element={<Popular />} />
-        <Route path='/listas' element={<Lists />} />
-        <Route path='/pelicula/:slug' element={<MovieDetail />} />
-        <Route path='/serie/:slug' element={<TvSerieDetail />} />
-        <Route path='/buscar' element={<Search />} />
-        <Route path='/ranking' element={<Ranking />} />
-        <Route path='/auth/login' element={<Login />} />
-        <Route path='/auth/register' element={<Register />} />
-        <Route path='*' element={<Error />} />
-      </Routes>
+      <div className='content'>
+        <ToastContainer position='bottom-center' theme='dark' />
+        {notAuthenticateListsModal && <NotAuthenticateListsModal />}
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/popular' element={<Popular />} />
+          <Route path='/listas' element={<Lists />} />
+          <Route path='/pelicula/:slug' element={<MovieDetail />} />
+          <Route path='/serie/:slug' element={<TvSerieDetail />} />
+          <Route path='/buscar' element={<Search />} />
+          <Route path='/ranking' element={<Ranking />} />
+          <Route path='/auth/login' element={<Login />} />
+          <Route path='/auth/register' element={<Register />} />
+          <Route path='*' element={<Error />} />
+        </Routes>
+      </div>
     </div>
   );
 }

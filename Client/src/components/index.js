@@ -10,6 +10,7 @@ import DetailImagesCarousel from "./Carousel/detailImages";
 import DetailCastCarousel from "./Carousel/detailCast";
 import DetailSimilarCarousel from "./Carousel/detailSimilar";
 import DetailSeasonsCarousel from "./Carousel/detailSeasons";
+import TrendingCarousel from "./Carousel/trending";
 import YearRelease from "./Slider/yearRelease";
 import Runtime from "./Slider/runtime";
 import Rating from "./Slider/rating";
@@ -38,6 +39,7 @@ export {
   DetailCastCarousel,
   DetailSimilarCarousel,
   DetailSeasonsCarousel,
+  TrendingCarousel,
   YearRelease,
   Runtime,
   Rating,
