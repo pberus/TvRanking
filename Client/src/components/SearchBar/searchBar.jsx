@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import Popover from "@mui/material/Popover";
 import { Typography } from "@mui/material";
-import { Movie, Tv } from "@mui/icons-material";
+import { LiveTv, Movie } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { removePopoverResults, searchTvPopover } from "../../redux/actions";
 import noImageAvailable from "../../assets/no_image_available.jpg";
@@ -112,8 +112,7 @@ const SearchBar = () => {
             "& .MuiFilledInput-underline:after": {
               borderBottom: "2px solid white", // Borde activo
             },
-            backgroundColor: "#333333",
-            width: "90%",
+            backgroundColor: "trasparent",
           }}
           slotProps={{
             input: {
@@ -152,7 +151,11 @@ const SearchBar = () => {
             <div>
               <div className='w-100 d-flex gap-1'>
                 <div className='w-50'>
-                  <Typography variant='overline' color='gray'>
+                  <Typography
+                    variant='overline'
+                    color='gray'
+                    sx={{ display: "flex" }}
+                  >
                     <Movie />
                     <span className='ps-1'>Peliculas</span>
                   </Typography>
@@ -214,8 +217,12 @@ const SearchBar = () => {
                   )}
                 </div>
                 <div className='w-50'>
-                  <Typography variant='overline' color='gray'>
-                    <Tv />
+                  <Typography
+                    variant='overline'
+                    color='gray'
+                    sx={{ display: "flex" }}
+                  >
+                    <LiveTv />
                     <span className='ps-1'>Series</span>
                   </Typography>
                   {searchPopoverResults.series.length > 0 ? (

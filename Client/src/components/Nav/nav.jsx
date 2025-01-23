@@ -17,16 +17,18 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { authenticate, removeLists } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import style from "./nav.module.css";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#333333",
+const theme = (color) =>
+  createTheme({
+    palette: {
+      primary: {
+        main: color,
+      },
     },
-  },
-});
+  });
 
 const pages = ["Inicio", "Popular", "Listas"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -34,6 +36,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function Nav() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
@@ -71,191 +74,213 @@ function Nav() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar position='static' color='primary'>
-        <Container maxWidth='xl'>
-          <Toolbar disableGutters>
-            <Typography
-              variant='h6'
-              noWrap
-              component='a'
-              href='/'
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "-moz-initial",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={logo}
-                alt='logo tv ranking'
-                height='60'
-                width='80'
-                className='p-1'
-              />
-            </Typography>
+    <div className={`${location.pathname === "/" && style.home}`}>
+      <ThemeProvider
+        theme={
+          location.pathname === "/"
+            ? theme("rgba(0, 0, 0, 0.2)")
+            : theme("#333333")
+        }
+      >
+        <AppBar position='static' color='primary'>
+          <Container maxWidth='xl'>
+            <Toolbar disableGutters>
+              <div className='w-50 d-flex align-items-center'>
+                <Typography
+                  variant='h6'
+                  noWrap
+                  component='a'
+                  href='/'
+                  sx={{
+                    mr: 2,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "-moz-initial",
+                    fontWeight: 700,
+                    letterSpacing: ".3rem",
+                    color: "inherit",
+                    textDecoration: "none",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={logo}
+                    alt='logo tv ranking'
+                    height='60'
+                    width='80'
+                    className='p-1'
+                  />
+                </Typography>
 
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size='large'
-                aria-label='account of current user'
-                aria-controls='menu-appbar'
-                aria-haspopup='true'
-                onClick={handleOpenNavMenu}
-                color='inherit'
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id='menu-appbar'
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{ display: { xs: "block", md: "none" } }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography sx={{ textAlign: "center" }}>
-                      {page === "Inicio" ? (
-                        <a href='/' style={{ textDecoration: "none" }}>
-                          {page}
-                        </a>
-                      ) : (
-                        <a
-                          href={`/${page.toLowerCase()}`}
-                          style={{ textDecoration: "none" }}
-                        >
-                          {page}
-                        </a>
-                      )}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <Typography
-              variant='h5'
-              noWrap
-              component='a'
-              href='/'
-              sx={{
-                mr: 2,
-                display: { xs: "flex", md: "none" },
-                flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              <img src={logo} alt='logo tv ranking' height='30' width='30' />
-              <span className='ps-2'>Tv Ranking</span>
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page === "Inicio" ? (
-                    <a
-                      href='/'
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {page}
-                    </a>
-                  ) : (
-                    <a
-                      href={`/${page.toLowerCase()}`}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {page}
-                    </a>
-                  )}
-                </Button>
-              ))}
-            </Box>
-            <Box sx={{ flexGrow: 1 }}>
-              <SearchBar />
-            </Box>
-            <Box sx={{ flexGrow: 0, marginRight: 1 }}>
-              {!isAuthenticated ? (
-                <div>
-                  <Button
-                    sx={{ backgroundColor: "white", border: 1, marginRight: 1 }}
-                    onClick={() => navigate("/auth/login")}
+                <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                  <IconButton
+                    size='large'
+                    aria-label='account of current user'
+                    aria-controls='menu-appbar'
+                    aria-haspopup='true'
+                    onClick={handleOpenNavMenu}
+                    color='inherit'
                   >
-                    Iniciar sesion
-                  </Button>
-                  <Button
-                    sx={{ color: "white", border: 1 }}
-                    onClick={() => navigate("/auth/register")}
-                  >
-                    Registrarse
-                  </Button>
-                </div>
-              ) : (
-                <Button
-                  sx={{ color: "white", border: 1 }}
-                  onClick={logoutFunction}
-                >
-                  Cerrar sesion
-                </Button>
-              )}
-            </Box>
-            {/* MENU CUENTA (configurar)
-                <Box sx={{ flexGrow: 0 }}>
-                  <Tooltip title='Open settings'>
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-                    </IconButton>
-                  </Tooltip>
+                    <MenuIcon />
+                  </IconButton>
                   <Menu
-                    sx={{ mt: "45px" }}
                     id='menu-appbar'
-                    anchorEl={anchorElUser}
+                    anchorEl={anchorElNav}
                     anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
+                      vertical: "bottom",
+                      horizontal: "left",
                     }}
                     keepMounted
                     transformOrigin={{
                       vertical: "top",
-                      horizontal: "right",
+                      horizontal: "left",
                     }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
+                    open={Boolean(anchorElNav)}
+                    onClose={handleCloseNavMenu}
+                    sx={{ display: { xs: "block", md: "none" } }}
                   >
-                    {settings.map((setting) => (
-                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    {pages.map((page) => (
+                      <MenuItem key={page} onClick={handleCloseNavMenu}>
                         <Typography sx={{ textAlign: "center" }}>
-                          {setting}
+                          {page === "Inicio" ? (
+                            <a href='/' style={{ textDecoration: "none" }}>
+                              {page}
+                            </a>
+                          ) : (
+                            <a
+                              href={`/${page.toLowerCase()}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              {page}
+                            </a>
+                          )}
                         </Typography>
                       </MenuItem>
                     ))}
                   </Menu>
                 </Box>
-              */}
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </ThemeProvider>
+                <Typography
+                  variant='h5'
+                  noWrap
+                  component='a'
+                  href='/'
+                  sx={{
+                    mr: 2,
+                    display: { xs: "flex", md: "none" },
+                    flexGrow: 1,
+                    fontFamily: "monospace",
+                    fontWeight: 700,
+                    letterSpacing: ".3rem",
+                    color: "inherit",
+                    textDecoration: "none",
+                  }}
+                >
+                  <img
+                    src={logo}
+                    alt='logo tv ranking'
+                    height='30'
+                    width='30'
+                  />
+                  <span className='ps-2'>Tv Ranking</span>
+                </Typography>
+                <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                  {pages.map((page) => (
+                    <Button
+                      key={page}
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      {page === "Inicio" ? (
+                        <a
+                          href='/'
+                          style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                          {page}
+                        </a>
+                      ) : (
+                        <a
+                          href={`/${page.toLowerCase()}`}
+                          style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                          {page}
+                        </a>
+                      )}
+                    </Button>
+                  ))}
+                </Box>
+              </div>
+              <div className='w-50 d-flex align-items-center justify-content-end'>
+                <Box sx={{ flexGrow: 1, width: "50%" }}>
+                  <SearchBar />
+                </Box>
+                <Box sx={{ flexGrow: 0, marginRight: 1, width: "50%" }}>
+                  {!isAuthenticated ? (
+                    <div>
+                      <Button
+                        sx={{
+                          backgroundColor: "white",
+                          border: 1,
+                          marginRight: 1,
+                          color: "black",
+                        }}
+                        onClick={() => navigate("/auth/login")}
+                      >
+                        Iniciar sesion
+                      </Button>
+                      <Button
+                        sx={{ color: "white", border: 1 }}
+                        onClick={() => navigate("/auth/register")}
+                      >
+                        Registrarse
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button
+                      sx={{ color: "white", border: 1 }}
+                      onClick={logoutFunction}
+                    >
+                      Cerrar sesion
+                    </Button>
+                  )}
+                </Box>
+                {/* MENU CUENTA (configurar)
+                  <Box sx={{ flexGrow: 0 }}>
+                    <Tooltip title='Open settings'>
+                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                        <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      sx={{ mt: "45px" }}
+                      id='menu-appbar'
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      {settings.map((setting) => (
+                        <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                          <Typography sx={{ textAlign: "center" }}>
+                            {setting}
+                          </Typography>
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                  </Box>
+                */}
+              </div>
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </ThemeProvider>
+    </div>
   );
 }
 export default Nav;

@@ -45,7 +45,7 @@ const TrendingCarousel = () => {
               <div
                 style={{
                   position: "absolute",
-                  top: "50%",
+                  top: "55%",
                   left: "2%",
                   color: "white",
                   backgroundColor: "rgba(0, 0, 0, 0.1)",
@@ -57,7 +57,7 @@ const TrendingCarousel = () => {
                 }}
               >
                 <h3>{tre.title}</h3>
-                <p style={{ maxHeight: "26%", overflow: "hidden" }}>
+                <p style={{ maxHeight: "30%", overflow: "hidden" }}>
                   {tre.overview}
                 </p>
                 <button
@@ -84,7 +84,7 @@ const TrendingCarousel = () => {
               <img
                 src={IMAGE_URL + tre.image}
                 className='w-100'
-                style={{ height: "400px" }}
+                style={{ height: "550px" }}
                 alt={`Slide ${index + 1}`}
               />
             </div>

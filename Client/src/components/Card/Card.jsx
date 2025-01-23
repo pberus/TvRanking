@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import style from "./card.module.css";
 import noImageAvailable from "../../assets/no_image_available.jpg";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import DoneIcon from "@mui/icons-material/Done";
+import { LiveTv, Movie, Done } from "@mui/icons-material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Tooltip from "@mui/material/Tooltip";
 import {
@@ -56,7 +56,11 @@ const Card = ({ tv, cardStyle }) => {
           date.split("-")[0]
         }`}
       >
-        <img src={image ? IMAGE_URL + image : noImageAvailable} alt={title} />
+        <img
+          src={image ? IMAGE_URL + image : noImageAvailable}
+          alt={title}
+          className='rounded'
+        />
       </Link>
       <div className={style.icons}>
         <Tooltip arrow title='Watchlist'>
@@ -78,7 +82,7 @@ const Card = ({ tv, cardStyle }) => {
             className={`${style.iconsButton} ${isInList.seen && "opacity-100"}`}
             onClick={() => handleList("seen")}
           >
-            <DoneIcon
+            <Done
               className={`${style.icon} ${isInList.seen && "text-warning"}`}
             />
           </button>
@@ -98,6 +102,24 @@ const Card = ({ tv, cardStyle }) => {
             />
           </button>
         </Tooltip>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          zIndex: "100",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          color: "white",
+          bottom: "6%",
+          left: "10%",
+          padding: 1,
+          borderRadius: "30%",
+        }}
+      >
+        {media_type === "movie" ? (
+          <Movie color='inherit' />
+        ) : (
+          <LiveTv color='inherit' />
+        )}
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ function App() {
 
   //Para que no muestre ninguna ruta protegida mientras carga
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className='content vh-100 text-white fs-3'>Loading...</div>;
   }
 
   return (

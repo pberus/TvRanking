@@ -5,67 +5,33 @@ import style from "./homeCarousel.module.css";
 const HomeCarousel = ({ tvArray, position }) => {
   return (
     <div className={style.color}>
-      <div id={`carouselExampleIndicators${position}`} className='carousel slide'>
-        <div className='carousel-indicators'>
-          <button
-            type='button'
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to='0'
-            className='active'
-            aria-current='true'
-            aria-label='Slide 1'
-          ></button>
-          <button
-            type='button'
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to='1'
-            aria-label='Slide 2'
-          ></button>
-          <button
-            type='button'
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to='2'
-            aria-label='Slide 3'
-          ></button>
-          <button
-            type='button'
-            data-bs-target="#carouselExampleIndicators"
-            data-bs-slide-to='3'
-            aria-label='Slide 4'
-          ></button>
-        </div>
+      <div
+        id={`carouselExampleIndicators${position}`}
+        className='carousel slide'
+      >
         <div className='carousel-inner'>
           <div className='carousel-item active'>
-            <div className='row'>
-              {tvArray.slice(0, 5).map((tv) => (
-                <div key={tv.id} className={`col ${style.card}`}>
+            <div className='d-flex justify-content-center gap-1'>
+              {tvArray.slice(0, 6).map((tv) => (
+                <div key={tv.id}>
                   <Card tv={tv} />
                 </div>
               ))}
             </div>
           </div>
           <div className='carousel-item'>
-            <div className='row'>
-              {tvArray.slice(5, 10).map((tv) => (
-                <div key={tv.id} className={`col ${style.card}`}>
+            <div className='d-flex justify-content-center gap-1'>
+              {tvArray.slice(6, 12).map((tv) => (
+                <div key={tv.id}>
                   <Card tv={tv} />
                 </div>
               ))}
             </div>
           </div>
           <div className='carousel-item'>
-            <div className='row'>
-              {tvArray.slice(10, 15).map((tv) => (
-                <div key={tv.id} className={`col ${style.card}`}>
-                  <Card tv={tv} />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className='carousel-item'>
-            <div className='row'>
-              {tvArray.slice(15, 20).map((tv) => (
-                <div key={tv.id} className={`col ${style.card}`}>
+            <div className='d-flex justify-content-center gap-1'>
+              {tvArray.slice(12, 18).map((tv) => (
+                <div key={tv.id}>
                   <Card tv={tv} />
                 </div>
               ))}
