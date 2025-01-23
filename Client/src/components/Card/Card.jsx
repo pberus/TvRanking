@@ -59,7 +59,7 @@ const Card = ({ tv, cardStyle }) => {
         <img
           src={image ? IMAGE_URL + image : noImageAvailable}
           alt={title}
-          className='rounded'
+          className={`${!cardStyle && "rounded"}`}
         />
       </Link>
       <div className={style.icons}>
@@ -107,7 +107,7 @@ const Card = ({ tv, cardStyle }) => {
         style={{
           position: "absolute",
           zIndex: "100",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.3)",
           color: "white",
           bottom: "6%",
           left: "10%",
@@ -116,9 +116,9 @@ const Card = ({ tv, cardStyle }) => {
         }}
       >
         {media_type === "movie" ? (
-          <Movie color='inherit' />
+          <Movie color='inherit' sx={{ opacity: "85%" }} />
         ) : (
-          <LiveTv color='inherit' />
+          <LiveTv color='inherit' sx={{ opacity: "85%" }} />
         )}
       </div>
     </div>

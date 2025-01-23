@@ -8,9 +8,9 @@ import {
   getProviders,
 } from "../../redux/actions";
 import { Rating, Runtime, Streaming, YearRelease } from "../../components";
-import imgStreaming from "../../assets/video-en-directo.png";
 import iconoCerrar from "../../assets/cerrar-simbolo-de-boton-circular.png";
 import style from "./lists.module.css";
+import { SmartDisplay } from "@mui/icons-material";
 
 const ToolbarLists = ({ list, totalResults }) => {
   const [filtersList, setFiltersList] = useState({
@@ -219,18 +219,14 @@ const ToolbarLists = ({ list, totalResults }) => {
           <div>
             <p className='d-inline-flex gap-1'>
               <button
-                className='btn btn-light border-secondary-subtle'
+                className='btn btn-dark border'
                 type='button'
                 data-bs-toggle='collapse'
                 data-bs-target='#collapseExample1'
                 aria-expanded='false'
                 aria-controls='collapseExample'
               >
-                <img
-                  className={style.imgStreaming}
-                  src={imgStreaming}
-                  alt='streaming'
-                />
+                <SmartDisplay />
                 {filmsProviders?.length > 0 && (
                   <span
                     className={`${style.spanStreaming} ${
@@ -252,7 +248,7 @@ const ToolbarLists = ({ list, totalResults }) => {
           {/* ORDENAMIENTOS */}
           <select
             name='sortBy'
-            className='form-select w-auto border-secondary-subtle'
+            className='form-select w-auto btn btn-dark text-start border'
             aria-label='Default select example'
             value={filtersList.sortBy}
             onChange={handleSort}
@@ -275,7 +271,7 @@ const ToolbarLists = ({ list, totalResults }) => {
           <div>
             <p className='d-inline-flex gap-1'>
               <button
-                className={`btn btn-secondary ${
+                className={`btn btn-dark border ${
                   activeFilters > 0 && "text-warning"
                 }`}
                 type='button'
@@ -312,12 +308,12 @@ const ToolbarLists = ({ list, totalResults }) => {
       </div>
       {/* FILTERS COLLAPSE */}
       <div className='collapse mb-2' id='collapseExample'>
-        <div className='card card-body'>
+        <div className='card card-body bg-dark'>
           {/* DROPDOWNS */}
           <div className='dropdown d-flex gap-3 d-flex align-items-baseline'>
             {/* year release */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${
+              className={`btn btn-dark border dropdown-toggle ${
                 filtersList.yearRange.length > 0 && "text-warning"
               }`}
               type='button'
@@ -341,7 +337,7 @@ const ToolbarLists = ({ list, totalResults }) => {
             </div>
             {/* lenguages */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${
+              className={`btn btn-dark border dropdown-toggle ${
                 filtersList.lenguage && "text-warning"
               }`}
               type='button'
@@ -389,7 +385,7 @@ const ToolbarLists = ({ list, totalResults }) => {
             </ul>
             {/* genres */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${
+              className={`btn btn-dark border dropdown-toggle ${
                 filtersList.genres.length > 0 && "text-warning"
               }`}
               type='button'
@@ -454,7 +450,7 @@ const ToolbarLists = ({ list, totalResults }) => {
             </ul>
             {/* runtime */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${
+              className={`btn btn-dark border dropdown-toggle ${
                 filtersList.runtime.length > 0 && "text-warning"
               }`}
               type='button'
@@ -483,7 +479,7 @@ const ToolbarLists = ({ list, totalResults }) => {
             </div>
             {/* rating */}
             <button
-              className={`btn btn-secondary dropdown-toggle ${
+              className={`btn btn-dark border dropdown-toggle ${
                 filtersList.rating.length > 0 && "text-warning"
               }`}
               type='button'
@@ -505,10 +501,7 @@ const ToolbarLists = ({ list, totalResults }) => {
                 setReset={setResetRating}
               />
             </div>
-            <button
-              className='border-0 bg-white d-inline'
-              onClick={handleResetFilters}
-            >
+            <button className='bg-dark border-0' onClick={handleResetFilters}>
               <p className='text-secondary m-0'>
                 <img className={style.imgStreaming} src={iconoCerrar} />{" "}
                 REINICIAR

@@ -1,13 +1,10 @@
 import { useSelector } from "react-redux";
 import InfoIcon from "@mui/icons-material/Info";
-import { useNavigate } from "react-router-dom";
 //import style from "./homeCarousel.module.css";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/original";
 
 const TrendingCarousel = () => {
-  const navigate = useNavigate();
-
   const trending = useSelector((state) => state.trending);
 
   const slugTitle = (title) =>
@@ -52,15 +49,18 @@ const TrendingCarousel = () => {
                   padding: "10px",
                   borderRadius: "5px",
                   zIndex: 10,
-                  height: "50%",
+                  height: "40%",
                   width: "50%",
                 }}
               >
                 <h3>{tre.title}</h3>
-                <p style={{ maxHeight: "30%", overflow: "hidden" }}>
+                <p style={{ maxHeight: "50%", overflow: "hidden" }}>
                   {tre.overview}
                 </p>
-                <button
+                <a
+                  href={`/${
+                    tre.media_type === "movie" ? "pelicula" : "serie"
+                  }/${slugTitle(tre.title)}-${tre.date.split("-")[0]}`}
                   style={{
                     backgroundColor: "rgba(122, 122, 122, 0.8)",
                     textDecoration: "none",
@@ -68,18 +68,13 @@ const TrendingCarousel = () => {
                     borderRadius: 5,
                     color: "white",
                     padding: 5,
+                    display: "flex",
+                    width: "25%",
                   }}
-                  onClick={() =>
-                    navigate(
-                      `/${
-                        tre.media_type === "movie" ? "pelicula" : "serie"
-                      }/${slugTitle(tre.title)}-${tre.date.split("-")[0]}`
-                    )
-                  }
                 >
                   <InfoIcon />
                   <span className='ps-2'>Mas información</span>
-                </button>
+                </a>
               </div>
               <img
                 src={IMAGE_URL + tre.image}

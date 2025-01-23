@@ -2,6 +2,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import ListCards from "../Cards/listCards";
+import { TvOff } from "@mui/icons-material";
 
 const InfiniteScrollLists = ({ items, totalPages, setPageList }) => {
   const [page, setPage] = useState(2);
@@ -29,9 +30,22 @@ const InfiniteScrollLists = ({ items, totalPages, setPageList }) => {
         hasMore={hasMore}
         loader={<h4>Loading...</h4>}
         endMessage={
-          <p style={{ textAlign: "center" }}>
+          <div
+            style={{
+              color: "white",
+              paddingTop: 10,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 5,
+            }}
+          >
+            <TvOff sx={{ fontSize: 60 }} />
             <b>¡Llegaste al final de la lista!</b>
-          </p>
+            <a href='/popular' className='btn btn-light'>
+              Sigue explorando
+            </a>
+          </div>
         }
       >
         <ListCards tvArray={items} />

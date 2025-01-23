@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import ToolbarLists from "../Toolbar/lists";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Bookmark, DoneOutline, Favorite } from "@mui/icons-material";
+import { Bookmark, DoneOutline, Favorite, TvOff } from "@mui/icons-material";
 
 const theme = createTheme({
   components: {
@@ -125,7 +125,7 @@ export default function TabsLists() {
             value={value}
             onChange={handleChange}
             aria-label='basic tabs example'
-            sx={{borderBottom: 2}}            
+            sx={{ borderBottom: 2 }}
           >
             <Tab
               label='Watchlist'
@@ -160,7 +160,16 @@ export default function TabsLists() {
                 setPageList={setPageList}
               />
             ) : (
-              <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+              <div
+                className='d-flex flex-column justify-content-center align-items-center gap-3 text-white'
+                style={{ height: "50vh" }}
+              >
+                <TvOff sx={{ fontSize: 80 }} />
+                <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+                <a href='/popular' className='btn btn-light'>
+                  Sigue explorando
+                </a>
+              </div>
             ))}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
@@ -172,7 +181,16 @@ export default function TabsLists() {
                 setPageList={setPageList}
               />
             ) : (
-              <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+              <div
+                className='d-flex flex-column justify-content-center align-items-center gap-3 text-white'
+                style={{ height: "50vh" }}
+              >
+                <TvOff sx={{ fontSize: 80 }} />
+                <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+                <a href='/popular' className='btn btn-light'>
+                  Sigue explorando
+                </a>
+              </div>
             ))}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
@@ -184,7 +202,16 @@ export default function TabsLists() {
                 setPageList={setPageList}
               />
             ) : (
-              <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+              <div
+                className='d-flex flex-column justify-content-center align-items-center gap-3 text-white pb-3'
+                style={{ height: "50vh" }}
+              >
+                <TvOff sx={{ fontSize: 80 }} />
+                <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+                <a href='/popular' className='btn btn-light'>
+                  Sigue explorando
+                </a>
+              </div>
             ))}
         </CustomTabPanel>
       </Box>

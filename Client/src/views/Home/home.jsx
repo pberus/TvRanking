@@ -15,12 +15,10 @@ import {
 import { HomeCarousel, TrendingCarousel } from "../../components";
 import logo from "../../assets/logotipo_tv_ranking.png";
 import { Start, GitHub, Work, LinkedIn } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [filmsOrSeries, setFilmsOrSeries] = useState(true);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   //films
   const nowPlayingFilms = useSelector((state) => state.nowPlayingFilms);
@@ -108,31 +106,33 @@ const Home = () => {
           >
             Descubre peliculas y series
           </button>
-          <button className='p-3 border rounded-5 fw-bold'>
-            <span className='pe-2' onClick={() => navigate("/popular")}>
-              Popular
-            </span>
+          <a
+            className='p-3 border rounded-5 fw-bold bg-white text-dark text-decoration-none'
+            href='/popular'
+          >
+            <span className='pe-2'>Popular</span>
             <Start />
-          </button>
-          <button className='p-3 border rounded-5 fw-bold'>
-            <span className='pe-2' onClick={() => navigate("/listas")}>
-              Listas
-            </span>
+          </a>
+          <a
+            className='p-3 border rounded-5 fw-bold bg-white text-dark text-decoration-none'
+            href='/listas'
+          >
+            <span className='pe-2'>Listas</span>
             <Start />
-          </button>
+          </a>
         </div>
       </div>
       <div ref={myRef} className='p-3'>
         <div className='mb-2'>
           <button
-            className="btn btn-dark border rounded-0 rounded-start"
+            className='btn btn-dark border rounded-0 rounded-start'
             disabled={filmsOrSeries}
             onClick={() => setFilmsOrSeries(true)}
           >
             Peliculas
           </button>
           <button
-            className="btn btn-dark border rounded-0 rounded-end"
+            className='btn btn-dark border rounded-0 rounded-end'
             disabled={!filmsOrSeries}
             onClick={() => setFilmsOrSeries(false)}
           >
