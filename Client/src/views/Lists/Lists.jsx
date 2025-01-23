@@ -26,13 +26,8 @@ const Lists = () => {
       {isAuthenticated ? (
         <TabsLists />
       ) : (
-        <div className='m-4'>
-          <div
-            className='d-flex flex-column border rounded p-3 mb-3 text-white'
-            style={{
-              background: "linear-gradient(to right, #7e22ce, #2563eb)",
-            }}
-          >
+        <div className='p-5'>
+          <div className='d-flex flex-column border rounded p-3 mb-3 bg-white text-dark'>
             <h3>¡Descubre las listas personalizadas!</h3>
             <p>
               Organiza tus películas y series favoritas, lleva un registro de lo
@@ -95,15 +90,15 @@ const Lists = () => {
           <div className='text-center'>
             <button
               onClick={() => navigate("/auth/login")}
-              className='mb-2 mt-3 p-2 rounded bg-dark text-white'
+              className='mb-2 mt-3 p-2 rounded border bg-white text-dark'
             >
               Iniciar sesión
             </button>
-            <p>
+            <p className='text-white'>
               ¿No tienes una cuenta?{" "}
               <Link
                 to={"/auth/register"}
-                className='text-dark fw-medium text-decoration-none'
+                className='text-white fw-medium text-decoration-none'
               >
                 Regístrate aqui
               </Link>

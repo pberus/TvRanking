@@ -190,28 +190,22 @@ const ToolbarLists = ({ list, totalResults }) => {
       <div className={style.nav}>
         <div className={style.filmsSeriesButtons}>
           {/* BOTONES DE PELICULAS Y SERIES */}
-          <button
-            className={`btn ${
-              filtersList.filmsOrSeries === "movie"
-                ? "btn-primary"
-                : "btn-secondary"
-            }`}
-            disabled={filtersList.filmsOrSeries === "movie"}
-            onClick={() => handleResetAll("movie")}
-          >
-            Peliculas
-          </button>
-          <button
-            className={`btn ${
-              filtersList.filmsOrSeries === "tv"
-                ? "btn-primary"
-                : "btn-secondary"
-            }`}
-            disabled={filtersList.filmsOrSeries === "tv"}
-            onClick={() => handleResetAll("tv")}
-          >
-            Series
-          </button>
+          <div>
+            <button
+              className='btn btn-dark border rounded-0 rounded-start'
+              disabled={filtersList.filmsOrSeries === "movie"}
+              onClick={() => handleResetAll("movie")}
+            >
+              Peliculas
+            </button>
+            <button
+              className='btn btn btn-dark border rounded-0 rounded-end'
+              disabled={filtersList.filmsOrSeries === "tv"}
+              onClick={() => handleResetAll("tv")}
+            >
+              Series
+            </button>
+          </div>
           <div>
             {totalResults > 0 && (
               <p className='text-secondary'>

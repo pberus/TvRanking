@@ -17,10 +17,12 @@ import {
   YearRelease,
 } from "../../components";
 import style from "./popular.module.css";
-import imgStreaming from "../../assets/video-en-directo.png";
-import iconoCerrar from "../../assets/cerrar-simbolo-de-boton-circular.png";
+import { SmartDisplay, HighlightOff } from "@mui/icons-material";
+import { BounceLoader } from "react-spinners";
 
 const Popular = () => {
+  const [loading, setLoading] = useState(false);
+
   const [discover, setDiscover] = useState({
     filmsOrSeries: "films",
     sortBy: "",
@@ -55,13 +57,23 @@ const Popular = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   useEffect(() => {
+    setLoading(true);
     isAuthenticated && dispatch(getAllLists());
+    setLoading(false);
   }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
-    dispatch(getLenguages());
-    dispatch(getGenres());
-    dispatch(getProviders());
+    const fetchData = async () => {
+      setLoading(true); // Activa el spinner
+      await Promise.all([
+        dispatch(getLenguages()),
+        dispatch(getGenres()),
+        dispatch(getProviders()),
+      ]);
+      setLoading(false); // Desactiva el spinner
+    };
+
+    fetchData();
   }, [dispatch]);
 
   useEffect(() => {
@@ -81,13 +93,19 @@ const Popular = () => {
     }
     setActiveFilters(count);
     // films/series
-    if (discover.filmsOrSeries === "films") {
-      dispatch(getDiscoverFilms(discover));
-      dispatch(removeTv("discoverSeries"));
-    } else {
-      dispatch(getDiscoverSeries(discover));
-      dispatch(removeTv("discoverFilms"));
-    }
+    const fetchDiscover = () => {
+      setLoading(true);
+      if (discover.filmsOrSeries === "films") {
+        dispatch(getDiscoverFilms(discover));
+        dispatch(removeTv("discoverSeries"));
+      } else {
+        dispatch(getDiscoverSeries(discover));
+        dispatch(removeTv("discoverFilms"));
+      }
+      setLoading(false);
+    };
+
+    fetchDiscover();
   }, [dispatch, discover]);
 
   //remove duplicates
@@ -239,382 +257,397 @@ const Popular = () => {
 
   return (
     <div className={style.popular}>
-      <div className={style.nav}>
-        <div className={style.filmsSeriesButtons}>
-          {/* BOTONES DE PELICULAS Y SERIES */}
-          <button
-            className={`btn ${
-              discover.filmsOrSeries === "films"
-                ? "btn-primary"
-                : "btn-secondary"
-            }`}
-            disabled={discover.filmsOrSeries === "films"}
-            onClick={() => handleResetAll("films")}
-          >
-            Peliculas
-          </button>
-          <button
-            className={`btn ${
-              discover.filmsOrSeries === "series"
-                ? "btn-primary"
-                : "btn-secondary"
-            }`}
-            disabled={discover.filmsOrSeries === "series"}
-            onClick={() => handleResetAll("series")}
-          >
-            Series
-          </button>
-          <div>
-            {(discoverFilms.totalResults || discoverSeries.totalResults) && (
-              <p className='text-secondary'>
-                {discover.filmsOrSeries === "films"
-                  ? discoverFilms.totalResults?.toLocaleString("es-ES")
-                  : discoverSeries.totalResults?.toLocaleString("es-ES")}{" "}
-                titulos
-              </p>
-            )}
-          </div>
+      {loading ? (
+        <div style={{ backgroundColor: "black", height: "100vh" }}>
+          <BounceLoader color='#ffffff' size={50} />
+          <p className='text-white'>Cargando...</p>
         </div>
-        <div className={style.ordeFiltButtons}>
-          {/* STREAMING */}
-          <div>
-            <p className='d-inline-flex gap-1'>
-              <button
-                className='btn btn-light border-secondary-subtle'
-                type='button'
-                data-bs-toggle='collapse'
-                data-bs-target='#collapseExample1'
-                aria-expanded='false'
-                aria-controls='collapseExample'
-              >
-                <img
-                  className={style.imgStreaming}
-                  src={imgStreaming}
-                  alt='streaming'
-                />
-                {filmsProviders?.length > 0 && (
-                  <span
-                    className={`${style.spanStreaming} ${
-                      discover.providers.length > 0 && "text-warning"
-                    }`}
-                  >
-                    {discover.filmsOrSeries === "films"
-                      ? discover.providers.length > 0
-                        ? `${discover.providers.length}/${filmsProviders.length}`
-                        : filmsProviders?.length
-                      : discover.providers.length > 0
-                      ? `${discover.providers.length}/${seriesProviders.length}`
-                      : seriesProviders?.length}
-                  </span>
-                )}
-              </button>
-            </p>
-          </div>
-          {/* ORDENAMIENTOS */}
-          <select
-            name='sortBy'
-            className='form-select w-auto border-secondary-subtle'
-            aria-label='Default select example'
-            value={discover.sortBy}
-            onChange={handleSort}
-          >
-            <option value='' disabled>
-              Ordenamientos
-            </option>
-            <option value='popularity'>Popularidad</option>
-            <option value='trending'>Tendencia</option>
-            <option
-              value={
-                discover.filmsOrSeries === "films"
-                  ? "primary_release_date"
-                  : "first_air_date"
-              }
-            >
-              Fecha de lanzamiento
-            </option>
-            <option
-              value={
-                discover.filmsOrSeries === "films"
-                  ? "original_title"
-                  : "original_name"
-              }
-            >
-              Alfabético
-            </option>
-            <option value='vote_average'>Calificación de TMDB</option>
-            {discover.filmsOrSeries === "films" ? (
-              <option value='revenue'>Recaudación</option>
-            ) : (
-              <option value='vote_count'>Cantidad de votos</option>
-            )}
-          </select>
-          {/* FILTROS */}
-          <div>
-            <p className='d-inline-flex gap-1'>
-              <button
-                className={`btn btn-secondary ${
-                  activeFilters > 0 && "text-warning"
-                }`}
-                type='button'
-                data-bs-toggle='collapse'
-                data-bs-target='#collapseExample'
-                aria-expanded='false'
-                aria-controls='collapseExample'
-              >
-                Filtros
-                {activeFilters > 0 && (
-                  <span className={style.activeFilters}>{activeFilters}</span>
-                )}
-              </button>
-            </p>
-          </div>
-        </div>
-      </div>
-      {/* STREAMING COLLAPSE */}
-      <div className='collapse mb-2' id='collapseExample1'>
-        <div className='card card-body bg-dark'>
-          {filmsProviders?.length > 0 && (
-            <Streaming
-              streamingArray={
-                discover.filmsOrSeries === "films"
-                  ? filmsProviders
-                  : seriesProviders
-              }
-              onStreamingChange={handleChange}
-              reset={resetProviders}
-              setReset={setResetProviders}
-            />
-          )}
-        </div>
-      </div>
-      {/* FILTERS COLLAPSE */}
-      <div className='collapse mb-2' id='collapseExample'>
-        <div className='card card-body'>
-          {/* DROPDOWNS */}
-          <div className='dropdown d-flex gap-3 d-flex align-items-baseline'>
-            {/* year release */}
-            <button
-              className={`btn btn-secondary dropdown-toggle ${
-                discover.yearRange.length > 0 && "text-warning"
-              }`}
-              type='button'
-              data-bs-toggle='dropdown'
-              data-bs-auto-close='outside'
-              aria-expanded='false'
-            >
-              Año de lanzamiento
-            </button>
-            <div className='dropdown-menu'>
-              <div className={style.header}>
-                <span className='dropdown-item-text'>Año de lanzamiento</span>
-                <button onClick={() => setResetYear(true)}>X</button>
-              </div>
-              <hr className='dropdown-divider' />
-              <YearRelease
-                onYearChange={handleChange}
-                reset={resetYear}
-                setReset={setResetYear}
-              />
-            </div>
-            {/* lenguages */}
-            <button
-              className={`btn btn-secondary dropdown-toggle ${
-                discover.lenguage && "text-warning"
-              }`}
-              type='button'
-              data-bs-toggle='dropdown'
-              data-bs-auto-close='outside'
-              aria-expanded='false'
-            >
-              Idioma original
-            </button>
-            <ul className={`dropdown-menu ${style.dropdownList}`}>
-              <li className={style.search}>
-                <span className='dropdown-item-text w-auto'>
-                  Idioma original
-                </span>
-                <input
-                  className='form-control w-auto'
-                  type='text'
-                  placeholder='Search'
-                  aria-label='Search'
-                  onChange={handleChangeInputLenguage}
-                  value={searchTerm}
-                />
-                <button onClick={handleResetLenguage}>X</button>
-              </li>
-              <hr className='dropdown-divider' />
-              {filteredLenguages.length > 0 ? (
-                filteredLenguages.map((len) => (
-                  <li key={len.iso}>
-                    <button
-                      className={`dropdown-item ${
-                        activeLenguage === len.iso && "active"
-                      }`}
-                      aria-current={
-                        activeLenguage === len.iso ? "true" : "false"
-                      }
-                      onClick={() => handleLenguage(len.iso)}
-                    >
-                      {len.name}
-                    </button>
-                  </li>
-                ))
-              ) : (
-                <li>No hay resultados</li>
-              )}
-            </ul>
-            {/* genres */}
-            <button
-              className={`btn btn-secondary dropdown-toggle ${
-                discover.genres.length > 0 && "text-warning"
-              }`}
-              type='button'
-              data-bs-toggle='dropdown'
-              data-bs-auto-close='outside'
-              aria-expanded='false'
-            >
-              Generos
-            </button>
-            <ul className={`dropdown-menu ${style.dropdownList}`}>
-              <li className={style.search}>
-                <span className='dropdown-item-text w-auto'>Generos</span>
-                <button onClick={handleResetGenres}>X</button>
-              </li>
-              <hr className='dropdown-divider' />
-              <div className='row'>
-                {discover.filmsOrSeries === "films"
-                  ? filmsGenres?.map((gen) => (
-                      <div className='col-6' key={gen.id}>
-                        <li>
-                          <button
-                            className={`dropdown-item
-                              ${
-                                activeGenres.some((active) => active === gen.id)
-                                  ? "active"
-                                  : ""
-                              }`}
-                            aria-current={
-                              activeGenres.some((active) => active === gen.id)
-                                ? "true"
-                                : "false"
-                            }
-                            onClick={() => handleGenres(gen.id)}
-                          >
-                            {gen.name}
-                          </button>
-                        </li>
-                      </div>
-                    ))
-                  : seriesGenres?.map((gen) => (
-                      <div className='col-6' key={gen.id}>
-                        <li>
-                          <button
-                            className={`dropdown-item ${
-                              activeGenres.some((active) => active === gen.id)
-                                ? "active"
-                                : ""
-                            }`}
-                            aria-current={
-                              activeGenres.some((active) => active === gen.id)
-                                ? "true"
-                                : "false"
-                            }
-                            onClick={() => handleGenres(gen.id)}
-                          >
-                            {gen.name}
-                          </button>
-                        </li>
-                      </div>
-                    ))}
-              </div>
-            </ul>
-            {/* runtime */}
-            <button
-              className={`btn btn-secondary dropdown-toggle ${
-                discover.runtime.length > 0 && "text-warning"
-              }`}
-              type='button'
-              data-bs-toggle='dropdown'
-              data-bs-auto-close='outside'
-              aria-expanded='false'
-            >
-              Duración
-            </button>
-            <div className='dropdown-menu'>
-              <div className={style.header}>
-                <span className='dropdown-item-text'>
-                  {discover.filmsOrSeries === "films"
-                    ? "Duración total"
-                    : "Duración promedio de los episodios"}
-                </span>
-                <button onClick={() => setResetRuntime(true)}>X</button>
-              </div>
-              <hr className='dropdown-divider' />
-              <Runtime
-                filmsOrSeries={discover.filmsOrSeries}
-                onRuntimeChange={handleChange}
-                reset={resetRuntime}
-                setReset={setResetRuntime}
-              />
-            </div>
-            {/* rating */}
-            <button
-              className={`btn btn-secondary dropdown-toggle ${
-                discover.rating.length > 0 && "text-warning"
-              }`}
-              type='button'
-              data-bs-toggle='dropdown'
-              data-bs-auto-close='outside'
-              aria-expanded='false'
-            >
-              Calificación
-            </button>
-            <div className='dropdown-menu'>
-              <div className={style.header}>
-                <span className='dropdown-item-text'>Calificación de TMDB</span>
-                <button onClick={() => setResetRating(true)}>X</button>
-              </div>
-              <hr className='dropdown-divider' />
-              <Rating
-                onRatingChange={handleChange}
-                reset={resetRating}
-                setReset={setResetRating}
-              />
-            </div>
-            <button
-              className='border-0 bg-white d-inline'
-              onClick={handleResetFilters}
-            >
-              <p className='text-secondary m-0'>
-                <img className={style.imgStreaming} src={iconoCerrar} />{" "}
-                REINICIAR
-              </p>
-            </button>
-          </div>
-        </div>
-      </div>
-      {/* INFINITE SCROLL */}
-      {discover.filmsOrSeries === "films" ? (
-        <>
-          {uniqueFilms?.length > 0 && (
-            <InfiniteScrollPopular
-              items={uniqueFilms}
-              totalPages={discoverFilms.totalPages}
-              setDiscover={setDiscover}
-              discover={discover}
-            />
-          )}
-        </>
       ) : (
         <>
-          {uniqueSeries?.length > 0 && (
-            <InfiniteScrollPopular
-              items={uniqueSeries}
-              totalPages={discoverSeries.totalPages}
-              setDiscover={setDiscover}
-              discover={discover}
-            />
+          <div className={style.nav}>
+            <div className={style.filmsSeriesButtons}>
+              {/* BOTONES DE PELICULAS Y SERIES */}
+              <div>
+                <button
+                  className='btn btn-dark border rounded-0 rounded-start'
+                  disabled={discover.filmsOrSeries === "films"}
+                  onClick={() => handleResetAll("films")}
+                >
+                  Peliculas
+                </button>
+                <button
+                  className='btn btn btn-dark border rounded-0 rounded-end'
+                  disabled={discover.filmsOrSeries === "series"}
+                  onClick={() => handleResetAll("series")}
+                >
+                  Series
+                </button>
+              </div>
+              <div>
+                {(discoverFilms.totalResults ||
+                  discoverSeries.totalResults) && (
+                  <p className='text-white'>
+                    {discover.filmsOrSeries === "films"
+                      ? discoverFilms.totalResults?.toLocaleString("es-ES")
+                      : discoverSeries.totalResults?.toLocaleString(
+                          "es-ES"
+                        )}{" "}
+                    titulos
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className={style.ordeFiltButtons}>
+              {/* STREAMING */}
+              <div>
+                <p className='d-inline-flex gap-1'>
+                  <button
+                    className='btn btn-dark border'
+                    type='button'
+                    data-bs-toggle='collapse'
+                    data-bs-target='#collapseExample1'
+                    aria-expanded='false'
+                    aria-controls='collapseExample'
+                  >
+                    <SmartDisplay />
+                    {filmsProviders?.length > 0 && (
+                      <span
+                        className={`${style.spanStreaming} ${
+                          discover.providers.length > 0 && "text-warning"
+                        }`}
+                      >
+                        {discover.filmsOrSeries === "films"
+                          ? discover.providers.length > 0
+                            ? `${discover.providers.length}/${filmsProviders.length}`
+                            : filmsProviders?.length
+                          : discover.providers.length > 0
+                          ? `${discover.providers.length}/${seriesProviders.length}`
+                          : seriesProviders?.length}
+                      </span>
+                    )}
+                  </button>
+                </p>
+              </div>
+              {/* ORDENAMIENTOS */}
+              <select
+                name='sortBy'
+                className='form-select w-auto btn btn-dark text-start border'
+                aria-label='Default select example'
+                value={discover.sortBy}
+                onChange={handleSort}
+              >
+                <option value='' disabled>
+                  Ordenamientos
+                </option>
+                <option value='popularity'>Popularidad</option>
+                <option value='trending'>Tendencia</option>
+                <option
+                  value={
+                    discover.filmsOrSeries === "films"
+                      ? "primary_release_date"
+                      : "first_air_date"
+                  }
+                >
+                  Fecha de lanzamiento
+                </option>
+                <option
+                  value={
+                    discover.filmsOrSeries === "films"
+                      ? "original_title"
+                      : "original_name"
+                  }
+                >
+                  Alfabético
+                </option>
+                <option value='vote_average'>Calificación de TMDB</option>
+                {discover.filmsOrSeries === "films" ? (
+                  <option value='revenue'>Recaudación</option>
+                ) : (
+                  <option value='vote_count'>Cantidad de votos</option>
+                )}
+              </select>
+              {/* FILTROS */}
+              <div>
+                <p className='d-inline-flex gap-1'>
+                  <button
+                    className={`btn btn-dark border ${
+                      activeFilters > 0 && "text-warning"
+                    }`}
+                    type='button'
+                    data-bs-toggle='collapse'
+                    data-bs-target='#collapseExample'
+                    aria-expanded='false'
+                    aria-controls='collapseExample'
+                  >
+                    Filtros
+                    {activeFilters > 0 && (
+                      <span className={style.activeFilters}>
+                        {activeFilters}
+                      </span>
+                    )}
+                  </button>
+                </p>
+              </div>
+            </div>
+          </div>
+          {/* STREAMING COLLAPSE */}
+          <div className='collapse mb-2' id='collapseExample1'>
+            <div className='card card-body bg-dark'>
+              {filmsProviders?.length > 0 && (
+                <Streaming
+                  streamingArray={
+                    discover.filmsOrSeries === "films"
+                      ? filmsProviders
+                      : seriesProviders
+                  }
+                  onStreamingChange={handleChange}
+                  reset={resetProviders}
+                  setReset={setResetProviders}
+                />
+              )}
+            </div>
+          </div>
+          {/* FILTERS COLLAPSE */}
+          <div className='collapse mb-2' id='collapseExample'>
+            <div className='card card-body bg-dark'>
+              {/* DROPDOWNS */}
+              <div className='dropdown d-flex gap-3 d-flex align-items-baseline'>
+                {/* year release */}
+                <button
+                  className={`btn btn-dark border dropdown-toggle ${
+                    discover.yearRange.length > 0 && "text-warning"
+                  }`}
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  data-bs-auto-close='outside'
+                  aria-expanded='false'
+                >
+                  Año de lanzamiento
+                </button>
+                <div className='dropdown-menu'>
+                  <div className={style.header}>
+                    <span className='dropdown-item-text'>
+                      Año de lanzamiento
+                    </span>
+                    <button onClick={() => setResetYear(true)}>X</button>
+                  </div>
+                  <hr className='dropdown-divider' />
+                  <YearRelease
+                    onYearChange={handleChange}
+                    reset={resetYear}
+                    setReset={setResetYear}
+                  />
+                </div>
+                {/* lenguages */}
+                <button
+                  className={`btn btn-dark border dropdown-toggle ${
+                    discover.lenguage && "text-warning"
+                  }`}
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  data-bs-auto-close='outside'
+                  aria-expanded='false'
+                >
+                  Idioma original
+                </button>
+                <ul className={`dropdown-menu ${style.dropdownList}`}>
+                  <li className={style.search}>
+                    <span className='dropdown-item-text w-auto'>
+                      Idioma original
+                    </span>
+                    <input
+                      className='form-control w-auto'
+                      type='text'
+                      placeholder='Search'
+                      aria-label='Search'
+                      onChange={handleChangeInputLenguage}
+                      value={searchTerm}
+                    />
+                    <button onClick={handleResetLenguage}>X</button>
+                  </li>
+                  <hr className='dropdown-divider' />
+                  {filteredLenguages.length > 0 ? (
+                    filteredLenguages.map((len) => (
+                      <li key={len.iso}>
+                        <button
+                          className={`dropdown-item ${
+                            activeLenguage === len.iso && "active"
+                          }`}
+                          aria-current={
+                            activeLenguage === len.iso ? "true" : "false"
+                          }
+                          onClick={() => handleLenguage(len.iso)}
+                        >
+                          {len.name}
+                        </button>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No hay resultados</li>
+                  )}
+                </ul>
+                {/* genres */}
+                <button
+                  className={`btn btn-dark border dropdown-toggle ${
+                    discover.genres.length > 0 && "text-warning"
+                  }`}
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  data-bs-auto-close='outside'
+                  aria-expanded='false'
+                >
+                  Generos
+                </button>
+                <ul className={`dropdown-menu ${style.dropdownList}`}>
+                  <li className={style.search}>
+                    <span className='dropdown-item-text w-auto'>Generos</span>
+                    <button onClick={handleResetGenres}>X</button>
+                  </li>
+                  <hr className='dropdown-divider' />
+                  <div className='row'>
+                    {discover.filmsOrSeries === "films"
+                      ? filmsGenres?.map((gen) => (
+                          <div className='col-6' key={gen.id}>
+                            <li>
+                              <button
+                                className={`dropdown-item
+                                ${
+                                  activeGenres.some(
+                                    (active) => active === gen.id
+                                  )
+                                    ? "active"
+                                    : ""
+                                }`}
+                                aria-current={
+                                  activeGenres.some(
+                                    (active) => active === gen.id
+                                  )
+                                    ? "true"
+                                    : "false"
+                                }
+                                onClick={() => handleGenres(gen.id)}
+                              >
+                                {gen.name}
+                              </button>
+                            </li>
+                          </div>
+                        ))
+                      : seriesGenres?.map((gen) => (
+                          <div className='col-6' key={gen.id}>
+                            <li>
+                              <button
+                                className={`dropdown-item ${
+                                  activeGenres.some(
+                                    (active) => active === gen.id
+                                  )
+                                    ? "active"
+                                    : ""
+                                }`}
+                                aria-current={
+                                  activeGenres.some(
+                                    (active) => active === gen.id
+                                  )
+                                    ? "true"
+                                    : "false"
+                                }
+                                onClick={() => handleGenres(gen.id)}
+                              >
+                                {gen.name}
+                              </button>
+                            </li>
+                          </div>
+                        ))}
+                  </div>
+                </ul>
+                {/* runtime */}
+                <button
+                  className={`btn btn-dark border dropdown-toggle ${
+                    discover.runtime.length > 0 && "text-warning"
+                  }`}
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  data-bs-auto-close='outside'
+                  aria-expanded='false'
+                >
+                  Duración
+                </button>
+                <div className='dropdown-menu'>
+                  <div className={style.header}>
+                    <span className='dropdown-item-text'>
+                      {discover.filmsOrSeries === "films"
+                        ? "Duración total"
+                        : "Duración promedio de los episodios"}
+                    </span>
+                    <button onClick={() => setResetRuntime(true)}>X</button>
+                  </div>
+                  <hr className='dropdown-divider' />
+                  <Runtime
+                    filmsOrSeries={discover.filmsOrSeries}
+                    onRuntimeChange={handleChange}
+                    reset={resetRuntime}
+                    setReset={setResetRuntime}
+                  />
+                </div>
+                {/* rating */}
+                <button
+                  className={`btn btn-dark border dropdown-toggle ${
+                    discover.rating.length > 0 && "text-warning"
+                  }`}
+                  type='button'
+                  data-bs-toggle='dropdown'
+                  data-bs-auto-close='outside'
+                  aria-expanded='false'
+                >
+                  Calificación
+                </button>
+                <div className='dropdown-menu'>
+                  <div className={style.header}>
+                    <span className='dropdown-item-text'>
+                      Calificación de TMDB
+                    </span>
+                    <button onClick={() => setResetRating(true)}>X</button>
+                  </div>
+                  <hr className='dropdown-divider' />
+                  <Rating
+                    onRatingChange={handleChange}
+                    reset={resetRating}
+                    setReset={setResetRating}
+                  />
+                </div>
+                <button
+                  className='bg-dark border-0'
+                  onClick={handleResetFilters}
+                >
+                  <p className='text-secondary m-0'>
+                    <HighlightOff /> REINICIAR
+                  </p>
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* INFINITE SCROLL */}
+          {discover.filmsOrSeries === "films" ? (
+            <>
+              {uniqueFilms?.length > 0 && (
+                <InfiniteScrollPopular
+                  items={uniqueFilms}
+                  totalPages={discoverFilms.totalPages}
+                  setDiscover={setDiscover}
+                  discover={discover}
+                />
+              )}
+            </>
+          ) : (
+            <>
+              {uniqueSeries?.length > 0 && (
+                <InfiniteScrollPopular
+                  items={uniqueSeries}
+                  totalPages={discoverSeries.totalPages}
+                  setDiscover={setDiscover}
+                  discover={discover}
+                />
+              )}
+            </>
           )}
         </>
       )}

@@ -2,13 +2,38 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import TvIcon from "@mui/icons-material/Tv";
-import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfiniteScrollLists from "../InfiniteScroll/lists";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import ToolbarLists from "../Toolbar/lists";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Bookmark, DoneOutline, Favorite } from "@mui/icons-material";
+
+const theme = createTheme({
+  components: {
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "transparent", // Fondo transparente para las tabs
+        },
+        indicator: {
+          backgroundColor: "white", // Línea inferior (indicador) blanca
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          color: "white", // Texto blanco de las tabs
+          "&.Mui-selected": {
+            color: "white", // Texto blanco para la tab seleccionada
+            fontWeight: "bold", // Opcional: Negrita para la seleccionada
+          },
+        },
+      },
+    },
+  },
+});
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -86,80 +111,83 @@ export default function TabsLists() {
   else totalResults = likedFiltered.length;
 
   return (
-    <Box
-      sx={{
-        ".MuiBox-root": {
-          padding: "5px",
-        },
-        width: "100%",
-      }}
-    >
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label='basic tabs example'
-        >
-          <Tab
-            label='Watchlist'
-            icon={<TvIcon />}
-            iconPosition='end'
-            {...a11yProps(0)}
-          />
-          <Tab
-            label='Visto'
-            icon={<DoneOutlineIcon />}
-            iconPosition='end'
-            {...a11yProps(1)}
-          />
-          <Tab
-            label='Me gusta'
-            icon={<FavoriteIcon />}
-            iconPosition='end'
-            {...a11yProps(2)}
-          />
-        </Tabs>
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          ".MuiBox-root": {
+            padding: "5px",
+          },
+          width: "100%",
+        }}
+      >
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label='basic tabs example'
+            sx={{borderBottom: 2}}            
+          >
+            <Tab
+              label='Watchlist'
+              icon={<Bookmark />}
+              iconPosition='end'
+              {...a11yProps(0)}
+            />
+            <Tab
+              label='Visto'
+              icon={<DoneOutline />}
+              iconPosition='end'
+              {...a11yProps(1)}
+            />
+            <Tab
+              label='Me gusta'
+              icon={<Favorite />}
+              iconPosition='end'
+              {...a11yProps(2)}
+            />
+          </Tabs>
+        </Box>
+        <ToolbarLists
+          list={Object.keys(list)[value]}
+          totalResults={totalResults}
+        />
+        <CustomTabPanel value={value} index={0}>
+          {list.watchlist &&
+            (list.watchlist.length > 0 ? (
+              <InfiniteScrollLists
+                items={list.watchlist}
+                totalPages={totalPages(watchlistFiltered)}
+                setPageList={setPageList}
+              />
+            ) : (
+              <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+            ))}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          {list.seen &&
+            (list.seen.length > 0 ? (
+              <InfiniteScrollLists
+                items={list.seen}
+                totalPages={totalPages(seenFiltered)}
+                setPageList={setPageList}
+              />
+            ) : (
+              <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+            ))}
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={2}>
+          {list.liked &&
+            (list.liked.length > 0 ? (
+              <InfiniteScrollLists
+                items={list.liked}
+                totalPages={totalPages(likedFiltered)}
+                setPageList={setPageList}
+              />
+            ) : (
+              <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
+            ))}
+        </CustomTabPanel>
       </Box>
-      <ToolbarLists
-        list={Object.keys(list)[value]}
-        totalResults={totalResults}
-      />
-      <CustomTabPanel value={value} index={0}>
-        {list.watchlist &&
-          (list.watchlist.length > 0 ? (
-            <InfiniteScrollLists
-              items={list.watchlist}
-              totalPages={totalPages(watchlistFiltered)}
-              setPageList={setPageList}
-            />
-          ) : (
-            <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
-          ))}
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        {list.seen &&
-          (list.seen.length > 0 ? (
-            <InfiniteScrollLists
-              items={list.seen}
-              totalPages={totalPages(seenFiltered)}
-              setPageList={setPageList}
-            />
-          ) : (
-            <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
-          ))}
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        {list.liked &&
-          (list.liked.length > 0 ? (
-            <InfiniteScrollLists
-              items={list.liked}
-              totalPages={totalPages(likedFiltered)}
-              setPageList={setPageList}
-            />
-          ) : (
-            <h5>¡Lo sentimos! No hay contenido para mostrar.</h5>
-          ))}
-      </CustomTabPanel>
-    </Box>
+    </ThemeProvider>
   );
 }

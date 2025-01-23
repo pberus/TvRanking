@@ -1,6 +1,6 @@
 .popular {
-  margin-left: 20px;
-  margin-right: 20px;
+  padding: 20px;
+  background-color: rgb(20, 20, 20);
 }
 
 .nav {
@@ -22,6 +22,7 @@
 
 .imgStreaming {
   width: 25px;
+  color: white;
 }
 
 .spanStreaming {

@@ -125,18 +125,14 @@ const Home = () => {
       <div ref={myRef} className='p-3'>
         <div className='mb-2'>
           <button
-            className={`btn ${
-              filmsOrSeries ? "btn-dark" : "btn-dark"
-            } border rounded-0 rounded-start`}
+            className="btn btn-dark border rounded-0 rounded-start"
             disabled={filmsOrSeries}
             onClick={() => setFilmsOrSeries(true)}
           >
             Peliculas
           </button>
           <button
-            className={`btn ${
-              !filmsOrSeries ? "btn-dark" : "btn-dark"
-            } border rounded-0 rounded-end`}
+            className="btn btn-dark border rounded-0 rounded-end"
             disabled={!filmsOrSeries}
             onClick={() => setFilmsOrSeries(false)}
           >
