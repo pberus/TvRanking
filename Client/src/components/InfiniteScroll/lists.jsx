@@ -1,7 +1,7 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import ListCards from "../Cards/listCards";
+import ListCards from "../Cards/ListCards";
 import { TvOff } from "@mui/icons-material";
 
 const InfiniteScrollLists = ({ items, totalPages, setPageList }) => {

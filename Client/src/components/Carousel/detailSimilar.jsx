@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Card from "../Card/card";
+import Card from "../Card/Card";
 
 const DetailSimilarCarousel = ({ similar }) => {
   const chunkArray = (array, size) => {

@@ -1,7 +1,7 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import Cards from "../Cards/cards";
+import Cards from "../Cards/Cards";
 
 const InfiniteScrollPopular = ({
   items,

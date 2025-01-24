@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import Card from "../Card/card";
+import Card from "../Card/Card";
 import style from "./cards.module.css"
 
 const Cards = ({tvArray}) => {

@@ -4,7 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import TvCard from "./card";
+import TvCard from "./Card";
 import tmdbIcono from "../../assets/tmdb-logo.svg";
 import { Link } from "react-router-dom";
 
