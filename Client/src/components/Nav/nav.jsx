@@ -74,7 +74,9 @@ function Nav() {
   };
 
   return (
-    <div className={`${location.pathname === "/" && style.home}`}>
+    <div
+      className={`${location.pathname === "/" ? style.home : "border-bottom"}`}
+    >
       <ThemeProvider
         theme={
           location.pathname === "/"
@@ -235,7 +237,11 @@ function Nav() {
                     </div>
                   ) : (
                     <Button
-                      sx={{ color: "white", border: 1 }}
+                      sx={{
+                        color: "black",
+                        border: 1,
+                        backgroundColor: "white",
+                      }}
                       onClick={logoutFunction}
                     >
                       Cerrar sesion

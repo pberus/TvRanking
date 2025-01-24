@@ -163,11 +163,14 @@ const SearchBar = () => {
                     searchPopoverResults.movies.map((mov, index) => (
                       <Link
                         key={mov.id}
-                        to={`/pelicula/${mov.title
-                          .toLowerCase()
-                          .replace(/[\s]+/g, "-")
-                          .replace(/[^a-z0-9áéíóúüñ-]+/gi, "")}-${
-                          mov.release_date.split("-")[0]
+                        to={`/pelicula/${
+                          mov.title &&
+                          mov.title
+                            .toLowerCase()
+                            .replace(/[\s]+/g, "-")
+                            .replace(/[^a-z0-9áéíóúüñ-]+/gi, "")
+                        }-${
+                          mov.release_date && mov.release_date.split("-")[0]
                         }`}
                         style={{ textDecoration: "none", color: "inherit" }}
                         onClick={handleClose}
@@ -176,7 +179,7 @@ const SearchBar = () => {
                           className={`d-flex border-bottom pb-2 pt-2 ${
                             index === 0 && "border-top"
                           }`}
-                          style={{ height: "150px" }}
+                          style={{ height: "150px", overflow: "hidden" }}
                         >
                           <img
                             className='w-25 pe-2'
@@ -192,7 +195,10 @@ const SearchBar = () => {
                               <h5>
                                 {mov.title}{" "}
                                 <span className='text-secondary'>
-                                  ({mov.release_date.split("-")[0]})
+                                  (
+                                  {mov.release_date &&
+                                    mov.release_date.split("-")[0]}
+                                  )
                                 </span>
                               </h5>
                               <p className='text-secondary'>
@@ -206,14 +212,14 @@ const SearchBar = () => {
                                 width='60'
                                 className='me-2'
                               />
-                              {mov.vote_average.toFixed(2)}
+                              {mov.vote_average && mov.vote_average.toFixed(2)}
                             </div>
                           </div>
                         </div>
                       </Link>
                     ))
                   ) : (
-                    <h6>No hay resultados</h6>
+                    <h6 className='pt-2 ps-1'>No hay resultados</h6>
                   )}
                 </div>
                 <div className='w-50'>
@@ -229,11 +235,14 @@ const SearchBar = () => {
                     searchPopoverResults.series.map((ser, index) => (
                       <Link
                         key={ser.id}
-                        to={`/serie/${ser.name
-                          .toLowerCase()
-                          .replace(/[\s]+/g, "-")
-                          .replace(/[^a-z0-9áéíóúüñ-]+/gi, "")}-${
-                          ser.first_air_date.split("-")[0]
+                        to={`/serie/${
+                          ser.name &&
+                          ser.name
+                            .toLowerCase()
+                            .replace(/[\s]+/g, "-")
+                            .replace(/[^a-z0-9áéíóúüñ-]+/gi, "")
+                        }-${
+                          ser.first_air_date && ser.first_air_date.split("-")[0]
                         }`}
                         style={{ textDecoration: "none", color: "inherit" }}
                         onClick={handleClose}
@@ -258,7 +267,10 @@ const SearchBar = () => {
                               <h5>
                                 {ser.name}{" "}
                                 <span className='text-secondary'>
-                                  ({ser.first_air_date.split("-")[0]})
+                                  (
+                                  {ser.first_air_date &&
+                                    ser.first_air_date.split("-")[0]}
+                                  )
                                 </span>
                               </h5>
                               <p className='text-secondary'>
@@ -272,14 +284,14 @@ const SearchBar = () => {
                                 width='60'
                                 className='me-2'
                               />
-                              {ser.vote_average.toFixed(2)}
+                              {ser.vote_average && ser.vote_average.toFixed(2)}
                             </div>
                           </div>
                         </div>
                       </Link>
                     ))
                   ) : (
-                    <h6>No hay resultados</h6>
+                    <h6 className='pt-2 ps-1'>No hay resultados</h6>
                   )}
                 </div>
               </div>

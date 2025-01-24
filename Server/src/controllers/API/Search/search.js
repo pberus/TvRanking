@@ -7,7 +7,9 @@ const SEARCH_URL = (query) =>
 const searchController = async (tv) => {
   const { data } = await axios(SEARCH_URL(tv));
 
-  const results = data.results.filter((tv) => tv.media_type !== "person");
+  const results = data.results.filter(
+    (tv) => tv.media_type !== "person" && tv.media_type !== "collection"
+  );
   return results;
 };
 

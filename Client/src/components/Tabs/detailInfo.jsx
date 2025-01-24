@@ -59,17 +59,22 @@ export default function TabsDetailInfo({ info }) {
   } = info;
 
   countries.registerLocale(es);
-  const uncodedCountries = origin_country.map((code) =>
-    countries.getName(code, "es")
-  );
+  const uncodedCountries =
+    origin_country?.length > 0
+      ? origin_country.map((code) => countries.getName(code, "es"))
+      : [];
 
   const uncodedLanguage = ISO6391.getNativeName(original_language);
 
-  const uncodedProdCountries = production_countries.map((code) =>
-    countries.getName(code.iso_3166_1, "es")
-  );
+  const spokenLanguagesName =
+    spoken_languages?.length > 0 ? spoken_languages.map((lan) => lan.name) : [];
 
-  const spokenLanguagesName = spoken_languages.map((lan) => lan.name);
+  const uncodedProdCountries =
+    production_countries?.length > 0
+      ? production_countries.map((code) =>
+          countries.getName(code.iso_3166_1, "es")
+        )
+      : [];
 
   return (
     <Box
@@ -78,9 +83,11 @@ export default function TabsDetailInfo({ info }) {
         border: 1,
         borderColor: "#e0e0e0",
         marginBottom: 3,
+        marginTop: 3,
         ".MuiBox-root": {
           padding: "0",
         },
+        backgroundColor: "white",
       }}
     >
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -100,23 +107,31 @@ export default function TabsDetailInfo({ info }) {
         <div className='d-flex justify-content-around mt-3'>
           <div>
             <h5>Detalles de la pelicula</h5>
-            <p>País/es: {uncodedCountries.join(", ")}</p>
-            <p>Idioma original: {uncodedLanguage}</p>
-            <p>Idiomas hablados: {spokenLanguagesName.join(", ")}</p>
-            <p>Estado: {status}</p>
+            {uncodedCountries.length > 0 && (
+              <p>País/es: {uncodedCountries.join(", ")}</p>
+            )}
+            {uncodedLanguage && <p>Idioma original: {uncodedLanguage}</p>}
+            {spokenLanguagesName.length > 0 && (
+              <p>Idiomas hablados: {spokenLanguagesName.join(", ")}</p>
+            )}
+            {status && <p>Estado: {status}</p>}
           </div>
-          <div>
-            <h5>Compañías productoras</h5>
-            {production_companies.map((comp, index) => (
-              <p key={index}>
-                {comp.name} ({countries.getName(comp.origin_country, "es")})
-              </p>
-            ))}
-          </div>
-          <div>
-            <h5>País/es de producción</h5>
-            <p>{uncodedProdCountries.join(", ")}</p>
-          </div>
+          {production_companies?.length > 0 && (
+            <div>
+              <h5>Compañías productoras</h5>
+              {production_companies.map((comp, index) => (
+                <p key={index}>
+                  {comp.name} ({countries.getName(comp.origin_country, "es")})
+                </p>
+              ))}
+            </div>
+          )}
+          {uncodedProdCountries.length > 0 && (
+            <div>
+              <h5>País/es de producción</h5>
+              <p>{uncodedProdCountries.join(", ")}</p>
+            </div>
+          )}
         </div>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>

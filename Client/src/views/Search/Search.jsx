@@ -31,22 +31,22 @@ const Search = () => {
   const [loading, setLoading] = useState(true);
 
   if (loading) {
-    return <h4 className='ms-3'>Cargando resultados...</h4>; // Muestra un mensaje de carga
+    return <h4 className='p-3 text-white'>Cargando resultados...</h4>; // Muestra un mensaje de carga
   }
 
   return (
-    <div className='m-3'>
+    <div className='p-3'>
       <div className='p-2 border-bottom'>
-        <h2>
+        <h2 className='text-white'>
           Resultados de búsqueda de:{" "}
           <span className='text-primary'>{searchTerm}</span>
         </h2>
         {searchTerm ? (
-          <h5 className='text-secondary'>
+          <h5 className='text-light'>
             Se encontraron {searchResults?.length} resultados
           </h5>
         ) : (
-          <h5 className='text-secondary'>Tendencias de hoy</h5>
+          <h5 className='text-light'>Tendencias de hoy</h5>
         )}
       </div>
       {searchResults?.length > 0 && (
@@ -69,16 +69,20 @@ const Search = () => {
               </div>
               <div className='ms-3'>
                 <h4>
-                  {tv.media_type === "movie" ? tv.title : tv.name}{" "}
-                  <span style={{ color: "#585c59", fontSize: "0.8em" }}>
-                    (
-                    {new Date(
-                      tv.media_type === "movie"
-                        ? tv.release_date
-                        : tv.first_air_date
-                    ).getFullYear()}
-                    )
+                  <span className='text-white'>
+                    {tv.media_type === "movie" ? tv.title : tv.name}{" "}
                   </span>
+                  {(tv.release_date || tv.first_air_date) && (
+                    <span style={{ color: "grey", fontSize: "0.8em" }}>
+                      (
+                      {new Date(
+                        tv.media_type === "movie"
+                          ? tv.release_date
+                          : tv.first_air_date
+                      ).getFullYear()}
+                      )
+                    </span>
+                  )}
                   <span
                     style={{
                       color: "#3f5ebe",
@@ -98,16 +102,18 @@ const Search = () => {
                     ? tv.original_title
                     : tv.original_name}
                 </h4>
-                <p className='text-secondary mt-3'>{tv.overview}</p>
-                <div>
-                  <img
-                    src={tmdbIcono}
-                    alt='tmdb-logo'
-                    width='60'
-                    className='me-2'
-                  />
-                  {tv.vote_average.toFixed(2)}
-                </div>
+                <p className='text-light mt-3'>{tv.overview}</p>
+                {tv.vote_average > 0 && (
+                  <div className='text-light'>
+                    <img
+                      src={tmdbIcono}
+                      alt='tmdb-logo'
+                      width='60'
+                      className='me-2'
+                    />
+                    {tv.vote_average.toFixed(2)}
+                  </div>
+                )}
               </div>
             </div>
           ))}

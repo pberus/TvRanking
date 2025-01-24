@@ -61,21 +61,30 @@ export default function DetailSeasonsModal({ open, handleClose, season }) {
               alt={`image of ${season?.name}`}
             />
             <div>
-              <p className='m-1'>
-                <b>Fecha de estreno: </b> {season?.air_date}
-              </p>
-              <p className='m-1'>
-                <b>Episodios: </b> {season?.episode_count}
-              </p>
-              <p className='m-1'>
-                <b>Calificación: </b> {season?.vote_average}
-                <img
-                  src={tmdbIcono}
-                  alt='tmdb-logo'
-                  width='60'
-                  className='ms-2'
-                />
-              </p>
+              {season?.air_date && (
+                <p className='m-1'>
+                  <b>Fecha de estreno: </b>{" "}
+                  {new Date(season.air_date + "T00:00:00").toLocaleDateString(
+                    "es-AR"
+                  )}
+                </p>
+              )}
+              {season?.episode_count && (
+                <p className='m-1'>
+                  <b>Episodios: </b> {season?.episode_count}
+                </p>
+              )}
+              {season?.vote_average && (
+                <p className='m-1'>
+                  <b>Calificación: </b> {season?.vote_average}
+                  <img
+                    src={tmdbIcono}
+                    alt='tmdb-logo'
+                    width='60'
+                    className='ms-2'
+                  />
+                </p>
+              )}
             </div>
           </div>
           <Typography id='modal-modal-description' sx={{ mt: 2 }}>

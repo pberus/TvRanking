@@ -32,7 +32,7 @@ import {
 import tmdbIcono from "../../assets/tmdb-logo.svg";
 import style from "./movie.module.css";
 
-const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
+const IMAGE_URL = "https://image.tmdb.org/t/p/original";
 
 const TvSerieDetail = () => {
   const { slug } = useParams();
@@ -133,21 +133,19 @@ const TvSerieDetail = () => {
   const [loading, setLoading] = useState(true);
 
   if (loading) {
-    return <h4 className='ms-3'>Cargando detalles de la serie...</h4>; // Muestra un mensaje de carga
+    return <h4 className='p-3 text-light'>Cargando detalles de la serie...</h4>; // Muestra un mensaje de carga
   }
 
   if (typeof detail === "string") {
-    return <h4 className='ms-3'>{detail}</h4>; // Muestra un mensaje de error
+    return <h4 className='p-3 text-light'>{detail}</h4>; // Muestra un mensaje de error
   }
 
   return (
-    <div>
+    <div className='pt-3'>
       <div className={style.start}>
         <div className={style.startPoster}>
           <img
-            src={
-              poster_path === null ? noImageAvailable : IMAGE_URL + poster_path
-            }
+            src={!poster_path ? noImageAvailable : IMAGE_URL + poster_path}
             alt={name}
             className={style.poster}
           />
@@ -183,10 +181,12 @@ const TvSerieDetail = () => {
           <div className='d-flex justify-content-between'>
             <div className='d-flex align-items-baseline'>
               <h2>
-                {name}{" "}
-                <span style={{ color: "#585c59", fontSize: "0.8em" }}>
-                  ({new Date(first_air_date).getFullYear()})
-                </span>
+                {name ? name : original_name}{" "}
+                {first_air_date && (
+                  <span style={{ color: "#585c59", fontSize: "0.8em" }}>
+                    ({new Date(first_air_date).getFullYear()})
+                  </span>
+                )}
               </h2>
             </div>
             <div className='d-flex h-50 p-1'>
@@ -222,13 +222,15 @@ const TvSerieDetail = () => {
             className='d-flex align-items-center flex-wrap'
             style={{ gap: "1rem" }}
           >
-            <div className='d-flex align-items-center'>
-              <CalendarToday className='me-1' />
-              <b className='me-2'>Fecha de estreno: </b>
-              {new Date(first_air_date + "T00:00:00").toLocaleDateString(
-                "es-AR"
-              )}
-            </div>
+            {first_air_date && (
+              <div className='d-flex align-items-center'>
+                <CalendarToday className='me-1' />
+                <b className='me-2'>Fecha de estreno: </b>
+                {new Date(first_air_date + "T00:00:00").toLocaleDateString(
+                  "es-AR"
+                )}
+              </div>
+            )}
             {episode_run_time?.length > 0 && (
               <div className='d-flex align-items-center'>
                 <AccessTime className='me-1' />
@@ -240,17 +242,19 @@ const TvSerieDetail = () => {
                     )}min`}
               </div>
             )}
-            <div className='d-flex align-items-center'>
-              <Grade className='me-1' />
-              <b className='me-2'>Calificación: </b>
-              {vote_average.toFixed(2)}
-              <img
-                src={tmdbIcono}
-                alt='tmdb-logo'
-                width='60'
-                className='ms-2'
-              />
-            </div>
+            {vote_average && (
+              <div className='d-flex align-items-center'>
+                <Grade className='me-1' />
+                <b className='me-2'>Calificación: </b>
+                {vote_average.toFixed(2)}
+                <img
+                  src={tmdbIcono}
+                  alt='tmdb-logo'
+                  width='60'
+                  className='ms-2'
+                />
+              </div>
+            )}
             {created_by?.length > 0 && (
               <div className='d-flex align-items-center'>
                 <Create className='me-1' />
@@ -275,22 +279,24 @@ const TvSerieDetail = () => {
           </div>
           <div className={`mt-3 ${style.providers}`}>
             <h5 className='p-3'>Dónde ver</h5>
-            <TabsDetailProviders providers={providers} title={name} />
+            <TabsDetailProviders
+              providers={providers}
+              title={name ? name : original_name}
+            />
           </div>
         </div>
       </div>
-      <div>
+      <div className='bg-dark pb-1 border-top mt-3'>
         {seasons?.length > 0 && (
-          <div className='m-3'>
+          <div className='p-3'>
             <h3 className='pb-1'>
-              <u>Temporadas</u>
+              <u className='text-light'>TEMPORADAS</u>
             </h3>
             <DetailSeasonsCarousel seasons={seasons} />
           </div>
         )}
       </div>
-      <div></div>
-      <div className='d-flex justify-content-center'>
+      <div className='d-flex justify-content-center bg-dark pt-2 pb-2 border-top border-bottom'>
         <TabsDetailInfo
           info={{
             cast,
@@ -306,9 +312,9 @@ const TvSerieDetail = () => {
         />
       </div>
       {images?.length > 0 && (
-        <div className='m-3'>
-          <h3 className='pb-1'>
-            <u>Imagenes</u>
+        <div className='bg-dark'>
+          <h3>
+            <u className='p-3 text-light'>IMÁGENES</u>
           </h3>
           <DetailImagesCarousel images={images} />
         </div>

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import style from "./detailImages.module.css";
 
-const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
+const IMAGE_URL = "https://image.tmdb.org/t/p/original";
 
 const DetailImagesCarousel = ({ images }) => {
   return (

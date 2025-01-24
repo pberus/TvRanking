@@ -26,7 +26,7 @@ const Lists = () => {
       {isAuthenticated ? (
         <TabsLists />
       ) : (
-        <div className='p-5'>
+        <div className='p-5 bg-dark'>
           <div className='d-flex flex-column border rounded p-3 mb-3 bg-white text-dark'>
             <h3>¡Descubre las listas personalizadas!</h3>
             <p>

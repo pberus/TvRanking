@@ -30,8 +30,8 @@ const DetailSeasonsCarousel = ({ seasons }) => {
   const seasonsChunks = chunkArray(seasons, 8); // Divide el array en grupos de 6
 
   return (
-    <div className='mt-2 border p-3'>
-      <div id='carouselExample' className='carousel slide'>
+    <div className='mt-2 border p-3 bg-dark text-light'>
+      <div id='carouselExample1' className='carousel slide'>
         <div className='carousel-inner'>
           {seasonsChunks.map((chunk, index) => (
             <div
@@ -73,7 +73,7 @@ const DetailSeasonsCarousel = ({ seasons }) => {
         <button
           className='carousel-control-prev w-auto bg-secondary'
           type='button'
-          data-bs-target='#carouselExample'
+          data-bs-target='#carouselExample1'
           data-bs-slide='prev'
         >
           <span
@@ -85,7 +85,7 @@ const DetailSeasonsCarousel = ({ seasons }) => {
         <button
           className='carousel-control-next w-auto bg-secondary'
           type='button'
-          data-bs-target='#carouselExample'
+          data-bs-target='#carouselExample1'
           data-bs-slide='next'
         >
           <span

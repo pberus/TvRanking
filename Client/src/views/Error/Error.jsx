@@ -10,7 +10,7 @@ const Error = () => {
 
   return (
     <Container
-      className='text-center d-flex flex-column align-items-center justify-content-center'
+      className='text-center d-flex flex-column align-items-center justify-content-center text-light'
       style={{ height: "80vh" }}
     >
       <Typography
