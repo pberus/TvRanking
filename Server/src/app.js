@@ -24,7 +24,7 @@ server.use(cookieParser());
 server.use(express.json());
 server.use(
   cors({
-    origin: "http://localhost:5173", // Permite solo el dominio especificado
+    origin: process.env.FRONTEND_URL || "http://localhost:5173", // Permite solo el dominio especificado
     credentials: true, // Permite el envío de cookies
   })
 );

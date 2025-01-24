@@ -30,7 +30,7 @@ export const AUTHENTICATE = "AUTHENTICATE";
 export const OPEN_NOT_AUTHENTICATE_LISTS_MODAL =
   "OPEN_NOT_AUTHENTICATE_LISTS_MODAL";
 
-const URL = "http://localhost:3001";
+const URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
 
 //GET FILMS
 export const getNowPlayingFilms = () => {

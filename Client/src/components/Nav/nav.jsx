@@ -21,6 +21,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import style from "./nav.module.css";
 
+const URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
+
 const theme = (color) =>
   createTheme({
     palette: {
@@ -61,7 +63,7 @@ function Nav() {
   const logoutFunction = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3001/logout",
+        URL + "/logout",
         {},
         { withCredentials: true }
       );

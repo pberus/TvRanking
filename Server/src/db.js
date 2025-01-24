@@ -2,16 +2,16 @@ const { Sequelize } = require("sequelize");
 
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+const { PGUSER, PGPASSWORD, PGHOST, PGDATABASE, PGPORT } = process.env;
 
 //Conexion con la BDD
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/tvranking`,
-  {
-    logging: false,
-    native: false,
-  }
-);
+const sequelize = new Sequelize(PGDATABASE, PGUSER, PGPASSWORD, {
+  host: PGHOST,
+  port: PGPORT,
+  dialect: "postgres",
+  logging: false,
+  native: false,
+});
 
 //Cada archivo se importa y se guarda en el arreglo modelDefiners, que luego se recorre para que cada modelo sea inicializado con la instancia de sequelize. Esto permite agregar varios modelos sin tener que importarlos manualmente.
 const basename = path.basename(__filename);

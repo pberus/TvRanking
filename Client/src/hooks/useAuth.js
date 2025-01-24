@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { authenticate } from "../redux/actions";
 
+const URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
+
 const useAuth = (setLoading) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,7 +17,7 @@ const useAuth = (setLoading) => {
     const urlsNotPermitted = ["/auth/login", "/auth/register"];
     const checkAuth = async () => {
       try {
-        const { data } = await axios("http://localhost:3001/protected", {
+        const { data } = await axios(URL + "/protected", {
           withCredentials: true,
         });
         //Si no esta autenticado, tira error. Si esta autenticado, sigo y aclaro que ruta no puedo ir si estoy autenticado
@@ -29,7 +31,7 @@ const useAuth = (setLoading) => {
         if (error.response?.data === "Access token expired") {
           try {
             await axios.post(
-              "http://localhost:3001/refresh-token",
+              URL + "/refresh-token",
               {},
               { withCredentials: true }
             );

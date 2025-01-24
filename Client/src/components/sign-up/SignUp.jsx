@@ -18,6 +18,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+const URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
+
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
@@ -120,11 +122,9 @@ export default function SignUp(props) {
         email: event.target.email.value,
         password: event.target.password.value,
       };
-      const { data } = await axios.post(
-        "http://localhost:3001/auth",
-        formData,
-        { withCredentials: true }
-      );
+      const { data } = await axios.post(URL + "/auth", formData, {
+        withCredentials: true,
+      });
       toast.success(data);
       navigate("/");
     } catch (error) {
@@ -213,9 +213,7 @@ export default function SignUp(props) {
             <Button
               fullWidth
               variant='outlined'
-              onClick={() =>
-                window.location.replace("http://localhost:3001/auth/google")
-              }
+              onClick={() => window.location.replace(URL + "/auth/google")}
               startIcon={<GoogleIcon />}
             >
               Regístrate con Google
@@ -224,9 +222,7 @@ export default function SignUp(props) {
             <Button
               fullWidth
               variant='outlined'
-              onClick={() =>
-                window.location.replace("http://localhost:3001/auth/facebook")
-              }
+              onClick={() => window.location.replace(URL + "/auth/facebook")}
               startIcon={<FacebookIcon />}
             >
               Regístrate con Facebook
