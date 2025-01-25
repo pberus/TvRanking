@@ -425,7 +425,6 @@ export const getDetail = (title, media_type) => {
         payload: data,
       });
     } catch (error) {
-      console.log(error);
       if (error.name === "AxiosError") {
         return dispatch({
           type: GET_DETAIL,

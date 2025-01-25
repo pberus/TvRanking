@@ -26,7 +26,6 @@ const useAuth = (setLoading) => {
 
         dispatch(authenticate(data));
       } catch (error) {
-        console.log("useAuth:", error);
         //Si expiro el access token, hago una solicitud para crear uno nuevo
         if (error.response?.data === "Access token expired") {
           try {
