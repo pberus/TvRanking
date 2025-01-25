@@ -4,6 +4,8 @@ const signIn = require("../../handlers/Auth/signIn");
 const jwt = require("jsonwebtoken");
 const { JWT_REFRESH_SECRET_KEY } = process.env;
 
+const URL = process.env.FRONTEND_URL || "http://localhost:5173";
+
 const routerAuth = require("express").Router();
 
 routerAuth.get(
@@ -18,7 +20,7 @@ routerAuth.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "http://localhost:5173/auth/login",
+    failureRedirect: URL + "/auth/login",
   }),
   async (req, res) => {
     // Generar un token de acceso JWT para el usuario
@@ -46,7 +48,7 @@ routerAuth.get(
     });
 
     // Redirigir a la página principal u otra página segura
-    res.redirect("http://localhost:5173");
+    res.redirect(URL);
   }
 );
 
@@ -61,7 +63,7 @@ routerAuth.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
     session: false,
-    failureRedirect: "http://localhost:5173/auth/login",
+    failureRedirect: URL + "/auth/login",
   }),
   async function (req, res) {
     const accessToken = req.user.token;
@@ -84,7 +86,7 @@ routerAuth.get(
       sameSite: "Strict",
     });
 
-    res.redirect("http://localhost:5173");
+    res.redirect(URL);
   }
 );
 

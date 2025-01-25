@@ -17,6 +17,8 @@ const {
 const { User } = require("./db");
 const { Op } = require("sequelize");
 
+const URL = process.env.BACKEND_URL || "http://localhost:3001";
+
 const server = express();
 
 server.use(morgan("dev"));
@@ -34,7 +36,7 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3001/auth/google/callback",
+      callbackURL: URL + "/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, cb) {
       try {
@@ -70,7 +72,7 @@ passport.use(
     {
       clientID: FACEBOOK_APP_ID,
       clientSecret: FACEBOOK_APP_SECRET,
-      callbackURL: "http://localhost:3001/auth/facebook/callback",
+      callbackURL: URL + "/auth/facebook/callback",
       profileFields: ["displayName", "email"],
     },
     async function (accessToken, refreshToken, profile, cb) {
