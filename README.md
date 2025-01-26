@@ -4,6 +4,14 @@
 
 TvRanking es una página web que te permite sumergirte en el entretenimiento. Desde los últimos estrenos hasta los clásicos imperdibles, encontrarás todo lo que necesitas para disfrutar al máximo de tus películas y series favoritas. Todo dentro de la inmensa base de datos de TMDB.
 
+## Preview
+
+[![video](/assets/VideoPreviewPortfolioPedroBerustein.gif)](https://github.com/pberus/Dev-Portfolio)
+
+## Live Demo
+
+Accede a la demo en vivo aquí: [TvRanking Live Demo](https://tvranking.up.railway.app/)
+
 ## Características principales
 
 - **Explora contenido popular y joyas ocultas**: Descubre las películas y series más populares del momento y las menos conocidas que podrían sorprenderte, así como títulos en cartelera, próximos a estrenarse y los mejor calificados.
@@ -64,14 +72,6 @@ TvRanking es una página web que te permite sumergirte en el entretenimiento. De
   <a href="https://www.npmjs.com/" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/npm.svg" alt="npm" width="40" height="40"/> 
   <a href="https://code.visualstudio.com/" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/visual-studio-code-1.svg" alt="visual studio code" width="40" height="40"/> 
 </p>
-
-## Preview
-
-[![video](/assets/VideoPreviewPortfolioPedroBerustein.gif)](https://github.com/pberus/Dev-Portfolio)
-
-## Live Demo
-
-Accede a la demo en vivo aquí: [TvRanking Live Demo](https://tvranking.up.railway.app/)
 
 ## Creditos
 
