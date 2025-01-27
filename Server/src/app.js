@@ -54,9 +54,13 @@ passport.use(
           });
         }
 
-        const token = jwt.sign({ id: user.id }, JWT_ACCESS_SECRET_KEY, {
-          expiresIn: "1h",
-        });
+        const token = jwt.sign(
+          { id: user.id, name: user.name, email: user.email },
+          JWT_ACCESS_SECRET_KEY,
+          {
+            expiresIn: "1h",
+          }
+        );
 
         return cb(null, { user, token });
       } catch (error) {
@@ -91,9 +95,13 @@ passport.use(
           });
         }
 
-        const token = jwt.sign({ id: user.id }, JWT_ACCESS_SECRET_KEY, {
-          expiresIn: "1h",
-        });
+        const token = jwt.sign(
+          { id: user.id, name: user.name, email: user.email },
+          JWT_ACCESS_SECRET_KEY,
+          {
+            expiresIn: "1h",
+          }
+        );
 
         return cb(null, { user, token });
       } catch (error) {

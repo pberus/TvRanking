@@ -11,9 +11,13 @@ const signInHandler = async (req, res) => {
     const isValid = await bcrypt.compare(password, userFound.password);
     if (!isValid) throw new Error("Contraseña incorrecta.");
 
-    const accessToken = jwt.sign({ id: userFound.id }, JWT_ACCESS_SECRET_KEY, {
-      expiresIn: "1h",
-    });
+    const accessToken = jwt.sign(
+      { id: userFound.id, name: userFound.name, email: userFound.email },
+      JWT_ACCESS_SECRET_KEY,
+      {
+        expiresIn: "1h",
+      }
+    );
     const refreshToken = jwt.sign(
       { id: userFound.id },
       JWT_REFRESH_SECRET_KEY,

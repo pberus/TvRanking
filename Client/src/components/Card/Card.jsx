@@ -33,7 +33,7 @@ const Card = ({ tv, cardStyle }) => {
   };
 
   const handleList = (list) => {
-    if (isAuthenticated) {
+    if (isAuthenticated.authenticated) {
       if (isInList[list]) {
         dispatch(removeCardList({ id, list }));
       } else {

@@ -37,7 +37,7 @@ const Home = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   useEffect(() => {
-    isAuthenticated && dispatch(getAllLists());
+    isAuthenticated.authenticated && dispatch(getAllLists());
   }, [dispatch, isAuthenticated]);
 
   useEffect(() => {

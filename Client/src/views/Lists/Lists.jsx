@@ -18,12 +18,12 @@ const Lists = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   useEffect(() => {
-    isAuthenticated && dispatch(getAllLists());
+    isAuthenticated.authenticated && dispatch(getAllLists());
   }, [dispatch, isAuthenticated]);
 
   return (
     <div>
-      {isAuthenticated ? (
+      {isAuthenticated.authenticated ? (
         <TabsLists />
       ) : (
         <div className='p-5 bg-dark'>

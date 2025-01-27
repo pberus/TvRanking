@@ -72,7 +72,7 @@ const TvSerieDetail = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   useEffect(() => {
-    isAuthenticated && dispatch(getAllLists());
+    isAuthenticated.authenticated && dispatch(getAllLists());
   }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
@@ -97,7 +97,7 @@ const TvSerieDetail = () => {
   };
 
   const handleList = (list) => {
-    if (isAuthenticated) {
+    if (isAuthenticated.authenticated) {
       if (isInList[list]) {
         dispatch(removeCardList({ id, list }));
       } else {

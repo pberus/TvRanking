@@ -70,7 +70,7 @@ const MovieDetail = () => {
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   useEffect(() => {
-    isAuthenticated && dispatch(getAllLists());
+    isAuthenticated.authenticated && dispatch(getAllLists());
   }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
@@ -95,7 +95,7 @@ const MovieDetail = () => {
   };
 
   const handleList = (list) => {
-    if (isAuthenticated) {
+    if (isAuthenticated.authenticated) {
       if (isInList[list]) {
         dispatch(removeCardList({ id, list }));
       } else {

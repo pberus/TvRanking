@@ -58,7 +58,7 @@ const Popular = () => {
 
   useEffect(() => {
     setLoading(true);
-    isAuthenticated && dispatch(getAllLists());
+    isAuthenticated.authenticated && dispatch(getAllLists());
     setLoading(false);
   }, [dispatch, isAuthenticated]);
 

@@ -63,7 +63,7 @@ const initialState = {
   searchResults: [],
   searchPopoverResults: {},
   //AUTH
-  isAuthenticated: false,
+  isAuthenticated: { authenticated: false, name: "", email: "" },
   notAuthenticateListsModal: false,
 };
 
@@ -224,7 +224,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case AUTHENTICATE:
       return {
         ...state,
-        isAuthenticated: payload.authenticated,
+        isAuthenticated: {
+          authenticated: payload.authenticated,
+          name: payload.name ? payload.name : "",
+          email: payload.email ? payload.email : "",
+        },
       };
     case OPEN_NOT_AUTHENTICATE_LISTS_MODAL:
       return {

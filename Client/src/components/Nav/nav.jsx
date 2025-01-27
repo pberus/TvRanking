@@ -212,12 +212,12 @@ function Nav() {
                   ))}
                 </Box>
               </div>
-              <div className='w-50 d-flex align-items-center justify-content-end'>
-                <Box sx={{ flexGrow: 1, width: "50%" }}>
+              <div className='w-50 d-flex align-items-center justify-content-around'>
+                <Box>
                   <SearchBar />
                 </Box>
-                <Box sx={{ flexGrow: 0, marginRight: 1, width: "50%" }}>
-                  {!isAuthenticated ? (
+                <Box sx={{ flexGrow: 0, marginRight: 1 }}>
+                  {!isAuthenticated.authenticated ? (
                     <div>
                       <Button
                         sx={{
@@ -238,51 +238,64 @@ function Nav() {
                       </Button>
                     </div>
                   ) : (
-                    <Button
-                      sx={{
-                        color: "black",
-                        border: 1,
-                        backgroundColor: "white",
-                      }}
-                      onClick={logoutFunction}
-                    >
-                      Cerrar sesion
-                    </Button>
+                    <div className='d-flex gap-3'>
+                      <Button
+                        sx={{
+                          color: "black",
+                          border: 1,
+                          backgroundColor: "white",
+                        }}
+                        onClick={logoutFunction}
+                      >
+                        Cerrar sesion
+                      </Button>
+                      <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title='Open settings'>
+                          <IconButton
+                            onClick={handleOpenUserMenu}
+                            sx={{ p: 0 }}
+                          >
+                            <Avatar src="/broken-image.jpg" />
+                          </IconButton>
+                        </Tooltip>
+                        <Menu
+                          sx={{ mt: "45px" }}
+                          id='menu-appbar'
+                          anchorEl={anchorElUser}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          open={Boolean(anchorElUser)}
+                          onClose={handleCloseUserMenu}
+                          disableScrollLock
+                        >
+                          {
+                            <Typography
+                              sx={{ textAlign: "center", padding: "8px", display: "flex", flexDirection: "column" }}
+                              onClick={handleCloseUserMenu}
+                            >
+                              <span>¡Hola <b>{isAuthenticated.name}</b>!</span>
+                              <span>Usuario: <b>{isAuthenticated.email}</b></span>                              
+                            </Typography>
+                          }
+                          {/*settings.map((setting) => (
+                          <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                            <Typography sx={{ textAlign: "center" }}>
+                              {setting}
+                            </Typography>
+                          </MenuItem>
+                        ))*/}
+                        </Menu>
+                      </Box>
+                    </div>
                   )}
                 </Box>
-                {/* MENU CUENTA (configurar)
-                  <Box sx={{ flexGrow: 0 }}>
-                    <Tooltip title='Open settings'>
-                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-                      </IconButton>
-                    </Tooltip>
-                    <Menu
-                      sx={{ mt: "45px" }}
-                      id='menu-appbar'
-                      anchorEl={anchorElUser}
-                      anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      keepMounted
-                      transformOrigin={{
-                        vertical: "top",
-                        horizontal: "right",
-                      }}
-                      open={Boolean(anchorElUser)}
-                      onClose={handleCloseUserMenu}
-                    >
-                      {settings.map((setting) => (
-                        <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                          <Typography sx={{ textAlign: "center" }}>
-                            {setting}
-                          </Typography>
-                        </MenuItem>
-                      ))}
-                    </Menu>
-                  </Box>
-                */}
               </div>
             </Toolbar>
           </Container>
