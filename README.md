@@ -75,7 +75,7 @@ Accede a la demo en vivo aquí: [TvRanking Live Demo](https://tvranking.up.railw
 
 ## Creditos
 
-Esta pagina web utiliza la API de TMDB, para acceder a todas las películas y series.
+Esta pagina web utiliza la API de TMDB, para acceder a todas las películas y series, y esta basado en la funcionalidad de JustWatch.
 
 ## Autor
 
