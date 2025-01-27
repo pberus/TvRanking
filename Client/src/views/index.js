@@ -1,4 +1,4 @@
-import Home from "./Home/Home";
+import Home from "./Home/Home.jsx";
 import Popular from "./Popular/Popular";
 import Lists from "./Lists/Lists";
 import MovieDetail from "./Detail/Movie";
