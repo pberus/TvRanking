@@ -4,9 +4,9 @@
 
 TvRanking es una página web que te permite sumergirte en el entretenimiento. Desde los últimos estrenos hasta los clásicos imperdibles, encontrarás todo lo que necesitas para disfrutar al máximo de tus películas y series favoritas. Todo dentro de la inmensa base de datos de TMDB.
 
-## Preview
+## Preview (video)
 
-[![video](/assets/VideoPreviewPortfolioPedroBerustein.gif)](https://github.com/pberus/Dev-Portfolio)
+[![Video Preview](/assets/miniatura.png)](https://vimeo.com/1050594720/5422539ad3?ts=0&share=copy)
 
 ## Live Demo
 
