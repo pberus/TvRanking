@@ -16,11 +16,13 @@ import PropTypes from "prop-types";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
-const SearchBar = ({onFocus, onBlur}) => {
+const SearchBar = ({ onFocus, onBlur }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [focus, setFocus] = useState(false);
 
   const searchPopoverResults = useSelector(
     (state) => state.searchPopoverResults
@@ -81,6 +83,16 @@ const SearchBar = ({onFocus, onBlur}) => {
   const open = Boolean(anchorEl);
   const id = open ? "search-popover" : undefined;
 
+  const handleFocus = () => {
+    onFocus();
+    setFocus(true);
+  };
+
+  const handleBlur = () => {
+    onBlur();
+    setFocus(false);
+  };
+
   return (
     <div>
       <Box sx={{ "& > :not(style)": { m: 1, border: 1, borderRadius: 1 } }}>
@@ -96,8 +108,8 @@ const SearchBar = ({onFocus, onBlur}) => {
           variant='outlined'
           color='dark'
           focused
-          onFocus={onFocus}
-          onBlur={onBlur}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           sx={{
             input: { color: "white" }, // Color del texto
             "& .MuiInputBase-input::placeholder": {
@@ -116,7 +128,7 @@ const SearchBar = ({onFocus, onBlur}) => {
             "& .MuiFilledInput-underline:after": {
               borderBottom: "2px solid white", // Borde activo
             },
-            backgroundColor: "trasparent",
+            backgroundColor: focus ? "rgba(0, 0, 0, 0.5)" : "trasparent",
           }}
           slotProps={{
             input: {
