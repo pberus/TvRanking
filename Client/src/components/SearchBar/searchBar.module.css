@@ -1,0 +1,25 @@
+.popoverResults {
+  width: 100%;
+  display: flex;
+  gap: 1;
+}
+
+.popoverMovies {
+  width: 50%;
+}
+
+.popoverSeries {
+  width: 50%;
+}
+
+@media (max-width: 600px) {
+  .popoverResults {
+    flex-direction: column;
+  }
+  .popoverMovies {
+    width: 100%;
+  }
+  .popoverSeries {
+    width: 100%;
+  }
+}

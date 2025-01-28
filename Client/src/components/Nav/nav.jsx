@@ -89,7 +89,7 @@ function Nav() {
         <AppBar position='static' color='primary'>
           <Container maxWidth='xl'>
             <Toolbar disableGutters>
-              <div className='w-50 d-flex align-items-center'>
+              <div className={style.routes}>
                 <Typography
                   variant='h6'
                   noWrap
@@ -146,13 +146,22 @@ function Nav() {
                       <MenuItem key={page} onClick={handleCloseNavMenu}>
                         <Typography sx={{ textAlign: "center" }}>
                           {page === "Inicio" ? (
-                            <a href='/' style={{ textDecoration: "none" }}>
+                            <a
+                              href='/'
+                              style={{
+                                textDecoration: "none",
+                                color: "inherit",
+                              }}
+                            >
                               {page}
                             </a>
                           ) : (
                             <a
                               href={`/${page.toLowerCase()}`}
-                              style={{ textDecoration: "none" }}
+                              style={{
+                                textDecoration: "none",
+                                color: "inherit",
+                              }}
                             >
                               {page}
                             </a>
@@ -167,24 +176,20 @@ function Nav() {
                   noWrap
                   component='a'
                   href='/'
-                  sx={{
-                    mr: 2,
+                  sx={{                   
                     display: { xs: "flex", md: "none" },
-                    flexGrow: 1,
-                    fontFamily: "monospace",
                     fontWeight: 700,
-                    letterSpacing: ".3rem",
                     color: "inherit",
-                    textDecoration: "none",
+                    width: "100%",
+                    height: "100%",
                   }}
                 >
                   <img
                     src={logo}
                     alt='logo tv ranking'
-                    height='30'
-                    width='30'
+                    height='50'
+                    width='50'
                   />
-                  <span className='ps-2'>Tv Ranking</span>
                 </Typography>
                 <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                   {pages.map((page) => (
@@ -212,8 +217,20 @@ function Nav() {
                   ))}
                 </Box>
               </div>
-              <div className='w-50 d-flex align-items-center justify-content-around'>
-                <Box>
+              <div className={style.searchLogin}>
+                <Box
+                  sx={{
+                    "@media (max-width: 1024px)": {
+                      width: "50%",
+                    },
+                    "@media (max-width: 768px)": {
+                      width: "30%",
+                    },
+                    "@media (max-width: 599px)": {
+                      width: "70%",
+                    },
+                  }}
+                >
                   <SearchBar />
                 </Box>
                 <Box sx={{ flexGrow: 0, marginRight: 1 }}>
@@ -225,37 +242,43 @@ function Nav() {
                           border: 1,
                           marginRight: 1,
                           color: "black",
+                          padding: {xs: 0, sm: "6px"}
                         }}
                         onClick={() => navigate("/auth/login")}
                       >
                         Iniciar sesion
                       </Button>
                       <Button
-                        sx={{ color: "white", border: 1 }}
+                        sx={{
+                          color: "white",
+                          border: 1,
+                          display: { xs: "none", sm: "inline" },
+                        }}
                         onClick={() => navigate("/auth/register")}
                       >
                         Registrarse
                       </Button>
                     </div>
                   ) : (
-                    <div className='d-flex gap-3'>
+                    <div className='d-flex gap-2'>
                       <Button
                         sx={{
                           color: "black",
                           border: 1,
                           backgroundColor: "white",
+                          padding: {xs: 0, sm: "6px"}
                         }}
                         onClick={logoutFunction}
                       >
                         Cerrar sesion
                       </Button>
-                      <Box sx={{ flexGrow: 0 }}>
+                      <Box sx={{ flexGrow: 0, display: "flex" }}>
                         <Tooltip title='Open settings'>
                           <IconButton
                             onClick={handleOpenUserMenu}
                             sx={{ p: 0 }}
                           >
-                            <Avatar src="/broken-image.jpg" />
+                            <Avatar src='/broken-image.jpg' />
                           </IconButton>
                         </Tooltip>
                         <Menu
@@ -277,11 +300,20 @@ function Nav() {
                         >
                           {
                             <Typography
-                              sx={{ textAlign: "center", padding: "8px", display: "flex", flexDirection: "column" }}
+                              sx={{
+                                textAlign: "center",
+                                padding: "8px",
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
                               onClick={handleCloseUserMenu}
                             >
-                              <span>¡Hola <b>{isAuthenticated.name}</b>!</span>
-                              <span>Usuario: <b>{isAuthenticated.email}</b></span>                              
+                              <span>
+                                ¡Hola <b>{isAuthenticated.name}</b>!
+                              </span>
+                              <span>
+                                Usuario: <b>{isAuthenticated.email}</b>
+                              </span>
                             </Typography>
                           }
                           {/*settings.map((setting) => (

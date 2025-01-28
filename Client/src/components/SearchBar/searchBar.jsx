@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removePopoverResults, searchTvPopover } from "../../redux/actions";
 import noImageAvailable from "../../assets/no_image_available.jpg";
 import tmdbIcono from "../../assets/tmdb-logo.svg";
+import style from "./searchBar.module.css";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -141,7 +142,7 @@ const SearchBar = () => {
         disableAutoFocus
         disableEnforceFocus
       >
-        <Box sx={{ p: 2, width: "700px", maxHeight: "85vh" }}>
+        <Box sx={{ p: 2, width: "700px", maxWidth: "100%", maxHeight: "85vh" }}>
           {searchPopoverResults &&
           !Object.keys(searchPopoverResults).length > 0 ? (
             <div>
@@ -149,8 +150,8 @@ const SearchBar = () => {
             </div>
           ) : (
             <div>
-              <div className='w-100 d-flex gap-1'>
-                <div className='w-50'>
+              <div className={style.popoverResults}>
+                <div className={style.popoverMovies}>
                   <Typography
                     variant='overline'
                     color='gray'
@@ -182,7 +183,7 @@ const SearchBar = () => {
                           style={{ height: "150px", overflow: "hidden" }}
                         >
                           <img
-                            className='w-25 pe-2'
+                            className='w-25 me-2'
                             src={
                               mov.poster_path
                                 ? IMAGE_URL + mov.poster_path
@@ -190,7 +191,7 @@ const SearchBar = () => {
                             }
                             alt={mov.title}
                           />
-                          <div className='d-flex flex-column justify-content-between'>
+                          <div className='d-flex flex-column justify-content-between w-75'>
                             <div>
                               <h5>
                                 {mov.title}{" "}
@@ -222,7 +223,7 @@ const SearchBar = () => {
                     <h6 className='pt-2 ps-1'>No hay resultados</h6>
                   )}
                 </div>
-                <div className='w-50'>
+                <div className={style.popoverSeries}>
                   <Typography
                     variant='overline'
                     color='gray'
@@ -254,7 +255,7 @@ const SearchBar = () => {
                           style={{ height: "150px" }}
                         >
                           <img
-                            className='w-25 pe-2'
+                            className='w-25 me-2'
                             src={
                               ser.poster_path
                                 ? IMAGE_URL + ser.poster_path
@@ -262,7 +263,7 @@ const SearchBar = () => {
                             }
                             alt={ser.name}
                           />
-                          <div className='d-flex flex-column justify-content-between'>
+                          <div className='d-flex flex-column justify-content-between w-75'>
                             <div>
                               <h5>
                                 {ser.name}{" "}

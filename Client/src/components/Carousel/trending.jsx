@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import InfoIcon from "@mui/icons-material/Info";
-//import style from "./homeCarousel.module.css";
+import style from "./trending.module.css";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/original";
 
@@ -40,18 +40,7 @@ const TrendingCarousel = () => {
               className={`carousel-item ${index === 0 ? "active" : ""}`}
             >
               <div
-                style={{
-                  position: "absolute",
-                  top: "55%",
-                  left: "2%",
-                  color: "white",
-                  backgroundColor: "rgba(0, 0, 0, 0.1)",
-                  padding: "10px",
-                  borderRadius: "5px",
-                  zIndex: 10,
-                  height: "40%",
-                  width: "50%",
-                }}
+                className={style.carouselItemInfo}                
               >
                 <h3>{tre.title}</h3>
                 <p style={{ maxHeight: "50%", overflow: "hidden" }}>
