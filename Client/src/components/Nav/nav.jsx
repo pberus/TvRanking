@@ -40,6 +40,8 @@ function Nav() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
   const isAuthenticated = useSelector((state) => state.isAuthenticated);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -73,6 +75,14 @@ function Nav() {
     } catch (error) {
       toast.error(error.message);
     }
+  };
+
+  const handleFocus = () => {
+    setIsExpanded(true);
+  };
+
+  const handleBlur = () => {
+    setIsExpanded(false);
   };
 
   return (
@@ -176,7 +186,7 @@ function Nav() {
                   noWrap
                   component='a'
                   href='/'
-                  sx={{                   
+                  sx={{
                     display: { xs: "flex", md: "none" },
                     fontWeight: 700,
                     color: "inherit",
@@ -229,11 +239,25 @@ function Nav() {
                     "@media (max-width: 599px)": {
                       width: "70%",
                     },
+                    "@media (max-width: 425px)": {
+                      width: "100vw",
+                      transition: "width 0.3s ease-in-out",
+                    },
                   }}
                 >
-                  <SearchBar />
+                  <SearchBar onFocus={handleFocus} onBlur={handleBlur} />
                 </Box>
-                <Box sx={{ flexGrow: 0, marginRight: 1 }}>
+                <Box
+                  sx={{
+                    flexGrow: 0,
+                    marginRight: 1,
+                    ...(isExpanded && {
+                      "@media (max-width: 425px)": {
+                        display: "none",
+                      },
+                    }),
+                  }}
+                >
                   {!isAuthenticated.authenticated ? (
                     <div>
                       <Button
@@ -242,7 +266,7 @@ function Nav() {
                           border: 1,
                           marginRight: 1,
                           color: "black",
-                          padding: {xs: 0, sm: "6px"}
+                          padding: { xs: 0, sm: "6px" },
                         }}
                         onClick={() => navigate("/auth/login")}
                       >
@@ -266,7 +290,7 @@ function Nav() {
                           color: "black",
                           border: 1,
                           backgroundColor: "white",
-                          padding: {xs: 0, sm: "6px"}
+                          padding: { xs: 0, sm: "6px" },
                         }}
                         onClick={logoutFunction}
                       >

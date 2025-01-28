@@ -68,12 +68,3 @@
   }
 }
 
-@media (max-width: 600px) {
-  .routes {
-    width: 35%;
-  }
-
-  .searchLogin {
-    width: 65%;
-  }
-}

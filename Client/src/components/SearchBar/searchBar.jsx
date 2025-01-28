@@ -12,10 +12,11 @@ import { removePopoverResults, searchTvPopover } from "../../redux/actions";
 import noImageAvailable from "../../assets/no_image_available.jpg";
 import tmdbIcono from "../../assets/tmdb-logo.svg";
 import style from "./searchBar.module.css";
+import PropTypes from "prop-types";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
-const SearchBar = () => {
+const SearchBar = ({onFocus, onBlur}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
@@ -95,6 +96,8 @@ const SearchBar = () => {
           variant='outlined'
           color='dark'
           focused
+          onFocus={onFocus}
+          onBlur={onBlur}
           sx={{
             input: { color: "white" }, // Color del texto
             "& .MuiInputBase-input::placeholder": {
@@ -315,6 +318,11 @@ const SearchBar = () => {
       </Popover>
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  onFocus: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
 };
 
 export default SearchBar;
