@@ -212,7 +212,7 @@ const Home = () => {
         )}
       </div>
       <footer className='d-flex flex-wrap justify-content-center align-items-center py-3 bg-dark'>
-        <div className='col-md-4 d-flex align-items-center'>
+        <div>
           <a
             href='/'
             className='mb-3 me-2 ms-5 mb-md-0 text-decoration-none lh-1'

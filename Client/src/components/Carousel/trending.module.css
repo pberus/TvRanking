@@ -10,3 +10,32 @@
   height: 40%;
   width: 50%;
 }
+
+.moreInfo {
+  padding-left: 5px;
+}
+
+@media (max-width: 768px) {
+  .moreInfo {
+    display: none;
+  }
+  .carouselItemInfo {
+    top: 50%;
+  }
+}
+
+@media (max-width: 425px) {
+  .carouselItemInfo p {
+    display: none;
+  }
+  .carouselItemInfo {
+    top: 65%;
+    display: inline-flex;
+    gap: 10px;
+    width: 75%;
+  }
+  .carouselItemInfo a {
+    display: inline-flex;
+    height: 25%;
+  }
+}

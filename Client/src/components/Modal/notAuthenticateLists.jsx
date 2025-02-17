@@ -14,6 +14,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 500,
+  maxWidth: "90vw",
   maxHeight: "90vh", // Limita la altura máxima al 90% de la ventana
   overflowY: "auto", // Habilita el scroll vertical si el contenido excede la altura
   bgcolor: "background.paper",
@@ -66,7 +67,7 @@ export default function NotAuthenticateListsModal() {
             </Typography>
             <button
               onClick={handleCloseModal}
-              className='bg-transparent border-0 text-secondary'
+              className='bg-transparent border-0 text-secondary d-flex'
             >
               {<CloseIcon />}
             </button>

@@ -39,9 +39,7 @@ const TrendingCarousel = () => {
               key={index}
               className={`carousel-item ${index === 0 ? "active" : ""}`}
             >
-              <div
-                className={style.carouselItemInfo}                
-              >
+              <div className={style.carouselItemInfo}>
                 <h3>{tre.title}</h3>
                 <p style={{ maxHeight: "50%", overflow: "hidden" }}>
                   {tre.overview}
@@ -57,18 +55,17 @@ const TrendingCarousel = () => {
                     borderRadius: 5,
                     color: "white",
                     padding: 5,
-                    display: "flex",
-                    width: "25%",
+                    display: "inline-flex",
                   }}
                 >
                   <InfoIcon />
-                  <span className='ps-2'>Mas información</span>
+                  <span className={style.moreInfo}>Mas información</span>
                 </a>
               </div>
               <img
                 src={IMAGE_URL + tre.image}
                 className='w-100'
-                style={{ height: "550px" }}
+                style={{ height: "75vh" }}
                 alt={`Slide ${index + 1}`}
               />
             </div>
