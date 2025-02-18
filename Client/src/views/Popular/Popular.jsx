@@ -17,7 +17,7 @@ import {
   YearRelease,
 } from "../../components";
 import style from "./popular.module.css";
-import { SmartDisplay, HighlightOff } from "@mui/icons-material";
+import { SmartDisplay, HighlightOff, FilterAlt } from "@mui/icons-material";
 import { BounceLoader } from "react-spinners";
 
 const Popular = () => {
@@ -75,6 +75,17 @@ const Popular = () => {
 
     fetchData();
   }, [dispatch]);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     //active filters
@@ -284,17 +295,17 @@ const Popular = () => {
                 </button>
               </div>
               <div>
-                {(discoverFilms.totalResults ||
-                  discoverSeries.totalResults) && (
-                  <p className='text-white'>
-                    {discover.filmsOrSeries === "films"
-                      ? discoverFilms.totalResults?.toLocaleString("es-ES")
-                      : discoverSeries.totalResults?.toLocaleString(
-                          "es-ES"
-                        )}{" "}
-                    titulos
-                  </p>
-                )}
+                {(discoverFilms.totalResults || discoverSeries.totalResults) &&
+                  !isMobile && (
+                    <p className='text-white'>
+                      {discover.filmsOrSeries === "films"
+                        ? discoverFilms.totalResults?.toLocaleString("es-ES")
+                        : discoverSeries.totalResults?.toLocaleString(
+                            "es-ES"
+                          )}{" "}
+                      titulos
+                    </p>
+                  )}
               </div>
             </div>
             <div className={style.ordeFiltButtons}>
@@ -310,7 +321,7 @@ const Popular = () => {
                     aria-controls='collapseExample'
                   >
                     <SmartDisplay />
-                    {filmsProviders?.length > 0 && (
+                    {filmsProviders?.length > 0 && !isMobile && (
                       <span
                         className={`${style.spanStreaming} ${
                           discover.providers.length > 0 && "text-warning"
@@ -331,13 +342,13 @@ const Popular = () => {
               {/* ORDENAMIENTOS */}
               <select
                 name='sortBy'
-                className='form-select w-auto btn btn-dark text-start border'
+                className='form-select w-25 btn btn-dark text-start border'
                 aria-label='Default select example'
                 value={discover.sortBy}
                 onChange={handleSort}
               >
                 <option value='' disabled>
-                  Ordenamientos
+                  {isMobile ? "⇅" : "Ordenamientos"}
                 </option>
                 <option value='popularity'>Popularidad</option>
                 <option value='trending'>Tendencia</option>
@@ -379,7 +390,7 @@ const Popular = () => {
                     aria-expanded='false'
                     aria-controls='collapseExample'
                   >
-                    Filtros
+                    {isMobile ? <FilterAlt /> : "Filtros"}
                     {activeFilters > 0 && (
                       <span className={style.activeFilters}>
                         {activeFilters}
@@ -411,7 +422,7 @@ const Popular = () => {
           <div className='collapse mb-2' id='collapseExample'>
             <div className='card card-body bg-dark'>
               {/* DROPDOWNS */}
-              <div className='dropdown d-flex gap-3 d-flex align-items-baseline'>
+              <div className='dropdown d-flex gap-3 d-flex align-items-baseline flex-wrap'>
                 {/* year release */}
                 <button
                   className={`btn btn-dark border dropdown-toggle ${
