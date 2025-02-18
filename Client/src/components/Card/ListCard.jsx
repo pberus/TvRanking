@@ -25,8 +25,11 @@ export default function ListCard({ tv }) {
         flexDirection: "row",
         border: "1px solid black",
         borderRadius: "15px",
-        width: "30%",
-        height: "15rem",
+        width: "400px",
+        height: "245px",
+        "@media (max-width: 425px)": {
+          height: "230px",
+        },
       }}
     >
       <TvCard tv={tv} cardStyle={true} />

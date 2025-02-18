@@ -39,9 +39,9 @@ const Lists = () => {
               Inicia sesión para desbloquear todas las funciones
             </p>
           </div>
-          <div className='d-flex justify-content-around mb-3 w-100'>
+          <div className='d-flex justify-content-around mb-3 w-100 flex-column flex-md-row gap-1'>
             <div
-              className='p-2 border border-secondary rounded opacity-75 bg-secondary-subtle p-4'
+              className='p-2 border border-secondary rounded opacity-75 bg-secondary-subtle p-4 w-100'
               style={{ width: "30%" }}
             >
               <div className='d-flex justify-content-between'>
@@ -57,7 +57,7 @@ const Lists = () => {
               </div>
             </div>
             <div
-              className='p-2 border border-secondary rounded opacity-75 bg-secondary-subtle p-4'
+              className='p-2 border border-secondary rounded opacity-75 bg-secondary-subtle p-4 w-100'
               style={{ width: "30%" }}
             >
               <div className='d-flex justify-content-between'>
@@ -73,7 +73,7 @@ const Lists = () => {
               </div>
             </div>
             <div
-              className='p-2 border border-secondary rounded opacity-75 bg-secondary-subtle p-4'
+              className='p-2 border border-secondary rounded opacity-75 bg-secondary-subtle p-4 w-100'
               style={{ width: "30%" }}
             >
               <div className='d-flex justify-content-between'>

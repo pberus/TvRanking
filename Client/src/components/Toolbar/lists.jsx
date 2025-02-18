@@ -10,7 +10,7 @@ import {
 import { Rating, Runtime, Streaming, YearRelease } from "../../components";
 import iconoCerrar from "../../assets/cerrar-simbolo-de-boton-circular.png";
 import style from "./lists.module.css";
-import { SmartDisplay } from "@mui/icons-material";
+import { SmartDisplay, FilterAlt } from "@mui/icons-material";
 
 const ToolbarLists = ({ list, totalResults }) => {
   const [filtersList, setFiltersList] = useState({
@@ -73,6 +73,15 @@ const ToolbarLists = ({ list, totalResults }) => {
       list,
     }));
   }, [list]);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   //sort
   const handleSort = (e) => {
@@ -207,7 +216,7 @@ const ToolbarLists = ({ list, totalResults }) => {
             </button>
           </div>
           <div>
-            {totalResults > 0 && (
+            {totalResults > 0 && !isMobile && (
               <p className='text-secondary'>
                 {totalResults?.toLocaleString("es-ES")} titulos
               </p>
@@ -227,7 +236,7 @@ const ToolbarLists = ({ list, totalResults }) => {
                 aria-controls='collapseExample'
               >
                 <SmartDisplay />
-                {filmsProviders?.length > 0 && (
+                {filmsProviders?.length > 0 && !isMobile && (
                   <span
                     className={`${style.spanStreaming} ${
                       filtersList.providers.length > 0 && "text-warning"
@@ -248,13 +257,13 @@ const ToolbarLists = ({ list, totalResults }) => {
           {/* ORDENAMIENTOS */}
           <select
             name='sortBy'
-            className='form-select w-auto btn btn-dark text-start border'
+            className='form-select w-25 btn btn-dark text-start border'
             aria-label='Default select example'
             value={filtersList.sortBy}
             onChange={handleSort}
           >
             <option value='' disabled>
-              Ordenamientos
+              {isMobile ? "⇅" : "Ordenamientos"}
             </option>
             <option value='last_added'>Ultimo agregado</option>
             <option value='popularity'>Popularidad</option>
@@ -280,7 +289,7 @@ const ToolbarLists = ({ list, totalResults }) => {
                 aria-expanded='false'
                 aria-controls='collapseExample'
               >
-                Filtros
+                {isMobile ? <FilterAlt /> : "Filtros"}
                 {activeFilters > 0 && (
                   <span className={style.activeFilters}>{activeFilters}</span>
                 )}
@@ -310,7 +319,7 @@ const ToolbarLists = ({ list, totalResults }) => {
       <div className='collapse mb-2' id='collapseExample'>
         <div className='card card-body bg-dark'>
           {/* DROPDOWNS */}
-          <div className='dropdown d-flex gap-3 d-flex align-items-baseline'>
+          <div className='dropdown d-flex gap-3 d-flex align-items-baseline flex-wrap'>
             {/* year release */}
             <button
               className={`btn btn-dark border dropdown-toggle ${
