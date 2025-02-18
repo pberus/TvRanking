@@ -52,7 +52,10 @@ const Search = () => {
       {searchResults?.length > 0 && (
         <div className='m-3'>
           {searchResults.map((tv) => (
-            <div key={tv.id} className='mb-3 pb-3 border-bottom d-flex'>
+            <div
+              key={tv.id}
+              className='mb-3 pb-3 border-bottom d-flex flex-column flex-sm-row align-items-center align-items-sm-start'
+            >
               <div>
                 <Card
                   tv={{
@@ -67,7 +70,7 @@ const Search = () => {
                   }}
                 />
               </div>
-              <div className='ms-3'>
+              <div className='ms-3 mt-3'>
                 <h4>
                   <span className='text-white'>
                     {tv.media_type === "movie" ? tv.title : tv.name}{" "}
