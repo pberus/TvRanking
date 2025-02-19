@@ -34,6 +34,7 @@ const DetailImagesCarousel = ({ images }) => {
               <img
                 src={IMAGE_URL + image}
                 className={`d-block w-100 ${style.img}`}
+                style={{ height: "75vh" }}
                 alt={`Slide ${index + 1}`}
               />
             </div>

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import Card from "../Card/Card";
+import { useEffect, useState } from "react";
 
 const DetailSimilarCarousel = ({ similar }) => {
   const chunkArray = (array, size) => {
@@ -10,7 +11,34 @@ const DetailSimilarCarousel = ({ similar }) => {
     return chunks;
   };
 
-  const similarChunks = chunkArray(similar, 6); // Divide el array en grupos de 6
+  const [visibleCount, setVisibleCount] = useState(6);
+
+  useEffect(() => {
+    const updateVisibleCount = () => {
+      let count;
+      if (window.innerWidth <= 425) {
+        count = 1;
+      } else if (window.innerWidth <= 600) {
+        count = 1;
+      } else if (window.innerWidth <= 768) {
+        count = 2;
+      } else if (window.innerWidth <= 1024) {
+        count = 3;
+      } else if (window.innerWidth <= 1200) {
+        count = 4;
+      } else {
+        count = 5;
+      }
+      setVisibleCount(count);
+    };
+
+    updateVisibleCount();
+    window.addEventListener("resize", updateVisibleCount);
+
+    return () => window.removeEventListener("resize", updateVisibleCount);
+  }, []);
+
+  const similarChunks = chunkArray(similar, visibleCount); // Divide el array en grupos de 6
 
   return (
     <div className='bg-dark'>

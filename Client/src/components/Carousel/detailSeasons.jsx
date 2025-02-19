@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import noImageAvailable from "../../assets/no_image_available.jpg";
 import DetailSeasonsModal from "../Modal/detailSeasons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -27,7 +27,34 @@ const DetailSeasonsCarousel = ({ seasons }) => {
     return chunks;
   };
 
-  const seasonsChunks = chunkArray(seasons, 8); // Divide el array en grupos de 6
+  const [visibleCount, setVisibleCount] = useState(8);
+
+  useEffect(() => {
+    const updateVisibleCount = () => {
+      let count;
+      if (window.innerWidth <= 425) {
+        count = 2;
+      } else if (window.innerWidth <= 600) {
+        count = 3;
+      } else if (window.innerWidth <= 768) {
+        count = 4;
+      } else if (window.innerWidth <= 1024) {
+        count = 5;
+      } else if (window.innerWidth <= 1200) {
+        count = 6;
+      } else {
+        count = 7;
+      }
+      setVisibleCount(count);
+    };
+
+    updateVisibleCount();
+    window.addEventListener("resize", updateVisibleCount);
+
+    return () => window.removeEventListener("resize", updateVisibleCount);
+  }, []);
+
+  const seasonsChunks = chunkArray(seasons, visibleCount); // Divide el array en grupos de 6
 
   return (
     <div className='mt-2 border p-3 bg-dark text-light'>
@@ -38,7 +65,7 @@ const DetailSeasonsCarousel = ({ seasons }) => {
               key={index}
               className={`carousel-item ${index === 0 ? "active" : ""}`}
             >
-              <div className='d-flex'>
+              <div className='d-flex justify-content-center'>
                 {chunk.map((season, i) => (
                   <div
                     key={i}

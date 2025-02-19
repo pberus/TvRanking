@@ -104,9 +104,11 @@ export default function TabsDetailInfo({ info }) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <div className='d-flex justify-content-around mt-3'>
+        <div className='d-flex justify-content-around m-3 flex-column flex-md-row'>
           <div>
-            <h5>Detalles de la pelicula</h5>
+            <h5 style={{ textDecoration: "underline" }}>
+              Detalles de la pelicula
+            </h5>
             {uncodedCountries.length > 0 && (
               <p>País/es: {uncodedCountries.join(", ")}</p>
             )}
@@ -118,7 +120,9 @@ export default function TabsDetailInfo({ info }) {
           </div>
           {production_companies?.length > 0 && (
             <div>
-              <h5>Compañías productoras</h5>
+              <h5 style={{ textDecoration: "underline" }}>
+                Compañías productoras
+              </h5>
               {production_companies.map((comp, index) => (
                 <p key={index}>
                   {comp.name} ({countries.getName(comp.origin_country, "es")})
@@ -128,7 +132,9 @@ export default function TabsDetailInfo({ info }) {
           )}
           {uncodedProdCountries.length > 0 && (
             <div>
-              <h5>País/es de producción</h5>
+              <h5 style={{ textDecoration: "underline" }}>
+                País/es de producción
+              </h5>
               <p>{uncodedProdCountries.join(", ")}</p>
             </div>
           )}

@@ -86,6 +86,21 @@ const TvSerieDetail = () => {
     };
   }, [dispatch, slug]); // Agrega slug como dependencia
 
+  const [imageSrc, setImageSrc] = useState(poster_path);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setImageSrc(window.innerWidth >= 600 ? poster_path : images[0]);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener on unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [poster_path, images]);
+
   const watchlist = useSelector((state) => state.watchlist);
   const seen = useSelector((state) => state.seen);
   const liked = useSelector((state) => state.liked);
@@ -145,7 +160,16 @@ const TvSerieDetail = () => {
       <div className={style.start}>
         <div className={style.startPoster}>
           <img
-            src={!poster_path ? noImageAvailable : IMAGE_URL + poster_path}
+            src={
+              !poster_path
+                ? noImageAvailable
+                : IMAGE_URL +
+                  (imageSrc
+                    ? imageSrc
+                    : window.innerWidth >= 600
+                    ? poster_path
+                    : images[0])
+            }
             alt={name}
             className={style.poster}
           />
@@ -277,7 +301,7 @@ const TvSerieDetail = () => {
               </div>
             )}
           </div>
-          <div className={`mt-3 ${style.providers}`}>
+          <div className={`mt-3 ${style.startProviders}`}>
             <h5 className='p-3'>Dónde ver</h5>
             <TabsDetailProviders
               providers={providers}
@@ -285,6 +309,13 @@ const TvSerieDetail = () => {
             />
           </div>
         </div>
+      </div>
+      <div className={`m-3 ${style.providers}`}>
+        <h5 className='p-3'>Dónde ver</h5>
+        <TabsDetailProviders
+          providers={providers}
+          title={name ? name : original_name}
+        />
       </div>
       <div className='bg-dark pb-1 border-top mt-3'>
         {seasons?.length > 0 && (

@@ -1,10 +1,21 @@
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import YouTube from "react-youtube";
 
 const YoutubeDetailVideos = ({ videos }) => {
+  const [width, setWidth] = useState(window.innerWidth > 600 ? 550 : 300);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth > 600 ? 550 : 300);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const opts = {
-    height: "350",
-    width: "550",
+    width: width,
+    height: (width * 9) / 16,
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 0,

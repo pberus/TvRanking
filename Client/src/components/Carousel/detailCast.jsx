@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import noImageAvailable from "../../assets/no_image_available.jpg";
+import { useEffect, useState } from "react";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -12,10 +13,37 @@ const DetailCastCarousel = ({ cast }) => {
     return chunks;
   };
 
-  const castChunks = chunkArray(cast, 6); // Divide el array en grupos de 6
+  const [visibleCount, setVisibleCount] = useState(6);
+
+  useEffect(() => {
+    const updateVisibleCount = () => {
+      let count;
+      if (window.innerWidth <= 425) {
+        count = 1;
+      } else if (window.innerWidth <= 600) {
+        count = 2;
+      } else if (window.innerWidth <= 768) {
+        count = 3;
+      } else if (window.innerWidth <= 1024) {
+        count = 4;
+      } else if (window.innerWidth <= 1200) {
+        count = 5;
+      } else {
+        count = 6;
+      }
+      setVisibleCount(count);
+    };
+
+    updateVisibleCount();
+    window.addEventListener("resize", updateVisibleCount);
+
+    return () => window.removeEventListener("resize", updateVisibleCount);
+  }, []);
+
+  const castChunks = chunkArray(cast, visibleCount); // Divide el array en grupos de 6
 
   return (
-    <div className="mt-2">
+    <div className='mt-2'>
       <div id='carouselExample' className='carousel slide'>
         <div className='carousel-inner'>
           {castChunks.map((chunk, index) => (
@@ -25,7 +53,10 @@ const DetailCastCarousel = ({ cast }) => {
             >
               <div className='d-flex justify-content-around'>
                 {chunk.map((actor, i) => (
-                  <div key={i} className='text-center'>
+                  <div
+                    key={i}
+                    className='text-center d-flex flex-column justify-content-between'
+                  >
                     <p>
                       <strong>{actor.name}</strong>
                     </p>
